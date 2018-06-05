@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   root to: 'pages#main'
 
+  get '/dashboard', to: 'pages#dashboard'
+
 end
