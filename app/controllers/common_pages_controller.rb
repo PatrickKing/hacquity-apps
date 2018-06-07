@@ -1,6 +1,6 @@
 class CommonPagesController < ApplicationController
 
-  skip_before_action :require_login, only: :main
+  before_action :require_login, except: :main
 
   def main
     if user_signed_in?
