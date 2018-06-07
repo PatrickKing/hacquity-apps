@@ -1,0 +1,47 @@
+<%= form_with(model: service_posting, local: true) do |form| %>
+  <% if service_posting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(service_posting.errors.count, "error") %> prohibited this service_posting from being saved:</h2>
+
+      <ul>
+      <% service_posting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :postingType %>
+    <%= form.text_field :postingType %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_field :summary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fullTimeEquivalents %>
+    <%= form.text_field :fullTimeEquivalents %>
+  </div>
+
+  <div class="field">
+    <%= form.label :userId_id %>
+    <%= form.text_field :userId_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :closed %>
+    <%= form.check_box :closed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
