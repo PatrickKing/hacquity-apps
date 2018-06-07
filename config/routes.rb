@@ -15,4 +15,9 @@ Rails.application.routes.draw do
   get '/second-shift', to: 'second_shift_pages#main'
   get '/mentor-match', to: 'mentor_match_pages#main'
 
+  resource :user, only: [] do
+    post 'activate_second_shift'
+    post 'activate_mentor_match'
+  end
+
 end

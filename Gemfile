@@ -8,6 +8,7 @@ gem 'rails', '~> 5.2.0'
 gem 'pg'
 gem 'slim'
 gem 'devise'
+gem 'awesome_print'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
