@@ -1,6 +1,3 @@
-/ h1 Dashboard
-
-
 .mui-container-fluid
 
   .mui-row
@@ -8,23 +5,31 @@
     .mui-col-md-6.mui-col-xs.12
       .mui-appbar.mui--bg-color-light-green-600
         h2.appbar-title Second Shift
-
       br
       p If you have hired help (like a nanny or a cleaner) but don't need them full time, or if you are looking for part time household help, Second Shift lets you connect with peers who can help.
-      = form_tag '/user/activate_second_shift', method: :post do
-        = submit_tag "Get Started with Second Shift" , class: "mui-btn mui-btn--raised mui--color-light-green-600"
 
-      p = current_user.second_shift_enabled
+      - unless current_user.second_shift_enabled
+        = form_tag '/user/activate_second_shift', method: :post do
+          = submit_tag "Get Started with Second Shift" , class: "mui-btn mui-btn--raised mui--color-light-green-600"
+      - else
+        a.mui-btn.mui-btn--raised.mui--color-light-green-600 href=second_shift_path
+          | Continue with Second Shift
+
+
 
 
     .mui-col-md-6.mui-col-xs.12
       .mui-appbar.mui--bg-color-teal-600
         h2.appbar-title Mentor Match
-
       br
       p Mentor Match helps you to discover other faculty who have interests like yours, and who are looking for mentor/mentee relationships.
 
-      = form_tag '/user/activate_mentor_match', method: :post do
-        = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui-btn--raised mui--color-teal-600"
+      - unless current_user.mentor_match_enabled
 
-      p = current_user.mentor_match_enabled
+        = form_tag '/user/activate_mentor_match', method: :post do
+          = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui-btn--raised mui--color-teal-600"
+
+      - else
+        a.mui-btn.mui-btn--raised.mui--color-teal-600 href=mentor_match_path
+          | Continue with Mentor Match
+
