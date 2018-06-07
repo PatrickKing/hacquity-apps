@@ -1,0 +1,37 @@
+<%= form_with(model: mentor_match_profile, local: true) do |form| %>
+  <% if mentor_match_profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mentor_match_profile.errors.count, "error") %> prohibited this mentor_match_profile from being saved:</h2>
+
+      <ul>
+      <% mentor_match_profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cv_text %>
+    <%= form.text_field :cv_text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :match_role %>
+    <%= form.text_field :match_role %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position %>
+    <%= form.text_field :position %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
