@@ -1,0 +1,27 @@
+
+.mui-appbar {
+  // to match .mui-panel
+  padding-left: 15px;
+}
+
+// for an appbar height of 56px
+.appbar-title {
+  margin: 0;
+  padding: 12px 0 12px 0;
+  font-size: 32px;
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  // appbar height 48px
+  .appbar-title {
+    padding: 4px 0 4px 0;
+  }
+}
+
+@media (min-width: 480px) {
+  // appbar height 64px
+  .appbar-title {
+    padding: 16px 0 16px 0;
+  }
+
+}

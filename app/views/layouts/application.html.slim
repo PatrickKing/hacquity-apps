@@ -19,7 +19,12 @@ html
       = flash.alert
       = flash.notice
       = render 'shared/auth_links'
-    = yield
+
+    .mui-container
+      = yield :appbar
+      .mui-panel
+        = yield
+
 
 
 
