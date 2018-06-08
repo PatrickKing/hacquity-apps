@@ -25,7 +25,6 @@
       p Mentor Match helps you to discover other faculty who have interests like yours, and who are looking for mentor/mentee relationships.
 
       - unless current_user.mentor_match_enabled
-
         = form_tag '/user/activate_mentor_match', method: :post do
           = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui-btn--raised mui--color-teal-600"
 

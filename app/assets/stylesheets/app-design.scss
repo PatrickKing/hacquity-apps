@@ -1,4 +1,8 @@
 
+$second_shift_green: #7CB342;
+$mentor_match_teal: #00897B;
+
+
 .mui-appbar {
   // to match .mui-panel
   padding-left: 15px;
@@ -24,4 +28,36 @@
     padding: 16px 0 16px 0;
   }
 
+}
+
+.hacquity-nav-list {
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.second-shift-nav-link {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+  border-bottom: 2px solid white;
+}
+
+
+.second-shift-nav-link.active, .second-shift-nav-link:hover {
+  border-bottom: 2px solid $second_shift_green; 
+
+  span {
+    color: $second_shift_green;
+  }
+}
+
+
+
+.mui-container-fluid.strip-padding {
+  padding: 0;
 }
