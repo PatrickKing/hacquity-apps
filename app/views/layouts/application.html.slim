@@ -22,8 +22,14 @@ html
 
     .mui-container
       = yield :appbar
-      .mui-panel
+
+      .mui-col-md-2.mui-col-xs-12
+        = yield :navbar
+      .mui-col-md-10.mui-col-xs-12
         = yield
+
+      .mui-panel
+        = yield :single_column
 
 
 

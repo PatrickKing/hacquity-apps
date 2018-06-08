@@ -1,6 +1,8 @@
 class ServicePostingsController < ApplicationController
   before_action :set_service_posting, only: [:show, :edit, :update, :destroy]
 
+  layout "second_shift_pages"
+
   # # GET /service_postings
   # def index
   #   @service_postings = ServicePosting.all
@@ -44,6 +46,21 @@ class ServicePostingsController < ApplicationController
     @service_posting.destroy
     redirect_to service_postings_url, notice: 'Service posting was successfully destroyed.'
   end
+
+  ### Additional non-restful actions:
+
+  def mine
+  end
+
+  def available
+  end
+
+  def wanted
+  end
+
+  def search
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
