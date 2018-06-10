@@ -57,3 +57,11 @@ $mentor_match_teal: #00897B;
 }
 
 
+
+
+.second-shift-form .mui-textfield {
+  input:focus, textarea:focus {
+    border-color: $second_shift_green;
+  }
+}
+

@@ -1,0 +1,47 @@
+= form_with(model: service_posting, local: true, class: 'mui-form second-shift-form') do |form|
+
+  - if service_posting.errors.any?
+    #error_explanation
+      h2 
+        = pluralize(service_posting.errors.count, "error")
+        | prohibited this service_posting from being saved:
+      ul
+      - service_posting.errors.full_messages.each do |message|
+        li = message
+
+    / t.string "posting_type"
+    / t.string "summary"
+    / t.string "description"
+    / t.decimal "full_time_equivalents"
+    / t.bigint "user_id"
+    / t.boolean "closed"
+    / t.datetime "created_at", null: false
+    / t.datetime "updated_at", null: false
+    / t.index ["user_id"], name: "index_service_postings_on_user_id"
+
+  .field
+    .mui-textfield
+      = form.label :summary
+      = form.text_field :summary
+
+  .field
+    .mui-textfield
+      = form.label :full_time_equivalents
+      = form.text_field :full_time_equivalents
+
+  .field
+    .mui-textfield
+      = form.label :description
+      = form.text_area :description
+
+  .field
+    .mui-textfield
+      = form.label :posting_type
+      = form.text_field :posting_type
+
+
+
+
+
+  .actions
+    = form.submit class: 'mui-btn mui-btn--raised mui--color-light-green-600'
