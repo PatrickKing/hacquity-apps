@@ -1,4 +1,6 @@
 class ServicePostingsController < ApplicationController
+  before_action :require_login
+
   before_action :set_service_posting, only: [:show, :edit, :update, :destroy]
 
   layout "second_shift_pages"
@@ -24,6 +26,7 @@ class ServicePostingsController < ApplicationController
   # POST /service_postings
   def create
     @service_posting = ServicePosting.new(service_posting_params)
+    @service_posting.user = current_user
 
     if @service_posting.save
       redirect_to @service_posting, notice: 'Service posting was successfully created.'
@@ -63,13 +66,11 @@ class ServicePostingsController < ApplicationController
 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_service_posting
       @service_posting = ServicePosting.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def service_posting_params
-      params.require(:service_posting).permit(:postingType, :summary, :description, :fullTimeEquivalents, :userId_id, :closed)
+      params.require(:service_posting).permit(:posting_type, :summary, :description, :full_time_equivalents, :service_type)
     end
 end

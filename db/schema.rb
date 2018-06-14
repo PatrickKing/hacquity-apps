@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_184034) do
+ActiveRecord::Schema.define(version: 2018_06_14_020506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2018_06_07_184034) do
     t.boolean "closed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "service_type"
     t.index ["user_id"], name: "index_service_postings_on_user_id"
   end
 

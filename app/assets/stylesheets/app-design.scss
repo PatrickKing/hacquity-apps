@@ -1,6 +1,7 @@
 
 $second_shift_green: #7CB342;
 $mentor_match_teal: #00897B;
+$invalid_red: #F44336;
 
 
 .mui-appbar {
@@ -65,3 +66,24 @@ $mentor_match_teal: #00897B;
   }
 }
 
+.second-shift-form .mui-select {
+  select:focus {
+    border-color: $second_shift_green;
+  }
+}
+
+.second-shift-form .mui-select:focus {
+  select {
+    border-color: $second_shift_green;
+  }
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+
+#error_explanation {
+  border-bottom: 2px solid $invalid_red;
+  color: $invalid_red;
+}
