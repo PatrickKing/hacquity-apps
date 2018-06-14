@@ -1,0 +1,48 @@
+= form_with(model: service_posting, local: true, class: 'mui-form second-shift-form') do |form|
+
+  - if service_posting.errors.any?
+    .form-section#error_explanation
+      h2 
+        = "#{pluralize(service_posting.errors.count, "error")} prohibited this posting from being saved:"
+      ul
+        - service_posting.errors.full_messages.each do |message|
+          li = message
+
+  .form-section
+    .mui-textfield
+      = form.label :summary
+      = form.text_field :summary
+    
+  .form-section
+    .mui-textfield
+      label Service available or wanted
+    .mui-radio
+      = form.radio_button :posting_type, 'Available'
+      = form.label :posting_type_available, 'Available'
+    .mui-radio
+      = form.radio_button :posting_type, 'Wanted'
+      = form.label :posting_type_wanted, 'Wanted'
+
+  .form-section
+    .mui-select
+      = form.label :service_type
+      = form.collection_select :service_type, ServicePosting::ServiceTypes, :to_s, :to_s, include_blank: true
+
+  .form-section
+    .mui-textfield
+      = form.label :full_time_equivalents
+      = form.number_field :full_time_equivalents, min: 0.1, max: 1, step: 0.1
+
+  .form-section
+    .mui-textfield
+      = form.label :description
+      = form.text_area :description
+
+
+
+
+
+
+
+  .actions
+    = form.submit class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'

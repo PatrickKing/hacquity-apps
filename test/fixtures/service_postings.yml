@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  postingType: MyString
+  summary: MyString
+  description: MyString
+  fullTimeEquivalents: 9.99
+  userId: one
+  closed: false
+
+two:
+  postingType: MyString
+  summary: MyString
+  description: MyString
+  fullTimeEquivalents: 9.99
+  userId: two
+  closed: false

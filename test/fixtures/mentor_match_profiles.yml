@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  cv_text: MyString
+  match_role: MyString
+  position: MyString
+
+two:
+  user: two
+  cv_text: MyString
+  match_role: MyString
+  position: MyString
