@@ -29,6 +29,14 @@ class ServicePosting < ApplicationRecord
 
 
 
+  def open_closed_text
+    if self.closed then 'Closed' else 'Open' end
+  end
+
+  def seeking_summary
+    "#{self.full_time_equivalents} FTE #{self.service_type}"
+  end
+
   before_create do
     self.closed = false if self.closed.nil?
   end

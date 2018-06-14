@@ -23,6 +23,7 @@ html
     .mui-container
       = yield :appbar
 
+      / NB: don't add .mui-row here, it just breaks the layout.
       .mui-col-md-2.mui-col-xs-12
         = yield :navbar
       .mui-col-md-10.mui-col-xs-12

@@ -53,12 +53,15 @@ class ServicePostingsController < ApplicationController
   ### Additional non-restful actions:
 
   def mine
+    @service_postings = ServicePosting.where user: current_user
   end
 
   def available
+    @service_postings = ServicePosting.where closed: false, posting_type: 'Available'
   end
 
   def wanted
+    @service_postings = ServicePosting.where closed: false, posting_type: 'Wanted'
   end
 
   def search

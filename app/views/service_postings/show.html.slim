@@ -1,30 +1,5 @@
-#notice = notice
-
-/ p
-/   strong Postingtype:
-/   = @service_posting.postingType 
 
 
-p
-  strong Summary:
-  = @service_posting.summary
+= render 'shared/service_posting', service_posting: @service_posting
 
 
-p
-  strong Description:
-  = @service_posting.description
-
-
-p
-  strong Fulltimeequivalents:
-  = @service_posting.full_time_equivalents
-
-
-
-
-/ p
-/   strong Closed:
-/   = @service_posting.closed
-
-
-= link_to 'Edit', edit_service_posting_path(@service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
