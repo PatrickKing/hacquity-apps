@@ -10,7 +10,8 @@
     .mui-col-md-10.mui-col-xs-12
       p
         strong By: 
-        = service_posting.user.name
+        = service_posting.user.email
+        / = service_posting.user.name
     .mui-col-md-2.mui-col-xs-12
       p = service_posting.open_closed_text
 
@@ -30,8 +31,33 @@
         = service_posting.description
 
 
+  - if service_posting.user == current_user
+    / this is terrible form!
+    - matches = service_posting.matches
+    - if matches.any?
+      .mui-row
+        .mui-col-md-12.mui-col-xs-12
+          p
+            strong Suggested Matches:
+
+          - matches.each do |match|
+            .mui-col-md-4.mui-col-xs-12
+              h2.second_shift_bottom_border = match.summary
+              p = match.full_seeking_summary
+              = link_to 'More Info', service_posting_path(match), class: 'mui-btn mui-btn--raised mui--color-light-green-600'
+
+        
+
+    - else
+      .mui-row
+        .mui-col-md-12.mui-col-xs-12
+          p
+            em No suggested matches found
+
+
+
   .mui-row
     .mui-col-md-12.mui-col-xs-12
       - if service_posting.user == current_user
         = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
-        = link_to 'Close', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+        / = link_to 'Close', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'

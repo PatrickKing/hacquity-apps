@@ -33,9 +33,33 @@ class ServicePosting < ApplicationRecord
     if self.closed then 'Closed' else 'Open' end
   end
 
+  def full_seeking_summary
+    "#{self.posting_type}: #{self.full_time_equivalents} FTE #{self.service_type}"
+  end
+
   def seeking_summary
     "#{self.full_time_equivalents} FTE #{self.service_type}"
   end
+
+
+  def matches
+
+    query_posting_type = if self.posting_type == 'Wanted' then 'Available' else'Wanted' end
+
+    time_operand = if self.posting_type == 'Available' then '<=' else '>=' end
+
+    ServicePosting.where(
+      closed: false,
+      service_type: self.service_type,
+      posting_type: query_posting_type)
+    .where("full_time_equivalents #{time_operand} ?", self.full_time_equivalents)
+    .where("id <> ?", self.id)
+    .limit(3).order(full_time_equivalents: :desc)
+
+  end
+
+
+
 
   before_create do
     self.closed = false if self.closed.nil?
