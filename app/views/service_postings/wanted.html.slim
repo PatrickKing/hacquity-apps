@@ -1,0 +1,8 @@
+
+.mui-container
+  .mui-row
+    .mui-col-md-12.mui-col-xs-12
+      h1 Postings: Services Wanted
+
+- @service_postings.each do |service_posting|
+  = render 'shared/service_posting', service_posting: service_posting

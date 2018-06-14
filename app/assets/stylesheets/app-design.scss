@@ -1,0 +1,93 @@
+
+$second_shift_green: #7CB342;
+$mentor_match_teal: #00897B;
+$invalid_red: #F44336;
+
+
+.mui-appbar {
+  // to match .mui-panel
+  padding-left: 15px;
+}
+
+// for an appbar height of 56px
+.appbar-title {
+  margin: 0;
+  padding: 12px 0 12px 0;
+  font-size: 32px;
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  // appbar height 48px
+  .appbar-title {
+    padding: 4px 0 4px 0;
+  }
+}
+
+@media (min-width: 480px) {
+  // appbar height 64px
+  .appbar-title {
+    padding: 16px 0 16px 0;
+  }
+
+}
+
+.hacquity-nav-list {
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.second-shift-nav-link {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+  border-bottom: 2px solid white;
+}
+
+
+.second-shift-nav-link.active, .second-shift-nav-link:hover {
+  border-bottom: 2px solid $second_shift_green; 
+
+  span {
+    color: $second_shift_green;
+  }
+}
+
+
+
+
+.second-shift-form .mui-textfield {
+  input:focus, textarea:focus {
+    border-color: $second_shift_green;
+  }
+}
+
+.second-shift-form .mui-select {
+  select:focus {
+    border-color: $second_shift_green;
+  }
+}
+
+.second-shift-form .mui-select:focus {
+  select {
+    border-color: $second_shift_green;
+  }
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+
+#error_explanation {
+  border-bottom: 2px solid $invalid_red;
+  color: $invalid_red;
+}
+
+.second_shift_bottom_border {
+  border-bottom: 2px solid $second_shift_green; 
+}

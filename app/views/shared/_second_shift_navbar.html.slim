@@ -1,0 +1,30 @@
+.hacquity-nav-list
+
+  a href = mine_service_postings_path 
+    .second-shift-nav-link class = nav_link_class('service_postings', 'mine')
+      span My Postings
+
+  a href = new_service_posting_path
+    .second-shift-nav-link class = new_create_nav_link_class('service_postings')
+      span Create Posting
+
+  a href = available_service_postings_path
+    .second-shift-nav-link class = nav_link_class('service_postings', 'available')
+      span Browse Available Postings
+
+  a href = wanted_service_postings_path
+    .second-shift-nav-link class = nav_link_class('service_postings', 'wanted')
+      span Browse Wanted Postings
+
+  a href = search_service_postings_path
+    .second-shift-nav-link class = nav_link_class('service_postings', 'search')
+      span Search Postings
+
+  a href = '#'
+    .second-shift-nav-link
+      span Second Shift Connections
+
+  a href = dashboard_path
+    .second-shift-nav-link
+      span Hacquity Home
+
