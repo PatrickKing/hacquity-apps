@@ -37,7 +37,7 @@
     / this is terrible form!
     - matches = service_posting.matches
     - if matches.any?
-      .mui-row
+      .mui-row.form-section
         .mui-col-md-12.mui-col-xs-12
           p
             strong Suggested Matches:
@@ -51,7 +51,7 @@
         
 
     - else
-      .mui-row
+      .mui-row.form-section
         .mui-col-md-12.mui-col-xs-12
           p
             em No suggested matches found
@@ -61,11 +61,14 @@
   .mui-row
     .mui-col-md-12.mui-col-xs-12
       - if service_posting.user == current_user
-        = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
 
         - if service_posting.closed == true
-          = form_with(model: service_posting, class: 'mui-form second-shift-form') do |form|
-
+          = form_tag open_service_posting_path(service_posting), method: :post
+            = submit_tag "Re-open", class: "mui-btn mui-btn--raised mui--color-light-green-600"
 
         - else
-        / = link_to 'Close', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+          = form_tag close_service_posting_path(service_posting), method: :post, class: 'mui-form--inline'
+            / The 'edit' link has nothing to do with the form, but it needs to be nested in the form tag to display inline with this submit button.
+            = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+            = submit_tag "Close", class: "mui-btn mui-btn--raised mui--color-light-green-600"
+

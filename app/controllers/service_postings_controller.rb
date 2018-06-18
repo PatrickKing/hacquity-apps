@@ -1,7 +1,7 @@
 class ServicePostingsController < ApplicationController
   before_action :require_login
 
-  before_action :set_service_posting, only: [:show, :edit, :update, :destroy]
+  before_action :set_service_posting, only: [:show, :edit, :update, :destroy, :open, :close]
 
   layout "second_shift_pages"
 
@@ -65,11 +65,13 @@ class ServicePostingsController < ApplicationController
 
   def close
     @service_posting.closed = true
+    @service_posting.save!
     redirect_to @service_posting, notice: 'The service posting was closed, and is no longer visible to the public.'
   end
 
   def open
     @service_posting.closed = false
+    @service_posting.save!
     redirect_to @service_posting, notice: 'The service posting was re-opened, and is again visible to the public.'
   end
 
