@@ -43,7 +43,7 @@ class MentorMatchProfilesController < ApplicationController
   # def destroy
   #   @mentor_match_profile.destroy
   #   redirect_to mentor_match_profiles_url, notice: 'Mentor match profile was successfully destroyed.'
-  end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
