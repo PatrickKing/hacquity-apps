@@ -54,6 +54,7 @@ class ServicePosting < ApplicationRecord
       posting_type: query_posting_type)
     .where("full_time_equivalents #{time_operand} ?", self.full_time_equivalents)
     .where("id <> ?", self.id)
+    .where("user_id <> ?", self.user.id)
     .limit(3).order(full_time_equivalents: :desc)
 
   end

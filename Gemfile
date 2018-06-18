@@ -10,6 +10,7 @@ gem 'slim'
 gem 'devise'
 gem 'awesome_print'
 gem "slim-rails"
+gem 'kaminari'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

@@ -9,3 +9,6 @@
 
 - @service_postings.each do |service_posting|
   = render 'shared/service_posting', service_posting: service_posting
+
+.form-section
+= paginate @service_postings

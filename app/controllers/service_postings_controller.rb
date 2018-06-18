@@ -40,23 +40,24 @@ class ServicePostingsController < ApplicationController
   end
 
 
-  def destroy
-    @service_posting.destroy
-    redirect_to service_postings_url, notice: 'Service posting was successfully destroyed.'
-  end
-
   ### Additional non-restful actions:
 
   def mine
-    @service_postings = ServicePosting.where user: current_user
+    @service_postings = ServicePosting
+      .where(user: current_user)
+      .page(params[:page])
   end
 
   def available
-    @service_postings = ServicePosting.where closed: false, posting_type: 'Available'
+    @service_postings = ServicePosting
+      .where(closed: false, posting_type: 'Available')
+      .page(params[:page])
   end
 
   def wanted
-    @service_postings = ServicePosting.where closed: false, posting_type: 'Wanted'
+    @service_postings = ServicePosting
+      .where(closed: false, posting_type: 'Wanted')
+      .page(params[:page])
   end
 
   def search
