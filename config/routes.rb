@@ -19,12 +19,16 @@ Rails.application.routes.draw do
   get '/second-shift', to: 'second_shift_pages#main'
 
   scope 'second-shift' do
-    resources :service_postings, path: 'postings', except: :index do
+    resources :service_postings, path: 'postings', except: [:index, :destroy] do
       collection do
         get 'mine'
         get 'available'
         get 'wanted'
         get 'search'
+      end
+      member do
+        post 'open'
+        post 'close'
       end
     end    
   end

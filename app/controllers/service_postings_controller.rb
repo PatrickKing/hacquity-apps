@@ -5,11 +5,6 @@ class ServicePostingsController < ApplicationController
 
   layout "second_shift_pages"
 
-  # # GET /service_postings
-  # def index
-  #   @service_postings = ServicePosting.all
-  # end
-
   # GET /service_postings/1
   def show
   end
@@ -44,7 +39,7 @@ class ServicePostingsController < ApplicationController
     end
   end
 
-  # DELETE /service_postings/1
+
   def destroy
     @service_posting.destroy
     redirect_to service_postings_url, notice: 'Service posting was successfully destroyed.'
@@ -66,6 +61,18 @@ class ServicePostingsController < ApplicationController
 
   def search
   end
+
+
+  def close
+    @service_posting.closed = true
+    redirect_to @service_posting, notice: 'The service posting was closed, and is no longer visible to the public.'
+  end
+
+  def open
+    @service_posting.closed = false
+    redirect_to @service_posting, notice: 'The service posting was re-opened, and is again visible to the public.'
+  end
+
 
 
   private

@@ -12,6 +12,8 @@
         strong By: 
         = service_posting.user.email
         / = service_posting.user.name
+        - if service_posting.user == current_user
+          strong = " (You)"
     .mui-col-md-2.mui-col-xs-12
       p = service_posting.open_closed_text
 
@@ -60,4 +62,10 @@
     .mui-col-md-12.mui-col-xs-12
       - if service_posting.user == current_user
         = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+
+        - if service_posting.closed == true
+          = form_with(model: service_posting, class: 'mui-form second-shift-form') do |form|
+
+
+        - else
         / = link_to 'Close', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
