@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   root to: 'common_pages#main'
 
   get '/dashboard', to: 'common_pages#dashboard'
-
-  devise_for :users
   
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
   resource :user, only: [] do
     post 'activate_second_shift'
     post 'activate_mentor_match'

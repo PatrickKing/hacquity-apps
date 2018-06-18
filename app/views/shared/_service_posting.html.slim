@@ -10,8 +10,7 @@
     .mui-col-md-10.mui-col-xs-12
       p
         strong By: 
-        = service_posting.user.email
-        / = service_posting.user.name
+        = service_posting.user.name
         - if service_posting.user == current_user
           strong = " (You)"
     .mui-col-md-2.mui-col-xs-12

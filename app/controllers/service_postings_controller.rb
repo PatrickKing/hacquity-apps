@@ -1,7 +1,8 @@
 class ServicePostingsController < ApplicationController
   before_action :require_login
 
-  before_action :set_service_posting, only: [:show, :edit, :update, :destroy, :open, :close]
+  before_action :set_service_posting, only: [:show, :edit, :update, :open, :close]
+  before_action :require_ownership, only: [:edit, :update, :open, :close]
 
   layout "second_shift_pages"
 
@@ -85,5 +86,12 @@ class ServicePostingsController < ApplicationController
 
     def service_posting_params
       params.require(:service_posting).permit(:posting_type, :summary, :description, :full_time_equivalents, :service_type)
+    end
+
+    def require_ownership
+      if @service_posting.user != current_user
+        flash[:notice] = 'You need to be the creator of the posting to do that.'
+        redirect_to request.referer || @service_posting
+      end
     end
 end
