@@ -16,12 +16,12 @@
     .second-shift-nav-link class = nav_link_class('service_postings', 'wanted')
       span Browse Wanted Postings
 
-  a href = search_service_postings_path
-    .second-shift-nav-link class = nav_link_class('service_postings', 'search')
-      span Search Postings
+  / a href = search_service_postings_path
+  /   .second-shift-nav-link class = nav_link_class('service_postings', 'search')
+  /     span Search Postings
 
-  a href = '#'
-    .second-shift-nav-link
+  a href = ss_connection_requests_path
+    .second-shift-nav-link class = nav_link_class('second_shift_connection_requests', 'index')
       span Second Shift Connections
 
   a href = dashboard_path

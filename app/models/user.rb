@@ -7,6 +7,15 @@ class User < ApplicationRecord
   has_many :service_postings
   has_one :mentor_match_profile
 
+  has_many :initiator_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :initiator_id
+
+  has_many :receiver_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :receiver_id
+
+
   validates :name, presence: true
   validates :name, length: { maximum: 300 }
 

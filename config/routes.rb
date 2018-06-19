@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   # Routes for the common pages and users:
 
   root to: 'common_pages#main'
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
     post 'activate_second_shift'
     post 'activate_mentor_match'
   end
+
 
 
   # Routes for Second Shift:
@@ -32,7 +34,18 @@ Rails.application.routes.draw do
         post 'open'
         post 'close'
       end
-    end    
+    end
+    resources :connection_requests, 
+      only: [:index, :create],
+      controller: 'second_shift_connection_requests',
+      as: 'ss_connection_requests' do
+        member do
+          post 'initiator_withdraw'
+          post 'initiator_undo_withdraw'
+          post 'receiver_accept'
+          post 'receiver_decline'
+        end
+      end
   end
 
 
@@ -43,6 +56,17 @@ Rails.application.routes.draw do
   scope 'mentor-match' do
     resource :my_mentor_match_profile
     resources :mentor_match_profiles, only: :show
+    resources :connection_requests,
+      only: [:index, :create],
+      controller: 'mentor_match_connection_requests',
+      as: 'mm_connection_requests' do
+        member do
+          post 'initiator_withdraw'
+          post 'initiator_undo_withdraw'
+          post 'receiver_accept'
+          post 'receiver_decline'
+        end
+      end
   end
 
 

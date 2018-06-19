@@ -13,6 +13,15 @@ class ServicePosting < ApplicationRecord
 
   belongs_to :user
 
+  has_many :initiator_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :initiator_service_posting_id
+
+  has_many :receiver_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :receiver_service_posting_id
+
+
   validates :summary, presence: true
   validates :summary, length: { maximum: 300 }
 
