@@ -1,0 +1,72 @@
+
+
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    h1.second_shift_bottom_border = service_posting.summary
+
+.mui-row
+  .mui-col-md-10.mui-col-xs-12
+    p
+      strong By: 
+      = service_posting.user.name
+      - if service_posting.user == current_user
+        strong = " (You)"
+  .mui-col-md-2.mui-col-xs-12
+    p = service_posting.open_closed_text
+
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    p
+      strong 
+        = service_posting.posting_type
+        | : 
+      = service_posting.seeking_summary
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    p
+      strong Description: 
+      = service_posting.description
+
+
+- if service_posting.user == current_user
+  - if matches.any?
+    .mui-row
+      .mui-col-md-12.mui-col-xs-12
+        p
+          strong Suggested Matches:
+
+    - matches.each_slice 3 do |matches_slice|
+      .mui-row
+        - matches_slice.each do |match|
+          .mui-col-md-4.mui-col-xs-12
+            h2.second_shift_bottom_border = match.summary
+            p = match.full_seeking_summary
+            - if show_connection_buttons
+
+              = link_to 'More Info', service_posting_path(match), class: 'mui-btn  mui--bg-color-light-green-600 mui--color-white'
+
+              br
+
+              - if service_posting.connection_exists? match
+                = link_to 'View connection request', service_posting.connection(match).show_path, class: 'mui-btn  mui--bg-color-light-green-600 mui--color-white'
+              - elsif !service_posting.closed and !service_posting.connection_exists? match
+                = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path do |form|
+                  = form.hidden_field :initiator_service_posting_id, value: service_posting.id
+                  = form.hidden_field :receiver_service_posting_id, value: match.id
+                  = form.submit "Send connection request", class: "mui-btn mui-btn--primary mui--bg-color-light-green-600"
+
+    / For spacing
+    .mui-row.form-section
+
+  - else
+    .mui-row.form-section
+      .mui-col-md-12.mui-col-xs-12
+        p
+          em No suggested matches found
+
+
+
+

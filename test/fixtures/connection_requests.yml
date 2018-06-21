@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  initiator: one
+  receiver: one
+  initiator_service_posting: one
+  receiver_service_posting: one
+  receiver_status: MyString
+  initiator_status: MyString
+  connection_type: MyString
+
+two:
+  initiator: two
+  receiver: two
+  initiator_service_posting: two
+  receiver_service_posting: two
+  receiver_status: MyString
+  initiator_status: MyString
+  connection_type: MyString

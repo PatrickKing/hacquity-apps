@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_020506) do
+ActiveRecord::Schema.define(version: 2018_06_18_204016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connection_requests", force: :cascade do |t|
+    t.bigint "initiator_id"
+    t.bigint "receiver_id"
+    t.bigint "initiator_service_posting_id"
+    t.bigint "receiver_service_posting_id"
+    t.string "receiver_status"
+    t.string "initiator_status"
+    t.string "connection_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["initiator_id"], name: "index_connection_requests_on_initiator_id"
+    t.index ["initiator_service_posting_id"], name: "index_connection_requests_on_initiator_service_posting_id"
+    t.index ["receiver_id"], name: "index_connection_requests_on_receiver_id"
+    t.index ["receiver_service_posting_id"], name: "index_connection_requests_on_receiver_service_posting_id"
+  end
 
   create_table "mentor_match_profiles", force: :cascade do |t|
     t.bigint "user_id"
@@ -38,22 +54,6 @@ ActiveRecord::Schema.define(version: 2018_06_14_020506) do
     t.index ["user_id"], name: "index_service_postings_on_user_id"
   end
 
-  create_table "user_connections", force: :cascade do |t|
-    t.bigint "initiator_id"
-    t.bigint "receiver_id"
-    t.string "connection_type"
-    t.bigint "initiator_posting_id"
-    t.bigint "receiver_posting_id"
-    t.boolean "accepted"
-    t.boolean "declined"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["initiator_id"], name: "index_user_connections_on_initiator_id"
-    t.index ["initiator_posting_id"], name: "index_user_connections_on_initiator_posting_id"
-    t.index ["receiver_id"], name: "index_user_connections_on_receiver_id"
-    t.index ["receiver_posting_id"], name: "index_user_connections_on_receiver_posting_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -74,10 +74,10 @@ ActiveRecord::Schema.define(version: 2018_06_14_020506) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "connection_requests", "service_postings", column: "initiator_service_posting_id"
+  add_foreign_key "connection_requests", "service_postings", column: "receiver_service_posting_id"
+  add_foreign_key "connection_requests", "users", column: "initiator_id"
+  add_foreign_key "connection_requests", "users", column: "receiver_id"
   add_foreign_key "mentor_match_profiles", "users"
   add_foreign_key "service_postings", "users"
-  add_foreign_key "user_connections", "service_postings", column: "initiator_posting_id"
-  add_foreign_key "user_connections", "service_postings", column: "receiver_posting_id"
-  add_foreign_key "user_connections", "users", column: "initiator_id"
-  add_foreign_key "user_connections", "users", column: "receiver_id"
 end

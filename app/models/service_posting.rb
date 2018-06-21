@@ -13,6 +13,15 @@ class ServicePosting < ApplicationRecord
 
   belongs_to :user
 
+  has_many :initiator_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :initiator_service_posting_id
+
+  has_many :receiver_connection_requests,
+    class_name: 'ConnectionRequest',
+    foreign_key: :receiver_service_posting_id
+
+
   validates :summary, presence: true
   validates :summary, length: { maximum: 300 }
 
@@ -42,7 +51,7 @@ class ServicePosting < ApplicationRecord
   end
 
 
-  def matches
+  def full_matches
 
     query_posting_type = if self.posting_type == 'Wanted' then 'Available' else'Wanted' end
 
@@ -54,14 +63,33 @@ class ServicePosting < ApplicationRecord
       posting_type: query_posting_type)
     .where("full_time_equivalents #{time_operand} ?", self.full_time_equivalents)
     .where("id <> ?", self.id)
-    .limit(3).order(full_time_equivalents: :desc)
+    .where("user_id <> ?", self.user.id)
+    .order(full_time_equivalents: :desc)
 
   end
 
+  def best_matches
+    self.full_matches.limit(3)
+  end
 
 
+  def connection_exists? (service_posting)
+    return true if ConnectionRequest.where(initiator_service_posting: self, receiver_service_posting: service_posting).any?
+    return true if ConnectionRequest.where(initiator_service_posting: service_posting, receiver_service_posting: self).any?
+    false
+  end
 
-  before_create do
+  def connection (service_posting)
+    request = nil
+
+    request = ConnectionRequest.where(initiator_service_posting: self, receiver_service_posting: service_posting).first
+    return request if request
+
+    request = ConnectionRequest.where(initiator_service_posting: service_posting, receiver_service_posting: self).first
+    request
+  end
+
+  before_validation do
     self.closed = false if self.closed.nil?
   end
 

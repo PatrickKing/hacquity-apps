@@ -2,8 +2,8 @@ class SecondShiftPagesController < ApplicationController
 
   before_action :require_login
 
-  def main
-  end
+  # def main
+  # end
 
 
 

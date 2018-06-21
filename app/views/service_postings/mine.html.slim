@@ -4,5 +4,13 @@
     .mui-col-md-12.mui-col-xs-12
       h1 My Postings
 
+      - if @service_postings.empty?
+        em There are no postings to show.
+
 - @service_postings.each do |service_posting|
-  = render 'shared/service_posting', service_posting: service_posting
+  .mui-container
+    = render 'service_postings/info', service_posting: service_posting, show_connection_buttons: false, matches: service_posting.best_matches
+    = render 'service_postings/index_buttons', service_posting: service_posting
+
+.form-section
+= paginate @service_postings

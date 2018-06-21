@@ -1,0 +1,15 @@
+.mui-container
+  .mui-row
+    .mui-col-md-12.mui-col-xs-12
+      h1 My Connection Requests
+
+      - if @connection_requests.empty?
+        em There are no connection requests to show.
+
+- @connection_requests.each do |connection_request|
+  .mui-container
+    = render 'connection_requests/info', connection_request: connection_request
+    = render 'connection_requests/index_buttons', connection_request: connection_request
+
+.form-section
+= paginate @connection_requests
