@@ -1,0 +1,57 @@
+
+
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    h1.second_shift_bottom_border = service_posting.summary
+
+.mui-row
+  .mui-col-md-10.mui-col-xs-12
+    p
+      strong By: 
+      = service_posting.user.name
+      - if service_posting.user == current_user
+        strong = " (You)"
+  .mui-col-md-2.mui-col-xs-12
+    p = service_posting.open_closed_text
+
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    p
+      strong 
+        = service_posting.posting_type
+        | : 
+      = service_posting.seeking_summary
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    p
+      strong Description: 
+      = service_posting.description
+
+
+- if service_posting.user == current_user
+  - if service_posting.matches.any?
+    .mui-row.form-section
+      .mui-col-md-12.mui-col-xs-12
+        p
+          strong Suggested Matches:
+
+        - service_posting.matches.each do |match|
+          .mui-col-md-4.mui-col-xs-12
+            h2.second_shift_bottom_border = match.summary
+            p = match.full_seeking_summary
+            = link_to 'More Info', service_posting_path(match), class: 'mui-btn  mui--bg-color-light-green-600 mui--color-white'
+
+      
+
+  - else
+    .mui-row.form-section
+      .mui-col-md-12.mui-col-xs-12
+        p
+          em No suggested matches found
+
+
+
+

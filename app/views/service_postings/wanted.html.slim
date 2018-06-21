@@ -8,7 +8,9 @@
         em There are no postings to show.
 
 - @service_postings.each do |service_posting|
-  = render 'shared/service_posting', service_posting: service_posting
+  .mui-container
+    = render 'service_postings/info', service_posting: service_posting
+    = render 'service_postings/index_buttons', service_posting: service_posting
 
 .form-section
 = paginate @service_postings

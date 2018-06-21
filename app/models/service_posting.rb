@@ -51,6 +51,7 @@ class ServicePosting < ApplicationRecord
   end
 
 
+  # TODO: may want to memoize the results of this call, we use it more than once in the view.
   def matches
 
     query_posting_type = if self.posting_type == 'Wanted' then 'Available' else'Wanted' end

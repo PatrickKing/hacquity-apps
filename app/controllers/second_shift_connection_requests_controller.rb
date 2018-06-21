@@ -13,6 +13,9 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   def create
     @connection_request = ConnectionRequest.new(connection_request_params)
+    @connection_request.initiator = current_user
+    @connection_request.receiver = @connection_request.receiver_service_posting.user
+    @connection_request.request_type = 'second_shift'
 
     if @connection_request.save
       redirect_to @connection_request, notice: 'Connection request sent.'
@@ -29,7 +32,7 @@ class SecondShiftConnectionRequestsController < ApplicationController
   private
 
   def connection_request_params
-    params.require(:connection_request).permit( :receiver_id, :initiator_service_posting_id, :receiver_service_posting_id, :connection_type)
+    params.require(:connection_request).permit(:initiator_service_posting_id, :receiver_service_posting_id)
   end
 
 end
