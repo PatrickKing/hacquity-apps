@@ -78,5 +78,13 @@ class ConnectionRequest < ApplicationRecord
     self.receiver_status ||= 'awaiting_decision'
   end
 
+  def show_path
+    # TODO: this probably belongs someplace else ... 
+    if connection_type == 'second_shift'
+      Rails.application.routes.url_helpers.ss_connection_request_path self
+    elsif connection_type == 'mentor_match'
+      Rails.application.routes.url_helpers.mm_connection_request_path self
+    end
+  end
 
 end

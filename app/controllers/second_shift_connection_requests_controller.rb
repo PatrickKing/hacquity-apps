@@ -7,8 +7,11 @@ class SecondShiftConnectionRequestsController < ApplicationController
   def index
     @connection_requests = ConnectionRequest
     .where(initiator: current_user).or(ConnectionRequest.where(receiver: current_user, initiator_status: 'created'))
+    .where(connection_type: 'second_shift')
     .order(created_at: :desc)
     .page(params[:page])
+
+    render 'connection_requests/index'
   end
 
   def create
@@ -18,15 +21,12 @@ class SecondShiftConnectionRequestsController < ApplicationController
     @connection_request.request_type = 'second_shift'
 
     if @connection_request.save
-      redirect_to @connection_request, notice: 'Connection request sent.'
+      redirect_to @connection_request.show_path, notice: 'Connection request sent.'
     else
       render :new
     end
   end
 
-  def backup_redirect_path
-    ss_connection_requests_path
-  end
 
 
   private

@@ -1,0 +1,51 @@
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    h2.second_shift_bottom_border Connection Request
+
+.mui-row
+  .mui-col-md-6.mui-col-xs-12
+    p
+      strong Sender: 
+      = connection_request.initiator.name
+      - if connection_request.initiator == current_user
+        strong = ' (You)'
+
+    p
+      strong 
+        = connection_request.initiator_service_posting.posting_type
+        | : 
+      = link_to connection_request.initiator_service_posting.seeking_summary, connection_request.initiator_service_posting
+
+    - if connection_request.accepted?
+      p
+        strong Email: 
+        = mail_to connection_request.initiator.email
+
+  .mui-col-md-6.mui-col-xs-12
+    p
+      strong Receiver: 
+      = connection_request.receiver.name
+      - if connection_request.receiver == current_user
+        strong = ' (You)'
+
+    p
+      strong 
+        = connection_request.receiver_service_posting.posting_type
+        | : 
+      = link_to connection_request.receiver_service_posting.seeking_summary, connection_request.receiver_service_posting
+
+    - if connection_request.accepted?
+      p
+        strong Email: 
+        = mail_to connection_request.receiver.email
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    p 
+      strong Status: 
+      - if connection_request.initiator == current_user
+        = connection_request.initiator_status_string
+      - elsif connection_request.receiver == current_user
+        = connection_request.receiver_status_string
+        

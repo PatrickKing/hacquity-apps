@@ -10,10 +10,6 @@ class MentorMatchConnectionRequestsController < ApplicationController
     end
   end
 
-  def backup_redirect_path
-    mm_connection_requests_path
-  end
-
 
   private
   

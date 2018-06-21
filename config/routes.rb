@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       end
     end
     resources :connection_requests, 
-      only: [:index, :create],
+      only: [:index, :create, :show],
       controller: 'second_shift_connection_requests',
       as: 'ss_connection_requests' do
         member do
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     resource :my_mentor_match_profile
     resources :mentor_match_profiles, only: :show
     resources :connection_requests,
-      only: [:index, :create],
+      only: [:index, :create, :show],
       controller: 'mentor_match_connection_requests',
       as: 'mm_connection_requests' do
         member do
