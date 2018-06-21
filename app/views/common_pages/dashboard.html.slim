@@ -13,7 +13,7 @@
 
         - unless current_user.second_shift_enabled
           = form_tag '/user/activate_second_shift', method: :post do
-            = submit_tag "Get Started with Second Shift" , class: "mui-btn mui--bg-color-light-green-600"
+            = submit_tag "Get Started with Second Shift" , class: "mui-btn mui--bg-color-light-green-600 mui--color-white"
         - else
           a.mui-btn.mui-btn--primary.mui--bg-color-light-green-600 href=available_service_postings_path
             | Continue with Second Shift
@@ -29,7 +29,7 @@
 
         - unless current_user.mentor_match_enabled
           = form_tag '/user/activate_mentor_match', method: :post do
-            = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui--bg-color-teal-600"
+            = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui--bg-color-teal-600 mui--color-white"
 
         - else
           a.mui-btn.mui-btn--primary.mui--bg-color-teal-600 href=mentor_match_path
