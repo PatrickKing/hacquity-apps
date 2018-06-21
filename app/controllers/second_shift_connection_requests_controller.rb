@@ -18,12 +18,12 @@ class SecondShiftConnectionRequestsController < ApplicationController
     @connection_request = ConnectionRequest.new(connection_request_params)
     @connection_request.initiator = current_user
     @connection_request.receiver = @connection_request.receiver_service_posting.user
-    @connection_request.request_type = 'second_shift'
+    @connection_request.connection_type = 'second_shift'
 
     if @connection_request.save
       redirect_to @connection_request.show_path, notice: 'Connection request sent.'
     else
-      render :new
+      redirect_to service_posting_path(@connection_request.initiator_service_posting), error: 'A problem prevented us from creating the request.'
     end
   end
 

@@ -73,10 +73,6 @@ class ConnectionRequest < ApplicationRecord
     
   end
 
-  before_create do
-    self.initiator_status ||= 'created'
-    self.receiver_status ||= 'awaiting_decision'
-  end
 
   def show_path
     # TODO: this probably belongs someplace else ... 
@@ -85,6 +81,11 @@ class ConnectionRequest < ApplicationRecord
     elsif connection_type == 'mentor_match'
       Rails.application.routes.url_helpers.mm_connection_request_path self
     end
+  end
+
+  before_validation do
+    self.initiator_status ||= 'created'
+    self.receiver_status ||= 'awaiting_decision'
   end
 
 end

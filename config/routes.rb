@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   # Routes for Second Shift:
 
-  get '/second-shift', to: 'second_shift_pages#main'
+  # get '/second-shift', to: 'second_shift_pages#main'
 
   scope 'second-shift' do
     resources :service_postings, path: 'postings', except: [:index, :destroy] do
@@ -28,7 +28,6 @@ Rails.application.routes.draw do
         get 'mine'
         get 'available'
         get 'wanted'
-        get 'search'
       end
       member do
         post 'open'
@@ -51,6 +50,7 @@ Rails.application.routes.draw do
 
   # Routes for Mentor Match:
 
+  # TODO: phasing this out
   get '/mentor-match', to: 'mentor_match_pages#main'
   
   scope 'mentor-match' do

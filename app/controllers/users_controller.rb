@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def activate_second_shift
     current_user.second_shift_enabled = true
     current_user.save!
-    redirect_to second_shift_path
+    redirect_to available_service_postings_path
   end
 
   def activate_mentor_match
