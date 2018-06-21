@@ -33,15 +33,13 @@
 
 
   - if service_posting.user == current_user
-    / this is terrible form!
-    - matches = service_posting.matches
-    - if matches.any?
+    - if service_posting.matches.any?
       .mui-row.form-section
         .mui-col-md-12.mui-col-xs-12
           p
             strong Suggested Matches:
 
-          - matches.each do |match|
+          - service_posting.matches.each do |match|
             .mui-col-md-4.mui-col-xs-12
               h2.second_shift_bottom_border = match.summary
               p = match.full_seeking_summary

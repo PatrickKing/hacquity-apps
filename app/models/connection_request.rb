@@ -49,6 +49,29 @@ class ConnectionRequest < ApplicationRecord
     self.initiator_status == 'created' and self.receiver_status == 'accepted'
   end
 
+  def initiator_status_string
+    if self.initiator_status == 'created' and self.receiver_status == 'accepted'
+      "Connection accepted by #{self.receiver.name}. Send an email to say hello!"
+    elsif self.initiator_status == 'created' and self.receiver_status == 'declined'
+      "Connection declined by #{self.receiver.name}"
+    elsif self.initiator_status == 'created' and self.receiver_status == 'awaiting_decision'
+      'Awaiting recipient reply'
+    elsif self.initiator_status == 'withdrawn'
+      'Withdrawn by you'
+    end
+  end
+
+
+  def receiver_status_string
+    if self.initiator_status == 'created' and self.receiver_status == 'accepted'
+      "Connection accepted by you. Send an email to #{self.initiator.name} to say hello!"
+    elsif self.initiator_status == 'created' and self.receiver_status == 'declined'
+      'Connection declined by you'
+    elsif self.initiator_status == 'created' and self.receiver_status == 'awaiting_decision'
+      'Awaiting your reply'
+    end
+    
+  end
 
   before_create do
     self.initiator_status ||= 'created'

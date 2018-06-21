@@ -21,10 +21,15 @@ class SecondShiftConnectionRequestsController < ApplicationController
     end
   end
 
+  def backup_redirect_path
+    ss_connection_requests_path
+  end
+
 
   private
 
   def connection_request_params
     params.require(:connection_request).permit( :receiver_id, :initiator_service_posting_id, :receiver_service_posting_id, :connection_type)
   end
+
 end

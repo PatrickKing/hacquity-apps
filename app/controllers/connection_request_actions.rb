@@ -52,14 +52,14 @@ module ConnectionRequestActions
   def require_initiator
     if @connection_request.initiator != current_user
       flash[:notice] = 'You need to be the initiator of the request to do that.'
-      redirect_to request.referer || root_path
+      redirect_to request.referer || self.backup_redirect_path
     end
   end
 
   def require_receiver
     if @connection_request.receiver != current_user
       flash[:notice] = 'You need to be the receiver of the request to do that.'
-      redirect_to request.referer || root_path
+      redirect_to request.referer || self.backup_redirect_path
     end
   end
 
