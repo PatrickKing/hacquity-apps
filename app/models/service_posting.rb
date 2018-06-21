@@ -51,8 +51,7 @@ class ServicePosting < ApplicationRecord
   end
 
 
-  # TODO: may want to memoize the results of this call, we use it more than once in the view.
-  def matches
+  def full_matches
 
     query_posting_type = if self.posting_type == 'Wanted' then 'Available' else'Wanted' end
 
@@ -65,8 +64,12 @@ class ServicePosting < ApplicationRecord
     .where("full_time_equivalents #{time_operand} ?", self.full_time_equivalents)
     .where("id <> ?", self.id)
     .where("user_id <> ?", self.user.id)
-    .limit(3).order(full_time_equivalents: :desc)
+    .order(full_time_equivalents: :desc)
 
+  end
+
+  def best_matches
+    self.full_matches.limit(3)
   end
 
 

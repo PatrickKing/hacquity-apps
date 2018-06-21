@@ -32,13 +32,15 @@
 
 
 - if service_posting.user == current_user
-  - if service_posting.matches.any?
-    .mui-row.form-section
+  - if matches.any?
+    .mui-row
       .mui-col-md-12.mui-col-xs-12
         p
           strong Suggested Matches:
 
-        - service_posting.matches.each do |match|
+    - matches.each_slice 3 do |matches_slice|
+      .mui-row
+        - matches_slice.each do |match|
           .mui-col-md-4.mui-col-xs-12
             h2.second_shift_bottom_border = match.summary
             p = match.full_seeking_summary
@@ -56,6 +58,8 @@
                   = form.hidden_field :receiver_service_posting_id, value: match.id
                   = form.submit "Send connection request", class: "mui-btn mui-btn--primary mui--bg-color-light-green-600"
 
+    / For spacing
+    .mui-row.form-section
 
   - else
     .mui-row.form-section

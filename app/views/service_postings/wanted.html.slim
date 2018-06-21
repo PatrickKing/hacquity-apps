@@ -9,7 +9,7 @@
 
 - @service_postings.each do |service_posting|
   .mui-container
-    = render 'service_postings/info', service_posting: service_posting, show_connection_buttons: false
+    = render 'service_postings/info', service_posting: service_posting, show_connection_buttons: false, matches: service_posting.best_matches
     = render 'service_postings/index_buttons', service_posting: service_posting
 
 .form-section
