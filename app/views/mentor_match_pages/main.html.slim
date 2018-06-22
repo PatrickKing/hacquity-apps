@@ -1,1 +1,12 @@
-h1 MM Home
+h1 Mentor Match: CV Upload
+
+= form_tag '/mentor-match/my_mentor_match_profile/upload_profile', method: :post, multipart: true do
+
+  = file_field_tag 'CV', accept: '.doc,.docx,.pdf,.txt'
+
+  = submit_tag "Upload" , class: "mui-btn mui--bg-color-teal-600 mui--color-white"
+
+p = current_user.mentor_match_profile.original_cv_drive_id
+p = current_user.mentor_match_profile.cv_gdoc_drive_id
+p = current_user.mentor_match_profile.cv_text
+

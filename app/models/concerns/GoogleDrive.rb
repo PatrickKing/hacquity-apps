@@ -40,4 +40,12 @@ module GoogleDrive
     drive
   end
 
+  # Since I've chosen a service account and I have no UI for viewing what I've
+  # uploaded, something to help me debug my world.
+  def self.drive_files(drive)
+    files = drive.list_files.files
+    ap (files.map do |f| "#{f.name} #{f.id}"; end)
+    files
+  end
+
 end
