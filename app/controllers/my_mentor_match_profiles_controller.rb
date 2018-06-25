@@ -2,14 +2,36 @@
 require './app/models/concerns/GoogleDrive'
 
 class MyMentorMatchProfilesController < ApplicationController
-
+  
   before_action :require_login
+
+  before_action :set_mentor_match_profile, only: [:show, :edit, :update]
 
   layout "mentor_match_pages"
 
 
+  def show
+  end
+
+
+  def edit
+  end
+
+
+
+  def update
+    if @mentor_match_profile.update(mentor_match_profile_params)
+      redirect_to my_mentor_match_profile_path, notice: 'Mentor match profile was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  
+
   def upload_profile
     # TODO: handle all the various exceptions the google API calls can produce
+    # TODO: in a better world, we would move much of this into a task outside of the request-response cycle.
 
     if params[:CV].nil?
       return redirect_to mentor_match_path, alert: "Please choose a CV file to upload."
@@ -71,5 +93,14 @@ class MyMentorMatchProfilesController < ApplicationController
 
   end
 
+  private
 
+  def set_mentor_match_profile
+    @mentor_match_profile = current_user.mentor_match_profile
+  end
+
+  def mentor_match_profile_params
+    params.require(:mentor_match_profile).permit(:match_role, :position, :seeking_summary)
+  end
+  
 end

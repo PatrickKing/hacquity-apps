@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_034412) do
+ActiveRecord::Schema.define(version: 2018_06_25_052912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2018_06_22_034412) do
     t.string "original_cv_drive_id"
     t.string "cv_gdoc_drive_id"
     t.boolean "uploaded_cv_exists"
-    t.index "to_tsvector('english'::regconfig, (cv_text)::text)", name: "profile_text_idx", using: :gin
+    t.string "seeking_summary"
     t.index ["user_id"], name: "index_mentor_match_profiles_on_user_id"
   end
 

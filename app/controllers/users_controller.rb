@@ -11,7 +11,12 @@ class UsersController < ApplicationController
   def activate_mentor_match
     current_user.mentor_match_enabled = true
     current_user.save!
-    redirect_to mentor_match_path
+
+    if current_user.mentor_match_profile.nil?
+      MentorMatchProfile.create user: current_user
+    end
+
+    redirect_to my_mentor_match_profile_profile_path
   end
 
 end

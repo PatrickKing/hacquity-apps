@@ -54,12 +54,16 @@ Rails.application.routes.draw do
   get '/mentor-match', to: 'mentor_match_pages#main'
   
   scope 'mentor-match' do
-    resource :my_mentor_match_profile do
+    resource :my_mentor_match_profile, only: [:show, :edit, :update] do
       member do
         post 'upload_profile'
       end
     end
-    resources :mentor_match_profiles, only: :show
+    resources :mentor_match_profiles, only: [:index, :show] do
+      collection do
+        get 'search'
+      end
+    end
     resources :connection_requests,
       only: [:index, :create, :show],
       controller: 'mentor_match_connection_requests',
