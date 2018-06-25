@@ -88,7 +88,7 @@ class MyMentorMatchProfilesController < ApplicationController
 
     profile.save!
 
-    redirect_to my_mentor_match_path, notice: "Resume uploaded successfully!"
+    redirect_to my_mentor_match_path, notice: "CV uploaded successfully!"
 
 
 

@@ -1,20 +1,7 @@
 
 h1 My Mentor Match Profile
 
-p 
-  strong Role: 
-  = @mentor_match_profile.role_display_text
-p 
-  strong Position: 
-  = @mentor_match_profile.position
-p 
-  strong Summary: 
-  = @mentor_match_profile.seeking_summary
-
-p 
-  strong CV: 
-  | a link to CV text here
-
+= render 'mentor_match_profiles/info', profile: @mentor_match_profile
 
 
 

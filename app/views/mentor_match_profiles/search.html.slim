@@ -1,0 +1,18 @@
+
+
+.mui-container
+
+  = form_tag search_mentor_match_profiles_path, method: :get, class: 'mui-form mentor-match-form' do
+
+    .form-section
+      .mui-textfield
+        = text_field_tag "query", params[:query]
+    = submit_tag "Search" , class: "mui-btn mui--bg-color-teal-600 mui--color-white"
+
+  .form-section
+
+  - @mentor_match_profiles.each do |profile|
+    = render 'mentor_match_profiles/info', profile: profile
+
+  .form-section
+  = paginate @mentor_match_profiles
