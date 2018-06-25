@@ -27,9 +27,11 @@ class MyMentorMatchProfilesController < ApplicationController
     end
   end
 
-  
+  def edit_cv
+    
+  end
 
-  def upload_profile
+  def update_cv
     # TODO: handle all the various exceptions the google API calls can produce
     # TODO: in a better world, we would move much of this into a task outside of the request-response cycle.
 
@@ -86,7 +88,7 @@ class MyMentorMatchProfilesController < ApplicationController
 
     profile.save!
 
-    redirect_to mentor_match_path, notice: "Resume uploaded successfully!"
+    redirect_to my_mentor_match_path, notice: "Resume uploaded successfully!"
 
 
 
@@ -102,5 +104,5 @@ class MyMentorMatchProfilesController < ApplicationController
   def mentor_match_profile_params
     params.require(:mentor_match_profile).permit(:match_role, :position, :seeking_summary)
   end
-  
+
 end

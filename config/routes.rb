@@ -55,8 +55,9 @@ Rails.application.routes.draw do
   
   scope 'mentor-match' do
     resource :my_mentor_match_profile, only: [:show, :edit, :update] do
-      member do
-        post 'upload_profile'
+      collection do
+        get 'edit_cv'
+        post 'update_cv'
       end
     end
     resources :mentor_match_profiles, only: [:index, :show] do
