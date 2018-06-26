@@ -1,12 +1,30 @@
-p 
-  strong Role: 
-  = profile.role_display_text
-p 
-  strong Position: 
-  = profile.position
-p 
-  strong Summary: 
-  = profile.seeking_summary
 
-p 
-  = link_to 'View CV', profile.web_view_link
+
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+    h1.mentor_match_bottom_border = profile.user.name
+
+.mui-row
+  .mui-col-md-6.mui-col-xs-12
+    p
+      strong Role: 
+      = profile.role_display_text
+    p
+      strong Position: 
+      = profile.position
+
+    - unless profile.web_view_link.blank?
+      p
+        = link_to 'View CV', profile.web_view_link
+    - else
+      p 
+        em No CV available.
+
+  .mui-col-md-6.mui-col-xs-12
+    p
+      strong Summary
+    p
+      = profile.seeking_summary
+
+
+

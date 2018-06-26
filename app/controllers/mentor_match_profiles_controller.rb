@@ -8,7 +8,8 @@ class MentorMatchProfilesController < ApplicationController
 
 
   def index
-    @mentor_match_profiles = MentorMatchProfile.all
+    @mentor_match_profiles = MentorMatchProfile.where.not(match_role: 'Not Seeking')
+      .page(params[:page])
   end
 
   def show

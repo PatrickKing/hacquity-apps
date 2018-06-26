@@ -13,10 +13,13 @@ class UsersController < ApplicationController
     current_user.save!
 
     if current_user.mentor_match_profile.nil?
-      MentorMatchProfile.create user: current_user
+      profile = MentorMatchProfile.new user: current_user
+      # Validations are for user modifications. Note that the profile is invalid as created, and needs a few fields filled out by the user!
+      # TODO: introduce a proper 'first run' wizard when the user joins mentor match.
+      profile.save! validate: false
     end
 
-    redirect_to my_mentor_match_profile_profile_path
+    redirect_to edit_my_mentor_match_profile_path
   end
 
 end
