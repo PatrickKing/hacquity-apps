@@ -1,7 +1,11 @@
 - content_for :appbar do
   .mui-appbar.mui--bg-color-teal-600
     h1.appbar-title Hacquity - Mentor Match
-  
+
+- content_for :navbar do
+  = render 'shared/mentor_match_navbar'
+
+
 = render template: "layouts/application"
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_204016) do
+ActiveRecord::Schema.define(version: 2018_06_26_072158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,11 +33,15 @@ ActiveRecord::Schema.define(version: 2018_06_18_204016) do
 
   create_table "mentor_match_profiles", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "cv_text"
     t.string "match_role"
     t.string "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "original_cv_drive_id"
+    t.boolean "uploaded_cv_exists"
+    t.string "seeking_summary"
+    t.string "web_view_link"
+    t.index ["original_cv_drive_id"], name: "index_mentor_match_profiles_on_original_cv_drive_id"
     t.index ["user_id"], name: "index_mentor_match_profiles_on_user_id"
   end
 

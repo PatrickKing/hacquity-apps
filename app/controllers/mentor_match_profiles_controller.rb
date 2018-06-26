@@ -1,58 +1,55 @@
+
+require './app/models/concerns/GoogleDrive'
+
 class MentorMatchProfilesController < ApplicationController
-  before_action :set_mentor_match_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_mentor_match_profile, only: [:show]
 
-  # GET /mentor_match_profiles
-  # def index
-  #   @mentor_match_profiles = MentorMatchProfile.all
-  # end
+  layout "mentor_match_pages"
 
-  # GET /mentor_match_profiles/1
+
+  def index
+    @mentor_match_profiles = MentorMatchProfile.where.not(match_role: 'Not Seeking')
+      .page(params[:page])
+  end
+
   def show
   end
 
-  # # GET /mentor_match_profiles/new
-  # def new
-  #   @mentor_match_profile = MentorMatchProfile.new
-  # end
 
-  # # GET /mentor_match_profiles/1/edit
-  # def edit
-  # end
+  # Custom non-restful actions:
 
-  # # POST /mentor_match_profiles
-  # def create
-  #   @mentor_match_profile = MentorMatchProfile.new(mentor_match_profile_params)
+  def search
 
-  #   if @mentor_match_profile.save
-  #     redirect_to @mentor_match_profile, notice: 'Mentor match profile was successfully created.'
-  #   else
-  #     render :new
-  #   end
-  # end
+    if params[:query].blank?
+      @mentor_match_profiles = MentorMatchProfile.none
+      return
+    end
 
-  # # PATCH/PUT /mentor_match_profiles/1
-  # def update
-  #   if @mentor_match_profile.update(mentor_match_profile_params)
-  #     redirect_to @mentor_match_profile, notice: 'Mentor match profile was successfully updated.'
-  #   else
-  #     render :edit
-  #   end
-  # end
+    # A very basic injection prevention as the query is quoted
+    # TODO: we might want to do something more aggressive here. I'm not exactly
+    # sure how to escape google query strings properly
+    query = params[:query].gsub "'", ''
 
-  # # DELETE /mentor_match_profiles/1
-  # def destroy
-  #   @mentor_match_profile.destroy
-  #   redirect_to mentor_match_profiles_url, notice: 'Mentor match profile was successfully destroyed.'
-  # end
+    drive = GoogleDrive.get_drive_service
+
+
+    drive_file_list = drive.list_files q: "fullText contains '#{query}' and properties has {key='seeking' and value='true'}"
+
+    profile_ids = drive_file_list.files.map do |file|
+      file.id
+    end
+
+    @mentor_match_profiles = MentorMatchProfile.where(original_cv_drive_id: profile_ids)
+      .page(params[:page])
+
+  end
+
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mentor_match_profile
-      @mentor_match_profile = MentorMatchProfile.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def mentor_match_profile_params
-      params.require(:mentor_match_profile).permit(:user_id, :cv_text, :match_role, :position)
-    end
+  def set_mentor_match_profile
+    @mentor_match_profile = MentorMatchProfile.find(params[:id])
+  end
+
 end
