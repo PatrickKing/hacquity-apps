@@ -20,7 +20,7 @@ class MentorMatchProfilesController < ApplicationController
   def search
 
     if params[:query].blank?
-      @mentor_match_profiles = []
+      @mentor_match_profiles = MentorMatchProfile.none
       return
     end
 
@@ -38,11 +38,9 @@ class MentorMatchProfilesController < ApplicationController
       file.id
     end
 
-    @mentor_match_profiles = MentorMatchProfile.where(id: profile_ids)
+    @mentor_match_profiles = MentorMatchProfile.where(original_cv_drive_id: profile_ids)
       .page(params[:page])
 
-
-    
   end
 
 

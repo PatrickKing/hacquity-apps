@@ -15,4 +15,6 @@
     = render 'mentor_match_profiles/info', profile: profile
 
   .form-section
-  = paginate @mentor_match_profiles
+
+  - if @mentor_match_profiles.any?
+    = paginate @mentor_match_profiles

@@ -33,6 +33,16 @@ class MentorMatchProfile < ApplicationRecord
     end
   end
 
+  def seeking?
+    case self.match_role
+    when 'Not Seeking'
+      'false'
+    when 'Seeking to be a Mentor', 'Seeking to be a Mentee', 'Seeking Both'
+      'true'
+    end
+    
+  end
+
   before_save do
     self.uploaded_cv_exists = false if self.uploaded_cv_exists.nil?
     self.match_role = 'Not Seeking' if self.match_role.blank?

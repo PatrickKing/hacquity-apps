@@ -21,6 +21,19 @@ class MyMentorMatchProfilesController < ApplicationController
 
   def update
     if @mentor_match_profile.update(mentor_match_profile_params)
+
+      drive = GoogleDrive.get_drive_service
+
+      # TODO: technically, we could make the old CV as not searchable and then 
+      # encounter an error uploading the new one. A proper app would need to
+      # address this.
+      unless @mentor_match_profile.original_cv_drive_id.nil?
+        previous_cv = drive.get_file @mentor_match_profile.original_cv_drive_id
+
+        # Yes, that trailing {} is required, or the hash will be treated as a set of keyword arguments.
+        drive.update_file(previous_cv.id, {properties: {"seeking"=>@mentor_match_profile.seeking?}}, {})
+      end
+
       redirect_to my_mentor_match_profile_path, notice: 'Mentor match profile was successfully updated.'
     else
       render :edit
@@ -56,39 +69,44 @@ class MyMentorMatchProfilesController < ApplicationController
       return redirect_to mentor_match_path, alert: "Please upload your CV in .doc, .docx, .pdf, or .txt format."
     end
 
+
     drive = GoogleDrive.get_drive_service
+    profile = current_user.mentor_match_profile
 
-    # First, upload the original file to Google Drive
+    # TODO: technically, we could make the old CV as not searchable and then 
+    # encounter an error uploading the new one. A proper app would need to
+    # address this.
+    unless profile.original_cv_drive_id.nil?
+      previous_cv = drive.get_file profile.original_cv_drive_id
+      drive.update_file(previous_cv.id, {properties: {"seeking"=>"false"}}, {})
+    end
 
-    original_file = drive.create_file( {name: params[:CV].original_filename},
-      fields: 'id',
+
+
+    # Upload the original file to Google Drive
+
+
+    original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>"true"}
+      },
+      fields: 'id,web_view_link',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
       upload_source: params[:CV].tempfile,
       content_type: mime_type
     )
 
-    # Second, make a copy of the file, converting it to a Google Doc
+    perm = Google::Apis::DriveV3::Permission.new
+    perm.role = 'reader'
+    perm.type = 'anyone'
+    drive.create_permission(original_file.id, perm, {}) 
 
-    gdoc_file = Google::Apis::DriveV3::File.new
-    gdoc_file.name = "#{params[:CV].original_filename}_google_doc_import"
-    gdoc_file.mime_type = 'application/vnd.google-apps.document'
-    gdoc_file = drive.copy_file original_file.id, gdoc_file
 
-    # Third, obtain the full text of the file from the Docs export
-
-    cv_text = drive.export_file(gdoc_file.id, 'text/plain',download_dest: StringIO.new)
-
-    # Finally, save all of our gains:
-
-    profile = current_user.mentor_match_profile
+    # Finally, save our gains:
 
     profile.original_cv_drive_id = original_file.id
-    profile.cv_gdoc_drive_id = gdoc_file.id
-    profile.cv_text = cv_text.string
-
+    profile.web_view_link = original_file.web_view_link
     profile.save!
 
-    redirect_to my_mentor_match_path, notice: "CV uploaded successfully!"
+    redirect_to my_mentor_match_profile_path, notice: "CV uploaded successfully!"
 
 
 
