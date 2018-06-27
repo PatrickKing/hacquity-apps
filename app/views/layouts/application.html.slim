@@ -16,9 +16,10 @@ html
 
   body
     .mui-panel
+      = render 'shared/auth_links'
+      br
       = flash.alert
       = flash.notice
-      = render 'shared/auth_links'
 
     .mui-container
       = yield :appbar
