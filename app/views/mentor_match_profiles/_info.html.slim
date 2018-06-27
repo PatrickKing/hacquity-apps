@@ -15,7 +15,7 @@
 
     - unless profile.web_view_link.blank?
       p
-        = link_to 'View CV', profile.web_view_link
+        = link_to 'View CV', profile.web_view_link, class: 'mui-btn mui-btn--primary mui--bg-color-teal-600'
     - else
       p 
         em No CV available.

@@ -77,8 +77,8 @@ class MyMentorMatchProfilesController < ApplicationController
     # encounter an error uploading the new one. A proper app would need to
     # address this.
     unless profile.original_cv_drive_id.nil?
-      previous_cv = drive.get_file profile.original_cv_drive_id
-      drive.update_file(previous_cv.id, {properties: {"seeking"=>"false"}}, {})
+      # previous_cv = drive.get_file profile.original_cv_drive_id
+      drive.update_file(profile.original_cv_drive_id, {properties: {"seeking"=>"false"}}, {})
     end
 
 
