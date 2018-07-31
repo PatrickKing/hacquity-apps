@@ -15,7 +15,7 @@ Hacquity is a Ruby on Rails app, the process getting set up for development with
 
 ### Prerequisites
 - [RVM](https://rvm.io/)
-- Postgres SQL (< 10.3)
+- Postgres SQL (> 10.3)
 
 
 ### Steps
