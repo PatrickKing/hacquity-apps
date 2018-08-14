@@ -15,12 +15,12 @@ Hacquity is a Ruby on Rails app, the process getting set up for development with
 
 ### Prerequisites
 - [RVM](https://rvm.io/)
-- Postgres SQL (< 10.3)
+- Postgres SQL (> 10.3)
 
 
 ### Steps
 
-- Clone ths repository
+- Clone the repository
 - Change into the project directory, follow RVM's directions to install the needed Ruby version, and use `bundle install` to install prerequisite gems
 - Visit the [Google developer's console](console.developers.google.com), and activate the Google Drive API for your google account.
 - Visit the credentials section of the developer's console and create a set of service account keys for development, and store them in a file at the root of the project directory named `google-drive-keys.sh`. Note that this file is in `.gitignore`, don't check in these credentials. See `app/models/concerns/GoogleDrive.rb` for details on how these credentials are used. 

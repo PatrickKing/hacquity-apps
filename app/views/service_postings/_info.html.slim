@@ -3,7 +3,7 @@
 
 .mui-row
   .mui-col-md-12.mui-col-xs-12
-    h1.second_shift_bottom_border = service_posting.summary
+    h1.bottom-border = service_posting.summary
 
 .mui-row
   .mui-col-md-10.mui-col-xs-12
@@ -42,21 +42,21 @@
       .mui-row
         - matches_slice.each do |match|
           .mui-col-md-4.mui-col-xs-12
-            h2.second_shift_bottom_border = match.summary
+            h2.bottom-border = match.summary
             p = match.full_seeking_summary
             - if show_connection_buttons
 
-              = link_to 'More Info', service_posting_path(match), class: 'mui-btn  mui--bg-color-light-green-600 mui--color-white'
+              = link_to 'More Info', service_posting_path(match), class: 'mui-btn mui-btn--primary'
 
               br
 
               - if service_posting.connection_exists? match
-                = link_to 'View connection request', service_posting.connection(match).show_path, class: 'mui-btn  mui--bg-color-light-green-600 mui--color-white'
+                = link_to 'View connection request', service_posting.connection(match).show_path, class: 'mui-btn mui-btn--primary'
               - elsif !service_posting.closed and !service_posting.connection_exists? match
                 = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path do |form|
                   = form.hidden_field :initiator_service_posting_id, value: service_posting.id
                   = form.hidden_field :receiver_service_posting_id, value: match.id
-                  = form.submit "Send connection request", class: "mui-btn mui-btn--primary mui--bg-color-light-green-600"
+                  = form.submit "Send connection request", class: "mui-btn mui-btn--primary"
 
     / For spacing
     .mui-row.form-section

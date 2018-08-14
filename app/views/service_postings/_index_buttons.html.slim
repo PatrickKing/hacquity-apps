@@ -1,7 +1,7 @@
 .mui-row
   .mui-col-md-12.mui-col-xs-12
-    = link_to 'View', service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+    = link_to 'View', service_posting_path(service_posting), class: 'mui-btn mui-btn--primary'
 
     - if service_posting.user == current_user
 
-      = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+      = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn mui-btn--primary'
