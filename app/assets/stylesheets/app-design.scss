@@ -1,14 +1,13 @@
 
 // From: https://www.muicss.com/docs/v1/getting-started/colors
-// For consistency, choose shades at 600... or not, whatever! 
 
 $dashboard-slate: #546E7A; // blue-grey-600
 $second-shift-green: #7CB342; // green-600
 $mentor-match-teal: #00897B; // teal-600
 $groups-cyan: #00838F; // cyan-800
-$cv-catalogue-blue: #1976D2; // blue-700   
-$admin-deep-purple: #5E35B1; // deep-purple-600   
-$trusted-vendors-deep-orange: #E64A19; // deep-orange-700 
+$cv-catalogue-blue: #1976D2; // blue-700
+$admin-deep-purple: #5E35B1; // deep-purple-600
+$trusted-vendors-deep-orange: #D84315; // deep-orange-800
 
 $invalid-red: #F44336;
 
@@ -171,4 +170,136 @@ $invalid-red: #F44336;
   }
 }
 
+
+
+
+.groups-colours {
+  .nav-link.active, .nav-link:hover {
+    border-bottom: 2px solid $groups-cyan;
+
+    span {
+      color: $groups-cyan;
+    }
+  }
+  form .mui-textfield {
+    input:focus, textarea:focus {
+      border-color: $groups-cyan;
+    }
+  }
+  form .mui-select {
+    select:focus {
+      border-color: $groups-cyan;
+    }
+  }
+  form .mui-select:focus {
+    select {
+      border-color: $groups-cyan;
+    }
+  }
+  .bottom-border {
+    border-bottom: 2px solid $groups-cyan;
+  }
+  .mui-appbar, .mui-btn--primary, .mui-btn--primary:focus, .mui-btn--primary:hover {
+    background-color: $groups-cyan;
+  }
+}
+
+
+
+.cv-catalogue-colours {
+  .nav-link.active, .nav-link:hover {
+    border-bottom: 2px solid $cv-catalogue-blue;
+
+    span {
+      color: $cv-catalogue-blue;
+    }
+  }
+  form .mui-textfield {
+    input:focus, textarea:focus {
+      border-color: $cv-catalogue-blue;
+    }
+  }
+  form .mui-select {
+    select:focus {
+      border-color: $cv-catalogue-blue;
+    }
+  }
+  form .mui-select:focus {
+    select {
+      border-color: $cv-catalogue-blue;
+    }
+  }
+  .bottom-border {
+    border-bottom: 2px solid $cv-catalogue-blue;
+  }
+  .mui-appbar, .mui-btn--primary, .mui-btn--primary:focus, .mui-btn--primary:hover {
+    background-color: $cv-catalogue-blue;
+  }
+}
+
+
+
+.admin-colours {
+  .nav-link.active, .nav-link:hover {
+    border-bottom: 2px solid $admin-deep-purple;
+
+    span {
+      color: $admin-deep-purple;
+    }
+  }
+  form .mui-textfield {
+    input:focus, textarea:focus {
+      border-color: $admin-deep-purple;
+    }
+  }
+  form .mui-select {
+    select:focus {
+      border-color: $admin-deep-purple;
+    }
+  }
+  form .mui-select:focus {
+    select {
+      border-color: $admin-deep-purple;
+    }
+  }
+  .bottom-border {
+    border-bottom: 2px solid $admin-deep-purple;
+  }
+  .mui-appbar, .mui-btn--primary, .mui-btn--primary:focus, .mui-btn--primary:hover {
+    background-color: $admin-deep-purple;
+  }
+}
+
+
+
+.trusted-vendors-colours {
+  .nav-link.active, .nav-link:hover {
+    border-bottom: 2px solid $trusted-vendors-deep-orange;
+
+    span {
+      color: $trusted-vendors-deep-orange;
+    }
+  }
+  form .mui-textfield {
+    input:focus, textarea:focus {
+      border-color: $trusted-vendors-deep-orange;
+    }
+  }
+  form .mui-select {
+    select:focus {
+      border-color: $trusted-vendors-deep-orange;
+    }
+  }
+  form .mui-select:focus {
+    select {
+      border-color: $trusted-vendors-deep-orange;
+    }
+  }
+  .bottom-border {
+    border-bottom: 2px solid $trusted-vendors-deep-orange;
+  }
+  .mui-appbar, .mui-btn--primary, .mui-btn--primary:focus, .mui-btn--primary:hover {
+    background-color: $trusted-vendors-deep-orange;
+  }
+}
 
