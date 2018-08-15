@@ -6,6 +6,9 @@ module ConnectionRequestActions
     base.before_action :require_initiator, only: [:initiator_withdraw, :initiator_undo_withdraw]
 
     base.before_action :require_receiver, only: [:receiver_accept, :receiver_decline]
+
+    base.before_action :require_not_accepted, only: [:initiator_withdraw, :initiator_undo_withdraw, :receiver_accept, :receiver_decline]
+
   end
 
   def show
@@ -30,6 +33,9 @@ module ConnectionRequestActions
   def receiver_accept
     @connection_request.receiver_status = 'accepted'
     @connection_request.save!
+
+    Connection.create_users @connection_request.receiver, @connection_request.initiator
+
     flash[:notice] = "Request accepted. You and the initiating user may see each other's emails, send a note to say hello!"
     redirect_to @connection_request.show_path
 
@@ -60,6 +66,13 @@ module ConnectionRequestActions
   def require_receiver
     if @connection_request.receiver != current_user
       flash[:notice] = 'You need to be the receiver of the request to do that.'
+      redirect_to @connection_request.show_path
+    end
+  end
+
+  def require_not_accepted
+    if @connection_request.receiver_status == 'accepted'
+      flash[:notice] = 'This connection request has been accepted and can not be changed. Visit the Connections page if you wish to remove this connection.'
       redirect_to @connection_request.show_path
     end
   end

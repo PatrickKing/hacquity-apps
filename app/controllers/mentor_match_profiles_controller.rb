@@ -44,7 +44,9 @@ class MentorMatchProfilesController < ApplicationController
 
   end
 
-
+  def query
+    redirect_to search_mentor_match_profiles_path(query: params[:query])
+  end
 
   private
 

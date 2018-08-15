@@ -12,6 +12,8 @@ gem 'awesome_print'
 gem "slim-rails"
 gem 'kaminari'
 gem 'google-api-client'
+gem 'jquery-rails'
+
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
