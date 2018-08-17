@@ -6,20 +6,16 @@ class ServicePostingsController < ApplicationController
 
   layout "second_shift_pages"
 
-  # GET /service_postings/1
   def show
   end
 
-  # GET /service_postings/new
   def new
     @service_posting = ServicePosting.new
   end
 
-  # GET /service_postings/1/edit
   def edit
   end
 
-  # POST /service_postings
   def create
     @service_posting = ServicePosting.new(service_posting_params)
     @service_posting.user = current_user
@@ -31,7 +27,6 @@ class ServicePostingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /service_postings/1
   def update
     if @service_posting.update(service_posting_params)
       redirect_to @service_posting, notice: 'Service posting was successfully updated.'

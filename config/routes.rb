@@ -33,12 +33,11 @@ Rails.application.routes.draw do
       end
     end
     resources :connection_requests, 
-      only: [:index, :create, :show],
+      only: [:index, :create],
       controller: 'second_shift_connection_requests',
       as: 'ss_connection_requests' do
         member do
           post 'initiator_withdraw'
-          post 'initiator_undo_withdraw'
           post 'receiver_accept'
           post 'receiver_decline'
         end
@@ -62,7 +61,7 @@ Rails.application.routes.draw do
       end
     end
     resources :connection_requests,
-      only: [:index, :create, :show],
+      only: [:index, :create],
       controller: 'mentor_match_connection_requests',
       as: 'mm_connection_requests' do
         member do

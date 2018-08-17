@@ -17,5 +17,8 @@ class MentorMatchConnectionRequestsController < ApplicationController
     params.require(:connection_request).permit( :receiver_id, :initiator_service_posting_id, :receiver_service_posting_id, :connection_type)
   end
 
+  def redirection_path
+    request.referer || mm_connection_requests_path
+  end
 
 end
