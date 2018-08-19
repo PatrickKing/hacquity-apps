@@ -19,6 +19,8 @@ $(document).on 'turbolinks:load', ->
   # This event handler causes *every* form in the application to be submitted by AJAX.
   # TODO: Not totally sure it will handle all form types correctly.
   $('body').on "submit", "form", (event) ->
+    return if $(this).attr('data-local')?
+
     event.preventDefault()
 
     method = $(this).children('input[name="_method"]').attr('value') or $(this).attr('method')
