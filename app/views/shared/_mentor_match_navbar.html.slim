@@ -15,7 +15,10 @@
 
   a href = mm_connection_requests_path
     .nav-link class = nav_link_class('mentor_match_connection_requests', 'index')
-      span Connection Requests
+      span
+        | Connection Requests
+        - if current_user.active_connection_request_count > 0
+          = " (#{current_user.active_connection_request_count})"
 
   a href = dashboard_path
     .nav-link

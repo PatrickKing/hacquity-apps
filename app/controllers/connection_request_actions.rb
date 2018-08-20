@@ -44,6 +44,7 @@ module ConnectionRequestActions
 
   private
 
+  # NB: see also user#active_connection_request_count
   def index_connection_requests
     ConnectionRequest.where("""
       (initiator_id = :user_id OR receiver_id = :user_id) AND
