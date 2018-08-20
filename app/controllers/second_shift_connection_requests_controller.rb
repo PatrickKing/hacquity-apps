@@ -6,25 +6,20 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   def index
 
-    @connection_requests = ConnectionRequest.where("""
-        (initiator_id = :user_id OR receiver_id = :user_id) AND
-        ((resolved = false) OR (resolved = true AND updated_at >= :date_limit))
-      """, user_id: current_user.id, date_limit: 3.days.ago)
-      .where(connection_type: 'second_shift')
-      .order(created_at: :desc)
-      .page(params[:page])
+   @connection_requests = index_connection_requests
 
     render 'connection_requests/index'
   end
 
   def create
-    # In the unlikely event that someone clicks to create a connection after one has been created:
 
     @connection_request = ConnectionRequest.new(connection_request_params)
     @connection_request.initiator = current_user
     @connection_request.receiver = @connection_request.receiver_service_posting.user
     @connection_request.connection_type = 'second_shift'
 
+    # In the unlikely event that someone clicks to create a connection after one has been created:
+    # TODO would be nice to extract + deduplicate this, but it needs to have the caller return early... not sure how I want to do this
     current_connection = ConnectionRequest.current_connection_request(@connection_request.initiator, @connection_request.receiver)
     if current_connection
       redirect_to redirection_path, notice: 'Connection request already exists.'
@@ -34,7 +29,7 @@ class SecondShiftConnectionRequestsController < ApplicationController
     if @connection_request.save
       redirect_to redirection_path, notice: 'Connection request sent.'
     else
-      redirect_to service_posting_path(@connection_request.initiator_service_posting), error: 'A problem prevented us from creating the request.'
+      redirect_to service_posting_path(@connection_request.initiator_service_posting), alert: 'A problem prevented us from creating the request.'
     end
   end
 

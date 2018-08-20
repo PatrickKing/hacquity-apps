@@ -3,7 +3,7 @@ module ConnectionRequestActions
   # NB: when including this module, be sure to define redirection_path
 
   def self.included(base)
-    base.before_action :set_connection_request, only: [:show, :initiator_withdraw, :receiver_accept, :receiver_decline]
+    base.before_action :set_connection_request, only: [:initiator_withdraw, :receiver_accept, :receiver_decline]
 
     base.before_action :require_initiator, only: [:initiator_withdraw]
 
@@ -11,10 +11,6 @@ module ConnectionRequestActions
 
     base.before_action :require_not_accepted, only: [:initiator_withdraw, :receiver_accept, :receiver_decline]
 
-  end
-
-  def show
-    render 'connection_requests/show'
   end
 
 
@@ -46,8 +42,16 @@ module ConnectionRequestActions
     redirect_to redirection_path
   end
 
-
   private
+
+  def index_connection_requests
+    ConnectionRequest.where("""
+      (initiator_id = :user_id OR receiver_id = :user_id) AND
+      ((resolved = false) OR (resolved = true AND updated_at >= :date_limit))
+    """, user_id: current_user.id, date_limit: 3.days.ago)
+    .order(created_at: :desc)
+    .page(params[:page])
+  end
 
   def set_connection_request
     @connection_request = ConnectionRequest.find(params[:id])

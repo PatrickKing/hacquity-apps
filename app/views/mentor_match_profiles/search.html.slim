@@ -13,6 +13,10 @@
 
   - @mentor_match_profiles.each do |profile|
     = render 'mentor_match_profiles/info', profile: profile
+    .mui-row
+      .mui-col-md-12.mui-col-xs-12
+        = render 'mentor_match_profiles/cv_button', profile: profile
+        = render 'mentor_match_profiles/show_button', profile: profile
 
   - if @mentor_match_profiles.empty?
     - if params[:query].blank?

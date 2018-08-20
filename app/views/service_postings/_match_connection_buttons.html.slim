@@ -1,3 +1,4 @@
+/ NB: form_with uses ajax by default. Since we are also hooking up all our forms to send with ajax, we use local: true to suppress rails' default behaviour and avoid sending twice.
 
 / receiver_service_posting is required.
 / initiator_service_posting is optional, since connections are permitted without matches.
@@ -56,4 +57,3 @@
     = form.submit "Send request", class: "mui-btn mui-btn--primary"
 
 
-  / - elsif !service_posting.closed and !service_posting.connection_exists? match
