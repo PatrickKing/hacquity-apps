@@ -5,9 +5,12 @@
 - other_user = receiver_service_posting.user
 
 
+/ If it's you, no-op
+- if current_user == other_user
+
 
 / If the users are connected:
-- if Connection.connection_exists? current_user, other_user
+- elsif Connection.connection_exists? current_user, other_user
 
   p
     = "You're connected. You can email #{other_user.name} at "

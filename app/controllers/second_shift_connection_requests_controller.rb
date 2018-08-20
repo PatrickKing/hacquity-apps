@@ -6,12 +6,10 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   def index
 
-    recent_resolved_requests = ConnectionRequest.where(resolved: true)
-      .where("updated_at >= :date_limit", date_limit: 3.days.ago)
-
-    @connection_requests = ConnectionRequest.where(initiator: current_user)
-      .or(ConnectionRequest.where(receiver: current_user))
-      .where(resolved: false).or(recent_resolved_requests)
+    @connection_requests = ConnectionRequest.where("""
+        (initiator_id = :user_id OR receiver_id = :user_id) AND
+        ((resolved = false) OR (resolved = true AND updated_at >= :date_limit))
+      """, user_id: current_user.id, date_limit: 3.days.ago)
       .where(connection_type: 'second_shift')
       .order(created_at: :desc)
       .page(params[:page])
