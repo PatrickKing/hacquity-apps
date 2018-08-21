@@ -1,0 +1,51 @@
+/ NB: form_with uses ajax by default. Since we are also hooking up all our forms to send with ajax, we use local: true to suppress rails' default behaviour and avoid sending twice.
+
+
+/ If it's you, no-op
+- if current_user == profile.user
+
+
+/ If the users are connected:
+- elsif Connection.connection_exists? current_user, profile.user
+
+  p
+    = "You're connected. You can email #{profile.user.name} at "
+    = mail_to profile.user.email
+
+
+/ If there is an existing connection request, related to this one or not:
+- elsif ConnectionRequest.current_connection_request current_user, profile.user
+
+  = render 'connection_requests/action_buttons', connection_request: ConnectionRequest.current_connection_request(current_user, profile.user)
+
+
+/ There is an old connection request which was accepted, but there is currently no connection. This means that the connection was removed at some point after being accepted. Offer a new connection button without summarizing the old request.
+- elsif ConnectionRequest.old_connection_request(current_user, profile.user)&.accepted?
+
+  p = "You're not connected with #{profile.user.name}."
+
+  = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
+    = form.hidden_field :receiver_id, value: profile.user.id
+    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+
+/ If there is one or more old request:
+- elsif ConnectionRequest.old_connection_request current_user, profile.user
+
+  p = "You're not connected with #{profile.user.name}."
+
+  / Since the old connection is resolved, the request action buttons will only render a little summary of how the last connection request turned out.
+  = render 'connection_requests/action_buttons', connection_request: ConnectionRequest.old_connection_request(current_user, profile.user)
+
+  = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
+    = form.hidden_field :receiver_id, value: profile.user.id
+    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+
+
+/ If there is no connection or connection request:
+- else
+
+  = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
+    = form.hidden_field :receiver_id, value: profile.user.id
+    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+
+

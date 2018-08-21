@@ -1,6 +1,6 @@
 .dashboard-colours
   - if user_signed_in?
-    = form_tag destroy_user_session_path, method: :delete do
+    = form_tag destroy_user_session_path, method: :delete, data: {local: true} do
       = submit_tag "Logout", class: 'mui-btn mui--color-blue-grey-600'
   - else
     = link_to "Log in", new_user_session_path, class: 'mui-btn mui-btn--primary'

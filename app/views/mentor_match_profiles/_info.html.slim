@@ -13,13 +13,6 @@
       strong Position: 
       = profile.position
 
-    - unless profile.web_view_link.blank?
-      p
-        = link_to 'View CV', profile.web_view_link, class: 'mui-btn mui-btn--primary'
-    - else
-      p 
-        em No CV available.
-
   .mui-col-md-6.mui-col-xs-12
     p
       strong Summary
