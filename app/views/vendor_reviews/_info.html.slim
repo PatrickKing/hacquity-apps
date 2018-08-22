@@ -1,0 +1,27 @@
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    h1.bottom-border = vendor_review.title
+
+.mui-row
+  .mui-col-md-6.mui-col-xs.12
+    p
+      strong Vendor Name: 
+      = vendor_review.vendor_name
+
+  .mui-col-md-6.mui-col-xs.12
+    p
+      strong Services Provided: 
+      = vendor_review.vendor_services
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    p
+      strong Review: 
+      = vendor_review.short_body
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    = link_to 'Full Review', vendor_review, class: 'mui-btn mui-btn--primary'
+
+.form-section

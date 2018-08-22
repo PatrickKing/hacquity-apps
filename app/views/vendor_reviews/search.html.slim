@@ -1,0 +1,24 @@
+h1 Search Vendor Reviews
+
+= form_tag query_vendor_reviews_path, method: :post, class: 'mui-form' do
+
+  .form-section
+    .mui-textfield
+      = text_field_tag "query", params[:query]
+  = submit_tag "Search" , class: "mui-btn mui-btn--primary"
+
+.form-section
+
+- @vendor_reviews.each do |vendor_review|
+  = render 'vendor_reviews/info', vendor_review: vendor_review
+
+- if @vendor_reviews.empty?
+  - if params[:query].blank?
+    em Add some search terms to look for reviews.
+  - else
+    em No vendor reviews found.
+
+
+.form-section
+  - if @vendor_reviews.any?
+    = paginate @vendor_reviews

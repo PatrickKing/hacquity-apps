@@ -1,0 +1,8 @@
+h1 My Vendor Reviews
+
+- @vendor_reviews.each do |vendor_review|
+  = render 'vendor_reviews/info', vendor_review: vendor_review
+
+.form-section
+  - if @vendor_reviews.any?
+    = paginate @vendor_reviews

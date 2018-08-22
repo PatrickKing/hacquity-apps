@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  likes: 1
+  title: MyString
+  body: MyString
+  vendor_name: MyString
+  vendor_address_line1: MyString
+  vendor_address_line2: MyString
+  vendor_email_address: MyString
+  vendor_phone_number: MyString
+  vendor_contact_instructions: MyString
+  vendor_services: MyString
+
+two:
+  user: two
+  likes: 1
+  title: MyString
+  body: MyString
+  vendor_name: MyString
+  vendor_address_line1: MyString
+  vendor_address_line2: MyString
+  vendor_email_address: MyString
+  vendor_phone_number: MyString
+  vendor_contact_instructions: MyString
+  vendor_services: MyString

@@ -1,0 +1,22 @@
+.hacquity-nav-list
+
+  a href = mine_vendor_reviews_path
+    .nav-link class = nav_link_class('vendor_reviews', 'mine')
+      span My Reviews
+
+  a href = new_vendor_review_path
+    .nav-link class = new_create_nav_link_class('vendor_reviews')
+      span New Review
+
+  a href = search_vendor_reviews_path
+    .nav-link class = nav_link_class('vendor_reviews', 'search')
+      span Search Reviews
+
+  a href = vendor_reviews_path
+    .nav-link class = nav_link_class('vendor_reviews', 'index')
+      span Browse Reviews
+
+  a href = dashboard_path
+    .nav-link
+      span Hacquity Home
+

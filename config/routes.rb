@@ -74,4 +74,20 @@ Rails.application.routes.draw do
   end
 
 
+  scope 'trusted-vendors' do
+    resources :vendor_reviews, path: 'reviews'do
+      collection do
+        get 'mine'
+        get 'search'
+        post 'query'
+      end
+      member do
+        post 'like'
+        post 'unlike'
+      end
+    end
+
+  end
+
+
 end

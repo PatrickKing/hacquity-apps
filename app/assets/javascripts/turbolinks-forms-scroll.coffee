@@ -18,16 +18,16 @@ $(document).on 'turbolinks:load', ->
   # We're taking advantage of a Rails / Turbolinks feature here: if you submit a form via AJAX and use redirect_to in the action, the Rails response will cause Turbolinks to handle the page load rather than refeshing as an ordinary form would.
   # This event handler causes *every* form in the application to be submitted by AJAX.
   # TODO: Not totally sure it will handle all form types correctly.
-  $('body').on "submit", "form", (event) ->
-    return if $(this).attr('data-local')?
+  # $('body').on "submit", "form", (event) ->
+  #   return if $(this).attr('data-local')?
 
-    event.preventDefault()
+  #   event.preventDefault()
 
-    method = $(this).children('input[name="_method"]').attr('value') or $(this).attr('method')
+  #   method = $(this).children('input[name="_method"]').attr('value') or $(this).attr('method')
 
-    $.ajax
-      url: $(this).attr('action')
-      method: method
-      data: $(this).serialize()
+  #   $.ajax
+  #     url: $(this).attr('action')
+  #     method: method
+  #     data: $(this).serialize()
 
 
