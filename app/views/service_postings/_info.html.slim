@@ -48,7 +48,7 @@
             p 
               strong = "#{match.posting_type}: "
               = match.seeking_summary
-              = link_to 'More Info', service_posting_path(match), class: 'mui-btn mui-btn--primary'
+              = link_to 'More Info', service_posting_path(match), class: 'mui-btn'
 
             - if show_connection_buttons
               h3 Connection Info

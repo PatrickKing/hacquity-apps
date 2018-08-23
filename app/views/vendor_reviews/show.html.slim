@@ -72,8 +72,8 @@
             = @vendor_review.vendor_contact_instructions
 
   - if current_user == @vendor_review.user
-    = link_to 'Edit', edit_vendor_review_path(@vendor_review), class: 'mui-btn mui-btn--primary'
-    / = link_to 'Delete', vendor_review_path(@vendor_review), class: 'mui-btn mui-btn--primary'
+    = link_to 'Edit', edit_vendor_review_path(@vendor_review), class: 'mui-btn'
+    / = link_to 'Delete', vendor_review_path(@vendor_review), class: 'mui-btn'
     = form_tag vendor_review_path(@vendor_review), method: :delete
-      = submit_tag "Delete", class: "mui-btn mui-btn--primary", data: { confirm: "Really delete review '#{@vendor_review.title}'?" }
+      = submit_tag "Delete", class: "mui-btn", data: { confirm: "Really delete review '#{@vendor_review.title}'?" }
 

@@ -32,7 +32,7 @@
   = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 / If there is one or more old request:
 - elsif ConnectionRequest.old_connection_request current_user, other_user
@@ -45,7 +45,7 @@
   = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 
 / If there is no connection or connection request:
@@ -54,6 +54,6 @@
   = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 

@@ -26,7 +26,7 @@
 
   = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
     = form.hidden_field :receiver_id, value: profile.user.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 / If there is one or more old request:
 - elsif ConnectionRequest.old_connection_request current_user, profile.user
@@ -38,7 +38,7 @@
 
   = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
     = form.hidden_field :receiver_id, value: profile.user.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 
 / If there is no connection or connection request:
@@ -46,6 +46,6 @@
 
   = form_with model: ConnectionRequest.new, method: :post, url: mm_connection_requests_path, local: true do |form|
     = form.hidden_field :receiver_id, value: profile.user.id
-    = form.submit "Send request", class: "mui-btn mui-btn--primary"
+    = form.submit "Send request", class: "mui-btn"
 
 
