@@ -6,6 +6,8 @@ class VendorReview < ApplicationRecord
 
   belongs_to :user
 
+  has_many :vendor_review_likes
+
   validates :title, presence: true
   validates :title, length: { maximum: 300 }
 
@@ -32,6 +34,11 @@ class VendorReview < ApplicationRecord
       self.vendor_email_address.blank? and
       self.vendor_phone_number.blank? and
       self.vendor_contact_instructions.blank?)
+  end
+
+  def liked_by? (user)
+    like = self.vendor_review_likes.where user_id: user.id
+    not like.empty?
   end
 
   def short_body

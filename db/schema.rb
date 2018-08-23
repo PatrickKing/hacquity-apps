@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_22_222701) do
+ActiveRecord::Schema.define(version: 2018_08_23_042412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 2018_08_22_222701) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vendor_review_likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "vendor_review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_vendor_review_likes_on_user_id"
+    t.index ["vendor_review_id"], name: "index_vendor_review_likes_on_vendor_review_id"
+  end
+
   create_table "vendor_reviews", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "likes"
@@ -128,5 +137,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_222701) do
   add_foreign_key "connection_requests", "users", column: "receiver_id"
   add_foreign_key "mentor_match_profiles", "users"
   add_foreign_key "service_postings", "users"
+  add_foreign_key "vendor_review_likes", "users"
+  add_foreign_key "vendor_review_likes", "vendor_reviews"
   add_foreign_key "vendor_reviews", "users"
 end

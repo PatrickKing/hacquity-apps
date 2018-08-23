@@ -69,12 +69,29 @@ class VendorReviewsController < ApplicationController
     redirect_to search_vendor_reviews_path(query: params[:query])
   end
 
+  # TODO: error handling on like/unlike
   def like
+    existing_like = VendorReviewLike.find user: current_user, vendor_review: @vendor_review
+
+    unless existing_like?
+      new_like = VendorReviewLike.create! user: current_user, vendor_review: @vendor_review
+      @vendor_review.likes += 1
+      @vendor_review.save!
+    end
     
+    redirect_to request.referrer or @vendor_review
   end
 
   def unlike
+    existing_like = VendorReviewLike.find user: current_user, vendor_review: @vendor_review
+
+    if existing_like?
+      existing_like.delete
+      @vendor_review.likes -= 1
+      @vendor_review.save!
+    end
     
+    redirect_to request.referrer or @vendor_review
   end
 
   private
