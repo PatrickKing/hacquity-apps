@@ -1,14 +1,16 @@
-h1 Browse Vendor Reviews
+.mui-container
 
-- @vendor_reviews.each do |vendor_review|
-  = render 'vendor_reviews/info', vendor_review: vendor_review
+  h1 Browse Vendor Reviews
+
+  - @vendor_reviews.each do |vendor_review|
+    = render 'vendor_reviews/info', vendor_review: vendor_review
 
 
-.form-section
-  - if @vendor_reviews.any?
-    = paginate @vendor_reviews
+  .form-section
+    - if @vendor_reviews.any?
+      = paginate @vendor_reviews
 
-  - if @vendor_reviews.empty?
-    p 
-      em No vendor reviews.
+    - if @vendor_reviews.empty?
+      p 
+        em No vendor reviews.
 

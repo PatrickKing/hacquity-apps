@@ -4,7 +4,7 @@ class VendorReviewsController < ApplicationController
 
   before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike]
 
-  before_action :require_owner, only: [:edit, :update]
+  before_action :require_owner, only: [:edit, :update, :destroy]
 
 
   layout 'trusted_vendors_pages'
@@ -46,7 +46,7 @@ class VendorReviewsController < ApplicationController
 
   def destroy
     @vendor_review.destroy
-    redirect_to vendor_reviews_url, notice: 'Vendor review was successfully destroyed.'
+    redirect_to mine_vendor_reviews_url, notice: 'Vendor review was successfully destroyed.'
   end
 
   # Non RESTful actions
@@ -71,9 +71,9 @@ class VendorReviewsController < ApplicationController
 
   # TODO: error handling on like/unlike
   def like
-    existing_like = VendorReviewLike.find user: current_user, vendor_review: @vendor_review
+    existing_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first
 
-    unless existing_like?
+    unless existing_like
       new_like = VendorReviewLike.create! user: current_user, vendor_review: @vendor_review
       @vendor_review.likes += 1
       @vendor_review.save!
@@ -83,9 +83,9 @@ class VendorReviewsController < ApplicationController
   end
 
   def unlike
-    existing_like = VendorReviewLike.find user: current_user, vendor_review: @vendor_review
+    existing_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first
 
-    if existing_like?
+    if existing_like
       existing_like.delete
       @vendor_review.likes -= 1
       @vendor_review.save!

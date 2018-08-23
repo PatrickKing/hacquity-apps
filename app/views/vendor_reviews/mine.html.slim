@@ -1,13 +1,15 @@
-h1 My Vendor Reviews
+.mui-container
 
-- @vendor_reviews.each do |vendor_review|
-  = render 'vendor_reviews/info', vendor_review: vendor_review
+  h1 My Vendor Reviews
 
-.form-section
-  - if @vendor_reviews.any?
-    = paginate @vendor_reviews
+  - @vendor_reviews.each do |vendor_review|
+    = render 'vendor_reviews/info', vendor_review: vendor_review
 
-  - if @vendor_reviews.empty?
-    p 
-      em You have no vendor reviews. Click 'New Review' to write one.
+  .form-section
+    - if @vendor_reviews.any?
+      = paginate @vendor_reviews
+
+    - if @vendor_reviews.empty?
+      p 
+        em You have no vendor reviews. Click 'New Review' to write one.
 
