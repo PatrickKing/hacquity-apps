@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_21_014923) do
+ActiveRecord::Schema.define(version: 2018_08_23_042412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,10 +103,41 @@ ActiveRecord::Schema.define(version: 2018_08_21_014923) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vendor_review_likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "vendor_review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_vendor_review_likes_on_user_id"
+    t.index ["vendor_review_id"], name: "index_vendor_review_likes_on_vendor_review_id"
+  end
+
+  create_table "vendor_reviews", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "likes"
+    t.string "title"
+    t.string "body"
+    t.string "vendor_name"
+    t.string "vendor_address_line1"
+    t.string "vendor_address_line2"
+    t.string "vendor_email_address"
+    t.string "vendor_phone_number"
+    t.string "vendor_contact_instructions"
+    t.string "vendor_services"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.tsvector "text_search_document"
+    t.index ["text_search_document"], name: "vendor_reviews_fts_idx", using: :gin
+    t.index ["user_id"], name: "index_vendor_reviews_on_user_id"
+  end
+
   add_foreign_key "connection_requests", "service_postings", column: "initiator_service_posting_id"
   add_foreign_key "connection_requests", "service_postings", column: "receiver_service_posting_id"
   add_foreign_key "connection_requests", "users", column: "initiator_id"
   add_foreign_key "connection_requests", "users", column: "receiver_id"
   add_foreign_key "mentor_match_profiles", "users"
   add_foreign_key "service_postings", "users"
+  add_foreign_key "vendor_review_likes", "users"
+  add_foreign_key "vendor_review_likes", "vendor_reviews"
+  add_foreign_key "vendor_reviews", "users"
 end

@@ -43,7 +43,7 @@ class MentorMatchProfile < ApplicationRecord
     
   end
 
-  before_save do
+  before_validation do
     self.uploaded_cv_exists = false if self.uploaded_cv_exists.nil?
     self.match_role = 'Not Seeking' if self.match_role.blank?
   end

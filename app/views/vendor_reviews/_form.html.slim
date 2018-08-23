@@ -1,0 +1,65 @@
+= form_with(model: @vendor_review, class: 'mui-form', local: true) do |form|
+
+  - if @vendor_review.errors.any?
+    #error-explanation
+      h2 = "#{pluralize(@vendor_review.errors.count, "error")} prohibited this vendor_review from being saved:"
+      ul
+        - @vendor_review.errors.full_messages.each do |message|
+          li = message
+
+  .mui-row.form-section
+    .mui-col-md-12.mui-col-xs.12
+      .mui-textfield
+        = form.label :title, 'Review Title'
+        = form.text_field :title
+
+  .mui-row.form-section
+    .mui-col-md-6.mui-col-xs.12
+      .mui-textfield
+        = form.label :vendor_name
+        = form.text_field :vendor_name
+    .mui-col-md-6.mui-col-xs.12
+      .mui-textfield
+        = form.label :vendor_services, 'Services Provided'
+        = form.text_field :vendor_services
+
+  .mui-row.form-section
+    .mui-col-md-12.mui-col-xs.12
+      .mui-textfield
+        = form.label :body, 'Review'
+        = form.text_area :body, rows: 5
+
+  .mui-row.form-section
+    .mui-col-md-12.mui-col-xs.12
+      h2 Vendor Contact Information
+      p
+        em Only include contact information if this vendor is open to inquiries from the public.
+
+  .mui-row.form-section
+    .mui-col-md-6.mui-col-xs.12
+
+      .mui-textfield
+        = form.label :vendor_email_address, 'Email Address'
+        = form.text_field :vendor_email_address
+      .mui-textfield
+        = form.label :vendor_phone_number, 'Phone Number'
+        = form.text_field :vendor_phone_number
+
+    .mui-col-md-6.mui-col-xs.12
+      .mui-textfield
+        = form.label :vendor_address_line1, 'Address'
+        = form.text_field :vendor_address_line1
+      .mui-textfield
+        = form.text_field :vendor_address_line2
+
+  .mui-row.form-section
+    .mui-col-md-12.mui-col-xs.12
+      .mui-textfield
+        = form.label :vendor_contact_instructions, 'Contact Instructions'
+        p
+          em Does this vendor have preferences or requirements for how they are contacted?
+        = form.text_field :vendor_contact_instructions
+
+
+  .actions
+    = form.submit class: 'mui-btn mui-btn--primary'
