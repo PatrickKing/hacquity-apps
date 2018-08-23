@@ -7,3 +7,8 @@ h1 Browse Vendor Reviews
 .form-section
   - if @vendor_reviews.any?
     = paginate @vendor_reviews
+
+  - if @vendor_reviews.empty?
+    p 
+      em No vendor reviews.
+

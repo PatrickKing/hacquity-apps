@@ -1,5 +1,11 @@
 class VendorReviewsController < ApplicationController
-  before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review]
+
+  before_action :require_login
+
+  before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike]
+
+  before_action :require_owner, only: [:edit, :update]
+
 
   layout 'trusted_vendors_pages'
 
@@ -60,26 +66,8 @@ class VendorReviewsController < ApplicationController
   end
 
   def query
-    
+    redirect_to search_vendor_reviews_path(query: params[:query])
   end
-
-  # def mine
-  #   @service_postings = ServicePosting
-  #     .where(user: current_user)
-  #     .page(params[:page])
-  # end
-
-  # def available
-  #   @service_postings = ServicePosting
-  #     .where(closed: false, posting_type: 'Available')
-  #     .page(params[:page])
-  # end
-
-  # def wanted
-  #   @service_postings = ServicePosting
-  #     .where(closed: false, posting_type: 'Wanted')
-  #     .page(params[:page])
-  # end
 
   def like
     
@@ -90,13 +78,20 @@ class VendorReviewsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_vendor_review
-      @vendor_review = VendorReview.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def vendor_review_params
-      params.require(:vendor_review).permit(:title, :body, :vendor_name, :vendor_address_line1, :vendor_address_line2, :vendor_email_address, :vendor_phone_number, :vendor_contact_instructions, :vendor_services)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_vendor_review
+    @vendor_review = VendorReview.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def vendor_review_params
+    params.require(:vendor_review).permit(:title, :body, :vendor_name, :vendor_address_line1, :vendor_address_line2, :vendor_email_address, :vendor_phone_number, :vendor_contact_instructions, :vendor_services)
+  end
+
+  def require_owner
+    unless current_user == @vendor_review.user
+      redirect_to @vendor_review, notice: 'You must be the author of the review to do that.'
     end
+  end
 end

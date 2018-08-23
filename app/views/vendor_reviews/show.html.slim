@@ -1,9 +1,18 @@
 
-.mui-row.form-section
+.mui-row
   .mui-col-md-12.mui-col-xs.12
     h1.bottom-border = @vendor_review.title
 
-.mui-row.form-section
+    p 
+      em
+        | Review by 
+        = @vendor_review.user.name
+    p 
+      em
+        | Updated 
+        = @vendor_review.updated_at.strftime '%A %B %d, %Y'
+
+.mui-row
   .mui-col-md-6.mui-col-xs.12
     p
       strong Vendor Name: 
@@ -14,7 +23,7 @@
       strong Services Provided: 
       = @vendor_review.vendor_services
 
-.mui-row.form-section
+.mui-row
   .mui-col-md-12.mui-col-xs.12
     p
       strong Review
@@ -22,11 +31,11 @@
 
 - if @vendor_review.has_contact_information?
 
-  .mui-row.form-section
+  .mui-row
     .mui-col-md-12.mui-col-xs.12
       h2.bottom-border Vendor Contact Information
 
-  .mui-row.form-section
+  .mui-row
     - unless @vendor_review.vendor_email_address.blank? and @vendor_review.vendor_phone_number.blank?
   
       .mui-col-md-6.mui-col-xs.12
@@ -49,7 +58,7 @@
           = @vendor_review.vendor_address_line2
 
   - unless @vendor_review.vendor_contact_instructions.blank?
-    .mui-row.form-section
+    .mui-row
       .mui-col-md-12.mui-col-xs.12
         p
           strong Contact Instructions:

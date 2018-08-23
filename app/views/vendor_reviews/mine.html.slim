@@ -6,3 +6,8 @@ h1 My Vendor Reviews
 .form-section
   - if @vendor_reviews.any?
     = paginate @vendor_reviews
+
+  - if @vendor_reviews.empty?
+    p 
+      em You have no vendor reviews. Click 'New Review' to write one.
+
