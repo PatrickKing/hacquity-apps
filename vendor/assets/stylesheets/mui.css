@@ -468,7 +468,7 @@ h4, h5, h6 {
   font-size: 14px;
   line-height: 18px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.87);
+  color: white; /*rgba(0, 0, 0, 0.87);*/
   background-color: #FFF;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -498,7 +498,7 @@ h4, h5, h6 {
 }
 
 .mui-btn:hover, .mui-btn:focus, .mui-btn:active {
-  color: rgba(0, 0, 0, 0.87);
+  color: white; /*rgba(0, 0, 0, 0.87);*/
   background-color: white;
 }
 
@@ -525,7 +525,7 @@ h4, h5, h6 {
 .mui-btn:hover, .mui-btn:focus, .mui-btn:active {
   outline: 0;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
+  color: white; /*rgba(0, 0, 0, 0.87);*/
 }
 
 .mui-btn:hover, .mui-btn:focus {

@@ -13,16 +13,16 @@
   .mui-col-md-12.mui-col-xs-12
 
     - if connection_request.can_be_withdrawn_by? current_user
-      = form_tag initiator_withdraw_ss_connection_request_path(connection_request), method: :post
-        = submit_tag "Withdraw request", class: "mui-btn mui-btn--primary preserve-scroll-position"
+      = form_with url: initiator_withdraw_ss_connection_request_path(connection_request) do |form|
+        = form.submit "Withdraw request", class: "mui-btn preserve-scroll-position"
 
     - if connection_request.can_be_accepted_by? current_user
-      = form_tag receiver_accept_ss_connection_request_path(connection_request), method: :post
-        = submit_tag "Accept request", class: "mui-btn mui-btn--primary preserve-scroll-position"
+      = form_with url: receiver_accept_ss_connection_request_path(connection_request) do |form|
+        = form.submit "Accept request", class: "mui-btn preserve-scroll-position"
 
     - if connection_request.can_be_declined_by? current_user
-      = form_tag receiver_decline_ss_connection_request_path(connection_request), method: :post
-        = submit_tag "Decline request", class: "mui-btn mui-btn--primary preserve-scroll-position"
+      = form_with url: receiver_decline_ss_connection_request_path(connection_request) do |form|
+        = form.submit "Decline request", class: "mui-btn preserve-scroll-position"
 
     - unless connection_request.resolved
       p

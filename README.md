@@ -1,6 +1,6 @@
-# DoM-Citizen
+# DoM Citizen
 
-The DoM-Citizen webapp was a hackathon project built as an experiment in addressing gender inequity in medicine and academia. It has two major modules, Second Shift and Mentor Match.
+The DoM Citizen webapp was a hackathon project built as an experiment in addressing gender inequity in medicine and academia. It has two major modules, Second Shift and Mentor Match.
 
 If you have hired help (like a nanny or a cleaner) but don't need them full time, or if you are looking for part time household help, Second Shift lets you connect with peers who can help.
 
@@ -10,7 +10,7 @@ Mentor Match helps you to discover other faculty who have interests like yours, 
 
 ## Development Setup
 
-DoM-Citizen is a Ruby on Rails app, the process getting set up for development with this project should be familiar to most rails developers. The app is built on Google Drive for CV file storage and search, which requires some credential setup.
+DoM Citizen is a Ruby on Rails app, the process getting set up for development with this project should be familiar to most rails developers. The app is built on Google Drive for CV file storage and search, which requires some credential setup.
 
 
 ### Prerequisites
