@@ -3,35 +3,48 @@
 
   .mui-container-fluid
 
-    .mui-row
+    .mui-row.form-section
 
-      .mui-col-md-6.mui-col-xs.12
-        .mui-appbar.mui--bg-color-light-green-600
+      .mui-col-md-6.mui-col-xs.12.second-shift-colours
+        .mui-appbar
           h2.appbar-title Second Shift
         br
         p If you have hired help (like a nanny or a cleaner) but don't need them full time, or if you are looking for part time household help, Second Shift lets you connect with peers who can help.
 
         - unless current_user.second_shift_enabled
           = form_tag '/user/activate_second_shift', method: :post do
-            = submit_tag "Get Started with Second Shift" , class: "mui-btn mui--bg-color-light-green-600 mui--color-white"
+            = submit_tag "Get Started with Second Shift", class: "mui-btn mui-btn--primary"
         - else
-          a.mui-btn.mui-btn--primary.mui--bg-color-light-green-600 href=available_service_postings_path
+          a.mui-btn.mui-btn--primary href=available_service_postings_path
             | Continue with Second Shift
 
 
 
 
-      .mui-col-md-6.mui-col-xs.12
-        .mui-appbar.mui--bg-color-teal-600
+      .mui-col-md-6.mui-col-xs.12.mentor-match-colours
+        .mui-appbar
           h2.appbar-title Mentor Match
         br
         p Mentor Match helps you to discover other faculty who have interests like yours, and who are looking for mentor/mentee relationships.
 
         - unless current_user.mentor_match_enabled
           = form_tag '/user/activate_mentor_match', method: :post do
-            = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui--bg-color-teal-600 mui--color-white"
+            = submit_tag "Get Started with Mentor Match" , class: "mui-btn mui-btn--primary"
 
         - else
-          a.mui-btn.mui-btn--primary.mui--bg-color-teal-600 href=my_mentor_match_profile_path
+          a.mui-btn.mui-btn--primary href=my_mentor_match_profile_path
             | Continue with Mentor Match
+
+
+    .mui-row.form-section
+
+      .mui-col-md-6.mui-col-xs.12.trusted-vendors-colours
+        .mui-appbar
+          h2.appbar-title Trusted Vendors
+        br
+        p Trusted Vendors is a place for reviews of people and companies who are trusted by members of the community. You can browse, search, and post vendor reviews.
+
+        a.mui-btn.mui-btn--primary href=vendor_reviews_path
+          | Go To Trusted Vendors
+
 

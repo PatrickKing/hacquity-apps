@@ -42,10 +42,6 @@ class ServicePosting < ApplicationRecord
     if self.closed then 'Closed' else 'Open' end
   end
 
-  def full_seeking_summary
-    "#{self.posting_type}: #{self.full_time_equivalents} FTE #{self.service_type}"
-  end
-
   def seeking_summary
     "#{self.full_time_equivalents} FTE #{self.service_type}"
   end
@@ -72,22 +68,6 @@ class ServicePosting < ApplicationRecord
     self.full_matches.limit(3)
   end
 
-
-  def connection_exists? (service_posting)
-    return true if ConnectionRequest.where(initiator_service_posting: self, receiver_service_posting: service_posting).any?
-    return true if ConnectionRequest.where(initiator_service_posting: service_posting, receiver_service_posting: self).any?
-    false
-  end
-
-  def connection (service_posting)
-    request = nil
-
-    request = ConnectionRequest.where(initiator_service_posting: self, receiver_service_posting: service_posting).first
-    return request if request
-
-    request = ConnectionRequest.where(initiator_service_posting: service_posting, receiver_service_posting: self).first
-    request
-  end
 
   before_validation do
     self.closed = false if self.closed.nil?

@@ -1,0 +1,11 @@
+- content_for :appbar do
+  .mui-appbar
+    h1.appbar-title DoM Citizen - Trusted Vendors
+
+- content_for :navbar do
+  = render 'shared/trusted_vendors_navbar'
+
+
+= render template: "layouts/application", locals: {colours_class: 'trusted-vendors-colours'}
+
+

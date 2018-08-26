@@ -20,8 +20,6 @@ Rails.application.routes.draw do
 
   # Routes for Second Shift:
 
-  # get '/second-shift', to: 'second_shift_pages#main'
-
   scope 'second-shift' do
     resources :service_postings, path: 'postings', except: [:index, :destroy] do
       collection do
@@ -35,12 +33,11 @@ Rails.application.routes.draw do
       end
     end
     resources :connection_requests, 
-      only: [:index, :create, :show],
+      only: [:index, :create],
       controller: 'second_shift_connection_requests',
       as: 'ss_connection_requests' do
         member do
           post 'initiator_withdraw'
-          post 'initiator_undo_withdraw'
           post 'receiver_accept'
           post 'receiver_decline'
         end
@@ -49,9 +46,6 @@ Rails.application.routes.draw do
 
 
   # Routes for Mentor Match:
-
-  # TODO: phasing this out
-  get '/mentor-match', to: 'mentor_match_pages#main'
   
   scope 'mentor-match' do
     resource :my_mentor_match_profile, only: [:show, :edit, :update] do
@@ -63,10 +57,11 @@ Rails.application.routes.draw do
     resources :mentor_match_profiles, only: [:index, :show] do
       collection do
         get 'search'
+        post 'query'
       end
     end
     resources :connection_requests,
-      only: [:index, :create, :show],
+      only: [:index, :create],
       controller: 'mentor_match_connection_requests',
       as: 'mm_connection_requests' do
         member do
@@ -76,6 +71,22 @@ Rails.application.routes.draw do
           post 'receiver_decline'
         end
       end
+  end
+
+
+  scope 'trusted-vendors' do
+    resources :vendor_reviews, path: 'reviews'do
+      collection do
+        get 'mine'
+        get 'search'
+        post 'query'
+      end
+      member do
+        post 'like'
+        post 'unlike'
+      end
+    end
+
   end
 
 

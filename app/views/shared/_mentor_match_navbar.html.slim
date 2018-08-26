@@ -2,18 +2,25 @@
 
 
   a href = my_mentor_match_profile_path
-    .nav-link.mentor-match-nav-link class = nav_link_class('my_mentor_match_profiles', 'show')
+    .nav-link class = nav_link_class('my_mentor_match_profiles', 'show')
       span My Mentor Match Profile
 
   a href = search_mentor_match_profiles_path
-    .nav-link.mentor-match-nav-link class = nav_link_class('mentor_match_profiles', 'search')
+    .nav-link class = nav_link_class('mentor_match_profiles', 'search')
       span Search Profiles
 
   a href = mentor_match_profiles_path
-    .nav-link.mentor-match-nav-link class = nav_link_class('mentor_match_profiles', 'index')
+    .nav-link class = nav_link_class('mentor_match_profiles', 'index')
       span Browse Profiles
 
+  a href = mm_connection_requests_path
+    .nav-link class = nav_link_class('mentor_match_connection_requests', 'index')
+      span
+        | Connection Requests
+        - if current_user.active_connection_request_count > 0
+          = " (#{current_user.active_connection_request_count})"
+
   a href = dashboard_path
-    .nav-link.mentor-match-nav-link
-      span Hacquity Home
+    .nav-link
+      span DoM-Citizen Home
 

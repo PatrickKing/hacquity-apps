@@ -2,17 +2,21 @@
 .mui-container
   h1 Search Mentor Match Profiles
 
-  = form_tag search_mentor_match_profiles_path, method: :get, class: 'mui-form mentor-match-form' do
+  = form_tag query_mentor_match_profiles_path, method: :post, class: 'mui-form' do
 
     .form-section
       .mui-textfield
         = text_field_tag "query", params[:query]
-    = submit_tag "Search" , class: "mui-btn mui--bg-color-teal-600 mui--color-white"
+    = submit_tag "Search" , class: "mui-btn mui-btn--primary"
 
   .form-section
 
   - @mentor_match_profiles.each do |profile|
     = render 'mentor_match_profiles/info', profile: profile
+    .mui-row
+      .mui-col-md-12.mui-col-xs-12
+        = render 'mentor_match_profiles/cv_button', profile: profile
+        = render 'mentor_match_profiles/show_button', profile: profile
 
   - if @mentor_match_profiles.empty?
     - if params[:query].blank?

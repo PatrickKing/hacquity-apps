@@ -1,7 +1,7 @@
-= form_with(model: service_posting, class: 'mui-form second-shift-form') do |form|
+= form_with(model: service_posting, class: 'mui-form', local: true) do |form|
 
   - if service_posting.errors.any?
-    .form-section#error_explanation
+    .form-section#error-explanation
       h2 
         = "#{pluralize(service_posting.errors.count, "error")} prohibited this posting from being saved:"
       ul
@@ -45,7 +45,7 @@
 
 
   .actions
-    = form.submit class: 'mui-btn mui-btn--primary mui--bg-color-light-green-600'
+    = form.submit class: 'mui-btn mui-btn--primary'
 
 
 
