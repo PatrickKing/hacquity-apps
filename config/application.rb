@@ -17,5 +17,7 @@ module Hacquity
     # the framework and any gems in your application.
 
     config.active_job.queue_adapter = :delayed_job
+
+    config.active_record.schema_format = :sql
   end
 end
