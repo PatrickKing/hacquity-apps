@@ -2,12 +2,12 @@
 
   h1 Search Vendor Reviews
 
-  = form_tag query_vendor_reviews_path, method: :post, class: 'mui-form' do
+  = form_with url: query_vendor_reviews_path, class: 'mui-form' do |form|
 
     .form-section
       .mui-textfield
-        = text_field_tag "query", params[:query]
-    = submit_tag "Search" , class: "mui-btn"
+        = form.text_field :query, value: params[:query]
+    = form.submit "Search", class: "mui-btn"
 
   .form-section
 

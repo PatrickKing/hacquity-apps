@@ -2,12 +2,12 @@
 .mui-container
   h1 Search Mentor Match Profiles
 
-  = form_tag query_mentor_match_profiles_path, method: :post, class: 'mui-form' do
+  = form_with url: query_mentor_match_profiles_path, class: 'mui-form' do |form|
 
     .form-section
       .mui-textfield
-        = text_field_tag "query", params[:query]
-    = submit_tag "Search" , class: "mui-btn"
+        = form.text_field :query, value: params[:query]
+    = form.submit "Search", class: "mui-btn"
 
   .form-section
 

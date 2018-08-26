@@ -1,4 +1,3 @@
-/ NB: form_with uses ajax by default. Since we are also hooking up all our forms to send with ajax, we use local: true to suppress rails' default behaviour and avoid sending twice.
 
 / receiver_service_posting is required.
 / initiator_service_posting is optional, since connections are permitted without matches.
@@ -29,7 +28,7 @@
 
   p = "You're not connected with #{other_user.name}."
 
-  = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
+  = form_with model: ConnectionRequest.new, url: ss_connection_requests_path do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
     = form.submit "Send request", class: "mui-btn"
@@ -42,7 +41,7 @@
   / Since the old connection is resolved, the request action buttons will only render a little summary of how the last connection request turned out.
   = render 'connection_requests/action_buttons', connection_request: ConnectionRequest.old_connection_request(current_user, other_user)
 
-  = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
+  = form_with model: ConnectionRequest.new, url: ss_connection_requests_path do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
     = form.submit "Send request", class: "mui-btn"
@@ -51,7 +50,7 @@
 / If there is no connection or connection request:
 - else
 
-  = form_with model: ConnectionRequest.new, method: :post, url: ss_connection_requests_path, local: true do |form|
+  = form_with model: ConnectionRequest.new, url: ss_connection_requests_path do |form|
     = form.hidden_field :initiator_service_posting_id, value: initiator_service_posting&.id
     = form.hidden_field :receiver_service_posting_id, value: receiver_service_posting.id
     = form.submit "Send request", class: "mui-btn"

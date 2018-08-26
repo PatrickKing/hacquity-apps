@@ -3,11 +3,11 @@
     - if service_posting.user == current_user
 
       - if service_posting.closed == true
-        = form_tag open_service_posting_path(service_posting), method: :post
-          = submit_tag "Re-open", class: "mui-btn"
+        = form_with url: open_service_posting_path(service_posting) do |form|
+          = form.submit "Re-open", class: "mui-btn"
 
       - else
-        = form_tag close_service_posting_path(service_posting), method: :post, class: 'mui-form--inline'
+        = form_with url: close_service_posting_path(service_posting), class: 'mui-form--inline' do |form|
           / The 'edit' link has nothing to do with the form, but it needs to be nested in the form tag to display inline with this submit button.
           = link_to 'Edit', edit_service_posting_path(service_posting), class: 'mui-btn'
-          = submit_tag "Close", class: "mui-btn"
+          = form.submit "Close", class: "mui-btn"

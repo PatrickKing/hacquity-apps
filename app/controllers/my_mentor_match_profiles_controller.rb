@@ -83,13 +83,14 @@ class MyMentorMatchProfilesController < ApplicationController
 
 
 
-    # Upload the original file to Google Drive
+    # Upload the file to Google Drive
 
 
     original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>"true"}
       },
       fields: 'id,web_view_link',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
+      # Update: have never seen the upload break at this point, assume this is OK.
       upload_source: params[:CV].tempfile,
       content_type: mime_type
     )
@@ -107,11 +108,11 @@ class MyMentorMatchProfilesController < ApplicationController
     profile.save!
 
     redirect_to my_mentor_match_profile_path, notice: "CV uploaded successfully!"
-
-
-
-
   end
+
+
+
+
 
   private
 

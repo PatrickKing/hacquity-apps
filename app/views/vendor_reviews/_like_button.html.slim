@@ -1,9 +1,9 @@
 - if vendor_review.liked_by? current_user
-  = form_tag unlike_vendor_review_path(vendor_review), method: :post
-    = submit_tag "Unlike (#{vendor_review.likes})", class: "mui-btn preserve-scroll-position"
+  = form_with url: unlike_vendor_review_path(vendor_review) do |form|
+    = form.submit "Unlike (#{vendor_review.likes})", class: "mui-btn preserve-scroll-position"
 - else
-  = form_tag like_vendor_review_path(vendor_review), method: :post
-    = submit_tag "Like (#{vendor_review.likes})", class: "mui-btn mui--bg-color-white mui--color-deep-orange-800 preserve-scroll-position"
+  = form_with url: like_vendor_review_path(vendor_review) do |form|
+    = form.submit "Like (#{vendor_review.likes})", class: "mui-btn mui--bg-color-white mui--color-deep-orange-800 preserve-scroll-position"
 
 
 
