@@ -3,7 +3,7 @@ doctype html
 html
   head
 
-    title Hacquity
+    title DoM Citizen
 
     = csrf_meta_tags
     = csp_meta_tag
@@ -15,23 +15,27 @@ html
     meta name="viewport" content="width=device-width, initial-scale=1"
 
   body
-    .mui-panel
-      = render 'shared/auth_links'
-      br
-      = flash.alert
-      = flash.notice
 
-    .mui-container
-      = yield :appbar
-
-      / NB: don't add .mui-row here, it just breaks the layout.
-      .mui-col-md-2.mui-col-xs-12
-        = yield :navbar
-      .mui-col-md-10.mui-col-xs-12
-        = yield
+    - colours_class ||= 'dashboard-colours'
+    div class=colours_class
 
       .mui-panel
-        = yield :single_column
+        = render 'shared/auth_links'
+        br
+        = flash.alert
+        = flash.notice
+
+      .mui-container
+        = yield :appbar
+
+        / NB: don't add .mui-row here, it just breaks the layout.
+        .mui-col-md-2.mui-col-xs-12
+          = yield :navbar
+        .mui-col-md-10.mui-col-xs-12
+          = yield
+
+        .mui-panel
+          = yield :single_column
 
 
 

@@ -2,7 +2,7 @@
 
 .mui-row
   .mui-col-md-12.mui-col-xs-12
-    h1.mentor_match_bottom_border = profile.user.name
+    h1.bottom-border = profile.user.name
 
 .mui-row
   .mui-col-md-6.mui-col-xs-12
@@ -12,13 +12,6 @@
     p
       strong Position: 
       = profile.position
-
-    - unless profile.web_view_link.blank?
-      p
-        = link_to 'View CV', profile.web_view_link, class: 'mui-btn mui-btn--primary mui--bg-color-teal-600'
-    - else
-      p 
-        em No CV available.
 
   .mui-col-md-6.mui-col-xs-12
     p

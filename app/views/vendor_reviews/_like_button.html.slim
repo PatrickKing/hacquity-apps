@@ -1,0 +1,14 @@
+- if vendor_review.disliked_by? current_user
+  = form_with url: neutral_helpfulness_vendor_review_path(vendor_review), class: 'mui--pull-right' do |form|
+    = form.submit "thumb_down", class: "mui-btn  preserve-scroll-position material-icons icon-button"
+- else
+  = form_with url: unlike_vendor_review_path(vendor_review), class: 'mui--pull-right' do |form|
+    = form.submit "thumb_down", class: "mui-btn preserve-scroll-position mui--bg-color-white mui--color-deep-orange-800 material-icons icon-button"
+
+- if vendor_review.liked_by? current_user
+  = form_with url: neutral_helpfulness_vendor_review_path(vendor_review), class: 'mui--pull-right' do |form|
+    = form.submit 'thumb_up', class: "mui-btn preserve-scroll-position  material-icons icon-button"
+- else
+  = form_with url: like_vendor_review_path(vendor_review), class: 'mui--pull-right' do |form|
+    = form.submit 'thumb_up', class: "mui-btn preserve-scroll-position mui--bg-color-white mui--color-deep-orange-800 material-icons icon-button"
+

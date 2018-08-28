@@ -1,0 +1,42 @@
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    h1.bottom-border = vendor_review.title
+
+    p 
+      em
+        | Review by 
+        = vendor_review.user.name
+    p 
+      em
+        | Updated 
+        = vendor_review.updated_at.strftime '%A %B %d, %Y'
+
+    p 
+      em
+        i.material-icons.inline-icon thumbs_up_down
+        = " #{vendor_review.likes}"
+
+
+.mui-row
+  .mui-col-md-6.mui-col-xs.12
+    p
+      strong Vendor Name: 
+      = vendor_review.vendor_name
+
+  .mui-col-md-6.mui-col-xs.12
+    p
+      strong Services Provided: 
+      = vendor_review.vendor_services
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    p
+      strong Review: 
+      = vendor_review.short_body
+
+.mui-row
+  .mui-col-md-12.mui-col-xs.12
+    = link_to 'Full Review', vendor_review, class: 'mui-btn'
+
+.form-section

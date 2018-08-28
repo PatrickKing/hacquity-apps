@@ -18,15 +18,13 @@ class ConnectionRequest < ApplicationRecord
 
   belongs_to :initiator, class_name: "User"
   belongs_to :receiver, class_name: "User"
-  belongs_to :initiator_service_posting, class_name: "ServicePosting"
-  belongs_to :receiver_service_posting, class_name: "ServicePosting"
+  belongs_to :initiator_service_posting, class_name: "ServicePosting", optional: true
+  belongs_to :receiver_service_posting, class_name: "ServicePosting", optional: true
 
 
   validates :initiator, presence: true
   
   validates :receiver, presence: true
-
-  validates :initiator_service_posting, presence: true, if: :is_second_shift_connection?
 
   validates :receiver_service_posting, presence: true, if: :is_second_shift_connection?
 
@@ -51,41 +49,80 @@ class ConnectionRequest < ApplicationRecord
 
   def initiator_status_string
     if self.initiator_status == 'created' and self.receiver_status == 'accepted'
-      "Connection accepted by #{self.receiver.name}. Send an email to say hello!"
+      "Connection request accepted by #{self.receiver.name}. Send an email to say hello!"
     elsif self.initiator_status == 'created' and self.receiver_status == 'declined'
-      "Connection declined by #{self.receiver.name}"
+      "Connection request declined by #{self.receiver.name}"
     elsif self.initiator_status == 'created' and self.receiver_status == 'awaiting_decision'
-      'Awaiting recipient reply'
+      'Connection request awaiting recipient reply'
     elsif self.initiator_status == 'withdrawn'
-      'Withdrawn by you'
+      'Connection request withdrawn by you'
     end
   end
 
 
   def receiver_status_string
     if self.initiator_status == 'created' and self.receiver_status == 'accepted'
-      "Connection accepted by you. Send an email to #{self.initiator.name} to say hello!"
+      "Connection request accepted by you. Send an email to #{self.initiator.name} to say hello!"
     elsif self.initiator_status == 'created' and self.receiver_status == 'declined'
-      'Connection declined by you'
+      'Connection request declined by you'
     elsif self.initiator_status == 'created' and self.receiver_status == 'awaiting_decision'
-      'Awaiting your reply'
+      'Connection request awaiting your reply'
+    elsif self.initiator_status == 'withdrawn'
+      "Connection request withdrawn by #{self.initiator.name}"
     end
     
   end
 
 
-  def show_path
-    # TODO: this probably belongs someplace else ... 
-    if connection_type == 'second_shift'
-      Rails.application.routes.url_helpers.ss_connection_request_path self
-    elsif connection_type == 'mentor_match'
-      Rails.application.routes.url_helpers.mm_connection_request_path self
+  # Regarding the state transitions a connection request is allowed to undergo: once the request is resolved, it is frozen and can no longer be accepted, declined, or withdrawn. Deleting a connection is not a responsibility connection requests.
+
+
+  def can_be_withdrawn_by? (user)
+    return false if self.resolved
+    self.initiator == user
+  end
+
+  def can_be_accepted_by? (user)
+    return false if self.resolved
+    self.receiver == user
+  end
+
+  def can_be_declined_by? (user)
+    return false if self.resolved
+    self.receiver == user
+  end
+
+  def other_user(user)
+    if self.initiator == user
+      self.receiver
+    elsif self.receiver == user
+      self.initiator
     end
   end
+
+
+
+  def self.requests_for_users (first_user, second_user)
+    forwardRequests = ConnectionRequest.where(initiator: first_user, receiver: second_user)
+    reverseRequests = ConnectionRequest.where(initiator: second_user, receiver: first_user)
+
+    forwardRequests.or(reverseRequests).order(updated_at: :desc)
+  end
+
+  def self.current_connection_request (first_user, second_user)
+    requests_for_users(first_user, second_user).where(resolved: false).first
+  end
+
+  def self.old_connection_request (first_user, second_user)
+    requests_for_users(first_user, second_user).where(resolved: true).first
+  end
+
+
 
   before_validation do
     self.initiator_status ||= 'created'
     self.receiver_status ||= 'awaiting_decision'
+    self.resolved = false if self.resolved.nil?
   end
 
 end

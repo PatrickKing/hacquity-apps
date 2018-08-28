@@ -1,0 +1,82 @@
+.mui-container
+
+  .mui-row
+    .mui-col-md-12.mui-col-xs.12
+      h1.bottom-border = @vendor_review.title
+  .mui-row
+    .mui-col-md-6.mui-col-xs.6
+      p 
+        em
+          | Review by 
+          = @vendor_review.user.name
+      p 
+        em
+          | Updated 
+          = @vendor_review.updated_at.strftime '%A %B %d, %Y'
+      p 
+        em
+          i.material-icons.inline-icon thumbs_up_down
+          = " #{@vendor_review.likes}"
+
+
+    .mui--pull-right
+      = render 'vendor_reviews/like_button', vendor_review: @vendor_review
+
+  .mui-row
+    .mui-col-md-6.mui-col-xs.12
+      p
+        strong Vendor Name: 
+        = @vendor_review.vendor_name
+
+    .mui-col-md-6.mui-col-xs.12
+      p
+        strong Services Provided: 
+        = @vendor_review.vendor_services
+
+  .mui-row
+    .mui-col-md-12.mui-col-xs.12
+      p
+        strong Review
+      div = simple_format @vendor_review.body
+
+  - if @vendor_review.has_contact_information?
+
+    .mui-row
+      .mui-col-md-12.mui-col-xs.12
+        h2.bottom-border Vendor Contact Information
+
+    .mui-row
+      - unless @vendor_review.vendor_email_address.blank? and @vendor_review.vendor_phone_number.blank?
+    
+        .mui-col-md-6.mui-col-xs.12
+          - unless @vendor_review.vendor_email_address.blank?
+              p
+                strong Email: 
+                = @vendor_review.vendor_email_address
+          - unless @vendor_review.vendor_phone_number.blank?
+              p
+                strong Phone: 
+                = @vendor_review.vendor_phone_number
+
+      - unless @vendor_review.vendor_address_line1.blank? and @vendor_review.vendor_address_line2.blank?
+        .mui-col-md-6.mui-col-xs.12
+          p
+            strong Address: 
+          p
+            = @vendor_review.vendor_address_line1
+          p
+            = @vendor_review.vendor_address_line2
+
+    - unless @vendor_review.vendor_contact_instructions.blank?
+      .mui-row
+        .mui-col-md-12.mui-col-xs.12
+          p
+            strong Contact Instructions:
+          p
+            = @vendor_review.vendor_contact_instructions
+
+  - if current_user == @vendor_review.user
+    = link_to 'Edit', edit_vendor_review_path(@vendor_review), class: 'mui-btn'
+    = form_with url: vendor_review_path(@vendor_review), method: :delete do |form|
+      = form.submit "Delete", class: "mui-btn", data: { confirm: "Really delete review '#{@vendor_review.title}'?" }
+
