@@ -26,7 +26,7 @@ class VendorReview < ApplicationRecord
   validates :vendor_phone_number, length: { maximum: 20 }
   validates :vendor_contact_instructions, length: { maximum: 300 }
 
-  validates :likes, numericality: {greater_than_or_equal_to: 0}
+  validates :likes, numericality: {only_integer: true}
 
   def has_contact_information?
     !(self.vendor_address_line1.blank? and
@@ -37,8 +37,15 @@ class VendorReview < ApplicationRecord
   end
 
   def liked_by? (user)
-    like = self.vendor_review_likes.where user_id: user.id
-    not like.empty?
+    like = self.vendor_review_likes.where(user_id: user.id).first
+    return false if like.nil?
+    like.helpfulness == 1
+  end
+
+  def disliked_by? (user)
+    like = self.vendor_review_likes.where(user_id: user.id).first
+    return false if like.nil?
+    like.helpfulness == -1
   end
 
   def short_body

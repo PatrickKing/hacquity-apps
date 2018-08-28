@@ -84,6 +84,7 @@ Rails.application.routes.draw do
       member do
         post 'like'
         post 'unlike'
+        post 'neutral_helpfulness'
       end
     end
 

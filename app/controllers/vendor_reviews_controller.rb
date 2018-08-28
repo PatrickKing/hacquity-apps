@@ -2,10 +2,11 @@ class VendorReviewsController < ApplicationController
 
   before_action :require_login
 
-  before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike]
+  before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike, :neutral_helpfulness]
 
   before_action :require_owner, only: [:edit, :update, :destroy]
 
+  before_action :set_vendor_review_like, only: [:like, :unlike, :neutral_helpfulness]
 
   layout 'trusted_vendors_pages'
 
@@ -71,26 +72,44 @@ class VendorReviewsController < ApplicationController
 
   # TODO: error handling on like/unlike
   def like
-    existing_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first
-
-    unless existing_like
-      new_like = VendorReviewLike.create! user: current_user, vendor_review: @vendor_review
+    if @vendor_review_like.helpfulness == -1
+      @vendor_review.likes += 2
+      @vendor_review.save!
+    elsif @vendor_review_like.helpfulness == 0
       @vendor_review.likes += 1
       @vendor_review.save!
     end
-    
+
+    @vendor_review_like.helpfulness = 1
+    @vendor_review_like.save!
     redirect_to request.referrer or @vendor_review
   end
 
   def unlike
-    existing_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first
-
-    if existing_like
-      existing_like.delete
+    if @vendor_review_like.helpfulness == 1
+      @vendor_review.likes -= 2
+      @vendor_review.save!
+    elsif @vendor_review_like.helpfulness == 0
       @vendor_review.likes -= 1
       @vendor_review.save!
     end
-    
+
+    @vendor_review_like.helpfulness = -1
+    @vendor_review_like.save!
+    redirect_to request.referrer or @vendor_review
+  end
+
+  def neutral_helpfulness
+    if @vendor_review_like.helpfulness == 1
+      @vendor_review.likes -= 1
+      @vendor_review.save!
+    elsif @vendor_review_like.helpfulness == -1
+      @vendor_review.likes += 1
+      @vendor_review.save!
+    end
+
+    @vendor_review_like.helpfulness = 0
+    @vendor_review_like.save!
     redirect_to request.referrer or @vendor_review
   end
 
@@ -104,6 +123,10 @@ class VendorReviewsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def vendor_review_params
     params.require(:vendor_review).permit(:title, :body, :vendor_name, :vendor_address_line1, :vendor_address_line2, :vendor_email_address, :vendor_phone_number, :vendor_contact_instructions, :vendor_services)
+  end
+
+  def set_vendor_review_like
+    @vendor_review_like = @vendor_review.vendor_review_likes.first_or_create(user_id: current_user.id)
   end
 
   def require_owner

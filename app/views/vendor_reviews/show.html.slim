@@ -3,7 +3,6 @@
   .mui-row
     .mui-col-md-12.mui-col-xs.12
       h1.bottom-border = @vendor_review.title
-
   .mui-row
     .mui-col-md-6.mui-col-xs.6
       p 
@@ -14,6 +13,11 @@
         em
           | Updated 
           = @vendor_review.updated_at.strftime '%A %B %d, %Y'
+      p 
+        em
+          i.material-icons.inline-icon thumbs_up_down
+          = " #{@vendor_review.likes}"
+
 
     .mui--pull-right
       = render 'vendor_reviews/like_button', vendor_review: @vendor_review
@@ -33,7 +37,7 @@
     .mui-col-md-12.mui-col-xs.12
       p
         strong Review
-      p = @vendor_review.body
+      div = simple_format @vendor_review.body
 
   - if @vendor_review.has_contact_information?
 
