@@ -1,10 +1,12 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -25,7 +27,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.ar_internal_metadata (
@@ -37,7 +39,7 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: connection_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: connection_requests; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.connection_requests (
@@ -75,7 +77,7 @@ ALTER SEQUENCE public.connection_requests_id_seq OWNED BY public.connection_requ
 
 
 --
--- Name: connections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: connections; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.connections (
@@ -107,7 +109,7 @@ ALTER SEQUENCE public.connections_id_seq OWNED BY public.connections.id;
 
 
 --
--- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.delayed_jobs (
@@ -146,7 +148,7 @@ ALTER SEQUENCE public.delayed_jobs_id_seq OWNED BY public.delayed_jobs.id;
 
 
 --
--- Name: mentor_match_profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: mentor_match_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.mentor_match_profiles (
@@ -183,7 +185,7 @@ ALTER SEQUENCE public.mentor_match_profiles_id_seq OWNED BY public.mentor_match_
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.schema_migrations (
@@ -192,7 +194,7 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: service_postings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: service_postings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.service_postings (
@@ -229,7 +231,7 @@ ALTER SEQUENCE public.service_postings_id_seq OWNED BY public.service_postings.i
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -272,7 +274,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: vendor_review_likes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: vendor_review_likes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.vendor_review_likes (
@@ -305,7 +307,7 @@ ALTER SEQUENCE public.vendor_review_likes_id_seq OWNED BY public.vendor_review_l
 
 
 --
--- Name: vendor_reviews; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: vendor_reviews; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.vendor_reviews (
@@ -347,63 +349,63 @@ ALTER SEQUENCE public.vendor_reviews_id_seq OWNED BY public.vendor_reviews.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: connection_requests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests ALTER COLUMN id SET DEFAULT nextval('public.connection_requests_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: connections id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connections ALTER COLUMN id SET DEFAULT nextval('public.connections_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.delayed_jobs ALTER COLUMN id SET DEFAULT nextval('public.delayed_jobs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: mentor_match_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentor_match_profiles ALTER COLUMN id SET DEFAULT nextval('public.mentor_match_profiles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: service_postings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.service_postings ALTER COLUMN id SET DEFAULT nextval('public.service_postings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: vendor_review_likes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_review_likes ALTER COLUMN id SET DEFAULT nextval('public.vendor_review_likes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: vendor_reviews id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_reviews ALTER COLUMN id SET DEFAULT nextval('public.vendor_reviews_id_seq'::regclass);
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
@@ -411,7 +413,7 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
--- Name: connection_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: connection_requests connection_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests
@@ -419,7 +421,7 @@ ALTER TABLE ONLY public.connection_requests
 
 
 --
--- Name: connections_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: connections connections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connections
@@ -427,7 +429,7 @@ ALTER TABLE ONLY public.connections
 
 
 --
--- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.delayed_jobs
@@ -435,7 +437,7 @@ ALTER TABLE ONLY public.delayed_jobs
 
 
 --
--- Name: mentor_match_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: mentor_match_profiles mentor_match_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentor_match_profiles
@@ -443,7 +445,7 @@ ALTER TABLE ONLY public.mentor_match_profiles
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.schema_migrations
@@ -451,7 +453,7 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: service_postings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: service_postings service_postings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.service_postings
@@ -459,7 +461,7 @@ ALTER TABLE ONLY public.service_postings
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -467,7 +469,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: vendor_review_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: vendor_review_likes vendor_review_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_review_likes
@@ -475,7 +477,7 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 
 --
--- Name: vendor_reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: vendor_reviews vendor_reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_reviews
@@ -483,126 +485,126 @@ ALTER TABLE ONLY public.vendor_reviews
 
 
 --
--- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority, run_at);
 
 
 --
--- Name: index_connection_requests_on_initiator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connection_requests_on_initiator_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connection_requests_on_initiator_id ON public.connection_requests USING btree (initiator_id);
 
 
 --
--- Name: index_connection_requests_on_initiator_service_posting_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connection_requests_on_initiator_service_posting_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connection_requests_on_initiator_service_posting_id ON public.connection_requests USING btree (initiator_service_posting_id);
 
 
 --
--- Name: index_connection_requests_on_receiver_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connection_requests_on_receiver_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connection_requests_on_receiver_id ON public.connection_requests USING btree (receiver_id);
 
 
 --
--- Name: index_connection_requests_on_receiver_service_posting_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connection_requests_on_receiver_service_posting_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connection_requests_on_receiver_service_posting_id ON public.connection_requests USING btree (receiver_service_posting_id);
 
 
 --
--- Name: index_connections_on_first_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connections_on_first_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connections_on_first_user_id ON public.connections USING btree (first_user_id);
 
 
 --
--- Name: index_connections_on_second_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_connections_on_second_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_connections_on_second_user_id ON public.connections USING btree (second_user_id);
 
 
 --
--- Name: index_mentor_match_profiles_on_original_cv_drive_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_mentor_match_profiles_on_original_cv_drive_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_mentor_match_profiles_on_original_cv_drive_id ON public.mentor_match_profiles USING btree (original_cv_drive_id);
 
 
 --
--- Name: index_mentor_match_profiles_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_mentor_match_profiles_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_mentor_match_profiles_on_user_id ON public.mentor_match_profiles USING btree (user_id);
 
 
 --
--- Name: index_service_postings_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_service_postings_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_service_postings_on_user_id ON public.service_postings USING btree (user_id);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
 
 
 --
--- Name: index_vendor_review_likes_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_vendor_review_likes_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_vendor_review_likes_on_user_id ON public.vendor_review_likes USING btree (user_id);
 
 
 --
--- Name: index_vendor_review_likes_on_vendor_review_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_vendor_review_likes_on_vendor_review_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_vendor_review_likes_on_vendor_review_id ON public.vendor_review_likes USING btree (vendor_review_id);
 
 
 --
--- Name: index_vendor_reviews_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_vendor_reviews_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_vendor_reviews_on_user_id ON public.vendor_reviews USING btree (user_id);
 
 
 --
--- Name: vendor_reviews_fts_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: vendor_reviews_fts_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX vendor_reviews_fts_idx ON public.vendor_reviews USING gin (text_search_document);
 
 
 --
--- Name: vendor_reviews_fts_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: vendor_reviews vendor_reviews_fts_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER vendor_reviews_fts_update BEFORE INSERT OR UPDATE ON public.vendor_reviews FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('text_search_document', 'pg_catalog.english', 'title', 'body', 'vendor_name', 'vendor_services');
 
 
 --
--- Name: fk_rails_14b982e77e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: connection_requests fk_rails_14b982e77e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests
@@ -610,7 +612,7 @@ ALTER TABLE ONLY public.connection_requests
 
 
 --
--- Name: fk_rails_343bc8bf08; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: vendor_review_likes fk_rails_343bc8bf08; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_review_likes
@@ -618,7 +620,7 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 
 --
--- Name: fk_rails_8a85be6f1c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: mentor_match_profiles fk_rails_8a85be6f1c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentor_match_profiles
@@ -626,7 +628,7 @@ ALTER TABLE ONLY public.mentor_match_profiles
 
 
 --
--- Name: fk_rails_8d397dd579; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: service_postings fk_rails_8d397dd579; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.service_postings
@@ -634,7 +636,7 @@ ALTER TABLE ONLY public.service_postings
 
 
 --
--- Name: fk_rails_9a06fdbe4d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: vendor_review_likes fk_rails_9a06fdbe4d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_review_likes
@@ -642,7 +644,7 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 
 --
--- Name: fk_rails_c98e35f83d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: vendor_reviews fk_rails_c98e35f83d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.vendor_reviews
@@ -650,7 +652,7 @@ ALTER TABLE ONLY public.vendor_reviews
 
 
 --
--- Name: fk_rails_dc12e4e96c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: connection_requests fk_rails_dc12e4e96c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests
@@ -658,7 +660,7 @@ ALTER TABLE ONLY public.connection_requests
 
 
 --
--- Name: fk_rails_e92c2df04e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: connection_requests fk_rails_e92c2df04e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests
@@ -666,7 +668,7 @@ ALTER TABLE ONLY public.connection_requests
 
 
 --
--- Name: fk_rails_f29c2b3e20; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: connection_requests fk_rails_f29c2b3e20; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connection_requests
@@ -677,7 +679,7 @@ ALTER TABLE ONLY public.connection_requests
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20180604215450'),
