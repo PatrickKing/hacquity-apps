@@ -1,7 +1,5 @@
 class SimplerMailer < ApplicationMailer
 
-  default from: 'notifications@example.com'
-
   def welcome_email (user)
     @myvar = 'erro warudo'
     @user = user

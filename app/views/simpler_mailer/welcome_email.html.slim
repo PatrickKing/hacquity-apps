@@ -1,23 +1,17 @@
-doctype html
+table style="width: 90%;" cellspacing='0'
+  tbody
 
-html
-  head
-    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: 'This is the title of an email!'
+    = render 'mail_shared/body', body: 'This is where the body of the email goes!'
+    = render 'mail_shared/body', body: 'now its easy to clone the body!'
 
-  body
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: 'www.google.com', link_text: 'woop?'
+        = render 'mail_shared/link_button', href: 'www.google.com', link_text: 'woop!'
+      td style=td_style
 
-    h1 
-      | eyyyyyyyyyyyy 
-      = @user.name
-      |, welcome to muh website
-
-    p
-      | you have maybe signed in to muh website
-      = "your username is #{@user.email} and your password is password, erps"
-
-    p
-      = "my var is #{@myvar}"
-
-    p woop
-
+    = render 'mail_shared/footer', user: @user
 
