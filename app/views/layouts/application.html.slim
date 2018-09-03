@@ -24,6 +24,7 @@ html
         br
         = flash.alert
         = flash.notice
+        = "Hello #{current_user.name}"
 
       .mui-container
         = yield :appbar
