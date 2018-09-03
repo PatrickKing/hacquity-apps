@@ -13,7 +13,7 @@ html
 
     p
       | you have maybe signed in to muh website
-      | your username is patrick.f.king@gmail.com and your password is password, erps
+      = "your username is #{@user.email} and your password is password, erps"
 
     p
       = "my var is #{@myvar}"
