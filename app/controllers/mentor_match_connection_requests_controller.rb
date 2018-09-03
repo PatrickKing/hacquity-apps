@@ -29,6 +29,7 @@ class MentorMatchConnectionRequestsController < ApplicationController
 
     if @connection_request.save
       redirect_to redirection_path, notice: 'Connection request sent.'
+      ConnectionRequestMailerJob.new(@connection_request).deliver
     else
       redirect_to redirection_path, alert: 'A problem prevented us from creating the request.'
     end

@@ -28,6 +28,7 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
     if @connection_request.save
       redirect_to redirection_path, notice: 'Connection request sent.'
+      ConnectionRequestMailerJob.new(@connection_request).deliver
     else
       redirect_to service_posting_path(@connection_request.initiator_service_posting), alert: 'A problem prevented us from creating the request.'
     end
