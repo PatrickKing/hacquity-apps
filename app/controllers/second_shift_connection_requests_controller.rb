@@ -6,7 +6,7 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   def index
 
-   @connection_requests = index_connection_requests
+    @connection_requests = index_connection_requests
 
     render 'connection_requests/index'
   end
