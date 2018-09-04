@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :require_login
+  before_action :require_login, except: :unsubscribe
 
   def activate_second_shift
     current_user.second_shift_enabled = true
@@ -20,6 +20,20 @@ class UsersController < ApplicationController
     end
 
     redirect_to edit_my_mentor_match_profile_path
+  end
+
+  def unsubscribe
+    user = User.find_by unsubscribe_token: params[:token]
+
+    if user.nil?
+      @message = "We couldn't find your account to unsubscribe you."
+      return
+    end
+
+    user.subscribe_to_emails = false
+    user.save!
+    @message = "You have been unsubscribed from DoM Citizen emails."
+
   end
 
 end

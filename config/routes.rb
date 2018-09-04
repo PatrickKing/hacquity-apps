@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resource :user, only: [] do
     post 'activate_second_shift'
     post 'activate_mentor_match'
+    get 'unsubscribe'
   end
 
 

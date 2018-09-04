@@ -30,6 +30,8 @@ class User < ApplicationRecord
   before_create do
     self.second_shift_enabled = false if self.second_shift_enabled.nil?
     self.mentor_match_enabled = false if self.mentor_match_enabled.nil?
+    self.subscribe_to_emails = true if self.subscribe_to_emails.nil?
+    self.unsubscribe_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
   end
 
 end

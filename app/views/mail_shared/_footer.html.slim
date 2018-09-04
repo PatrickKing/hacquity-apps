@@ -5,7 +5,8 @@ tr
       | You are receiving this email because you signed up for 
       a target="_blank" style="color: #{slate_colour};" href=Rails.configuration.action_mailer.default_url_options[:host] DoM Citizen
       |. 
-      | Please log in to change your email notification settings.
+      a target="_blank" style="color: #{slate_colour};" href=unsubscribe_user_url(token: user&.unsubscribe_token) Unsubscribe
+      |.
     P
       | This email was sent to 
       = user&.email
