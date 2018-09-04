@@ -20,12 +20,15 @@ html
     div class=colours_class
 
       .mui-panel
-        = render 'shared/auth_links'
+        .mui--pull-left
+          = render 'shared/auth_links'
+        .mui--pull-right
+          - if user_signed_in?
+            = "Hello #{current_user.name} "
+            = link_to 'settings', user_path, class: 'mui-btn material-icons icon-button'
         br
         = flash.alert
         = flash.notice
-        - if user_signed_in?
-          = "Hello #{current_user.name}"
 
       .mui-container
         = yield :appbar

@@ -2,6 +2,23 @@ class UsersController < ApplicationController
 
   before_action :require_login, except: :unsubscribe
 
+  layout 'user_settings_pages'
+
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    if current_user.update(user_params)
+      redirect_to user_path, notice: 'Your info was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+
   def activate_second_shift
     current_user.second_shift_enabled = true
     current_user.save!
@@ -34,6 +51,24 @@ class UsersController < ApplicationController
     user.save!
     @message = "You have been unsubscribed from DoM Citizen emails."
 
+  end
+
+
+
+  def set_email_subscription
+    if params[:subscribe] == 'false'
+      current_user.subscribe_to_emails = false
+      current_user.save!
+    elsif params[:subscribe] == 'true'
+      current_user.subscribe_to_emails = true
+      current_user.save!
+    end
+
+    redirect_to user_path
+  end
+
+  def user_params
+     params.require(:user).permit(:name)
   end
 
 end

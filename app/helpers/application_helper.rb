@@ -15,5 +15,13 @@ module ApplicationHelper
       ''
     end
   end
+
+  def edit_create_nav_link_class(controller)
+    if controller_name == controller and (action_name == 'edit' or action_name == 'update')
+      'active'
+    else
+      ''
+    end
+  end
     
 end

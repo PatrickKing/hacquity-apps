@@ -11,10 +11,12 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resource :user, only: [] do
+  resource :user, only: [:show, :edit, :update] do
     post 'activate_second_shift'
     post 'activate_mentor_match'
     get 'unsubscribe'
+
+    post 'set_email_subscription'
   end
 
 
@@ -76,7 +78,7 @@ Rails.application.routes.draw do
 
 
   scope 'trusted-vendors' do
-    resources :vendor_reviews, path: 'reviews'do
+    resources :vendor_reviews, path: 'reviews' do
       collection do
         get 'mine'
         get 'search'

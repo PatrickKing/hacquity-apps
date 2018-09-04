@@ -1,0 +1,11 @@
+- content_for :appbar do
+  .mui-appbar
+    h1.appbar-title DoM Citizen - Settings
+
+- content_for :navbar do
+  = render 'shared/user_settings_navbar'
+
+
+= render template: "layouts/application", locals: {colours_class: 'dashboard-colours'}
+
+

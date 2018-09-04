@@ -27,6 +27,14 @@ class User < ApplicationRecord
     .count
   end
 
+  def email_subscription_string
+    if subscribe_to_emails
+      'Subscribed to email'
+    else
+      'No email'
+    end
+  end
+
   before_create do
     self.second_shift_enabled = false if self.second_shift_enabled.nil?
     self.mentor_match_enabled = false if self.mentor_match_enabled.nil?
