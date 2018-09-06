@@ -1,0 +1,21 @@
+h2 Update My Info
+
+= form_with(model: current_user, class: 'mui-form', action: :patch, local: true) do |form|
+
+  - if current_user.errors.any?
+    .form-section#error-explanation
+      h2
+        = "#{pluralize(current_user.errors.count, "error")} prohibited your info from being saved:"
+
+      ul
+        - current_user.errors.full_messages.each do |message|
+          li = message
+
+  .form-section
+    .mui-textfield
+      = form.label :name, 'Name'
+      = form.text_field :name
+
+  .actions
+    = form.submit class: 'mui-btn'
+

@@ -31,7 +31,9 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
 
 - Repeat the steps given in setup for creating a Google service account, but this time give the account a name indicating that it will be used in production
 - Create an app with Heroku, and add it as a git remote on your local repository
-- In the Heroku dashboard, set the three service account related environment variables
+- In the Heroku dashboard:
+    - Set the three service account related environment variables
+    - Set the `MAIL_HOST` environment variable
 - `git push heroku HEAD:master`
 
 

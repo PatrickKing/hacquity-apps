@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, 
+         :lockable, :confirmable
 
   has_many :service_postings
   has_one :mentor_match_profile
@@ -27,9 +28,28 @@ class User < ApplicationRecord
     .count
   end
 
+  def email_subscription_string
+    if subscribe_to_emails
+      'Subscribed to email'
+    else
+      'No email'
+    end
+  end
+
+  def send_devise_notification (notification, *args)
+    DeviseMailerJob.new(notification, self, *args).deliver
+  end
+
+  # devise_mailer is a protected method on the user instance, so we can't call it from my delayed_job instance directly. Hence this song and dance.
+  def deliver_now (notification, args)
+    devise_mailer.send(notification, self, *args).deliver
+  end
+
   before_create do
     self.second_shift_enabled = false if self.second_shift_enabled.nil?
     self.mentor_match_enabled = false if self.mentor_match_enabled.nil?
+    self.subscribe_to_emails = true if self.subscribe_to_emails.nil?
+    self.unsubscribe_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
   end
 
 end

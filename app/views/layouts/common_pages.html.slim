@@ -1,6 +1,7 @@
 - content_for :appbar do
   .mui-appbar
-    h1.appbar-title DoM Citizen
+    h1.appbar-title 
+      = link_to 'DoM Citizen', root_path, class: 'home-link'
 
 
 = render template: "layouts/application", locals: {colours_class: 'dashboard-colours'}

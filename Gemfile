@@ -14,6 +14,7 @@ gem 'kaminari'
 gem 'google-api-client'
 gem 'jquery-rails'
 gem 'delayed_job_active_record'
+gem 'daemons'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -69,3 +70,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+

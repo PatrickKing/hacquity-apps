@@ -1,0 +1,22 @@
+h2 My Info
+.mui-container-fluid
+
+  .mui-row.form-section
+    p
+      strong Name: 
+      = current_user.name
+
+    p
+      strong Email Address: 
+      = current_user.email
+
+    p
+      strong Emails from DoM Citizen: 
+      = current_user.email_subscription_string
+
+    - if current_user.subscribe_to_emails
+      = form_with url: set_email_subscription_user_path(subscribe: false) do |form|
+        = form.submit "Unsubscribe", class: "mui-btn preserve-scroll-position"
+    - else
+      = form_with url: set_email_subscription_user_path(subscribe: true) do |form|
+        = form.submit "Re-subscribe", class: "mui-btn preserve-scroll-position"

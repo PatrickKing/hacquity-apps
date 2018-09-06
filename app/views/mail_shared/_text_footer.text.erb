@@ -1,0 +1,17 @@
+<% offer_unsubscribe = offer_unsubscribe || 'yes' %>
+============================================================
+
+You are receiving this email because you signed up for DoM Citizen. 
+<% if offer_unsubscribe == 'yes' %>
+
+  Unsubscribe:
+
+  <%= unsubscribe_user_url(token: user&.unsubscribe_token) %>
+
+<% end %>
+
+Log in:
+
+<%= host_url %>
+
+This email was sent to <%= user&.email %>.

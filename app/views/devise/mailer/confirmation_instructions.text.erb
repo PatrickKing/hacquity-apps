@@ -1,0 +1,12 @@
+DoM Citizen
+Confirmation Instructions
+
+============================================================
+
+Welcome <%= @resource.name %>,
+
+You can confirm your account email through the link below:
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+<%= render 'mail_shared/text_footer', user: @resource, offer_unsubscribe: 'no' %>

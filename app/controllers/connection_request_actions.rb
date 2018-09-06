@@ -52,6 +52,7 @@ module ConnectionRequestActions
     """, user_id: current_user.id, date_limit: 3.days.ago)
     .order(created_at: :desc)
     .page(params[:page])
+    .includes(initiator: [:mentor_match_profile], receiver: [:mentor_match_profile], initiator_service_posting: [], receiver_service_posting: [])
   end
 
   def set_connection_request

@@ -1,0 +1,18 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "#{@connection_request.initiator.name} wants to connect on DoM Citizen"
+    = render 'mail_shared/body', body: @detail
+    = render 'mail_shared/body', body: "You can respond to this request on your #{@connection_request.connection_type.titleize} requests page."
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: @connections_url, link_text: "My #{@connection_request.connection_type.titleize} requests"
+
+      td style=td_style
+
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @connection_request.receiver
+

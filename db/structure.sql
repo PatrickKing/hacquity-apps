@@ -248,7 +248,16 @@ CREATE TABLE public.users (
     current_sign_in_ip inet,
     last_sign_in_ip inet,
     second_shift_enabled boolean,
-    mentor_match_enabled boolean
+    mentor_match_enabled boolean,
+    subscribe_to_emails boolean,
+    unsubscribe_token character varying,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone
 );
 
 
@@ -553,6 +562,13 @@ CREATE INDEX index_service_postings_on_user_id ON public.service_postings USING 
 
 
 --
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON public.users USING btree (confirmation_token);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -564,6 +580,20 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
+
+
+--
+-- Name: index_users_on_unsubscribe_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_unsubscribe_token ON public.users USING btree (unsubscribe_token);
 
 
 --
@@ -700,6 +730,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821174547'),
 ('20180822222701'),
 ('20180823042412'),
-('20180826002434');
+('20180826002434'),
+('20180904012405'),
+('20180906003800');
 
 

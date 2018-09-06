@@ -1,0 +1,15 @@
+
+DoM Citizen
+<%= @connection_request.initiator.name %> wants to connect on DoM Citizen.
+
+============================================================
+
+<%= @detail %>
+
+You can respond to this request on your <%= @connection_request.connection_type.titleize%> requests page.
+
+My <%= @connection_request.connection_type.titleize %> requests: <%= @connections_url %>
+
+Thanks!
+
+<%= render 'mail_shared/text_footer', user: @connection_request.receiver %>
