@@ -19,13 +19,19 @@ html
     - colours_class ||= 'dashboard-colours'
     div class=colours_class
 
-      .mui-panel
-        .mui--pull-left
-          = render 'shared/auth_links'
+      .mui-panel.dashboard-colours
         .mui--pull-right
           - if user_signed_in?
             = "Hello #{current_user.name} "
-            = link_to 'settings', user_path, class: 'mui-btn material-icons icon-button'
+            = link_to 'settings', user_path, class: 'mui-btn material-icons icon-button mui--color-blue-grey-600 mui--bg-color-white'
+
+            = form_with url: destroy_user_session_path, method: :delete, local: true, class: 'inline' do |form|
+              = form.submit "Logout", class: 'mui-btn mui--color-blue-grey-600 mui--bg-color-white'
+          - else
+            = link_to "Log in", new_user_session_path, class: 'mui-btn'
+            = link_to "Sign up", new_user_registration_path, class: 'mui-btn'
+
+
         br
         = flash.alert
         = flash.notice

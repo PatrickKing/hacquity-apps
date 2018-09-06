@@ -1,6 +1,8 @@
 - content_for :appbar do
   .mui-appbar
-    h1.appbar-title DoM Citizen - Second Shift
+    h1.appbar-title 
+      = link_to 'DoM Citizen', root_path, class: 'home-link'
+      |  - Second Shift
 
 - content_for :navbar do
   = render 'shared/second_shift_navbar'
