@@ -12,9 +12,36 @@ h2 Update My Info
           li = message
 
   .form-section
+    h3 My Contact Info
+
     .mui-textfield
       = form.label :name, 'Name'
       = form.text_field :name
+
+    .mui-textfield
+      = form.label :phone_number, 'Phone Number'
+      = form.text_field :phone_number
+
+    .mui-select
+      = form.label :preferred_contact_method, 'Preferred Contact Method'
+      = form.collection_select :preferred_contact_method, User::ContactMethods, :to_s, :titleize
+
+  .form-section
+    h3 Admin Assistant Contact Info
+
+    .mui-textfield
+      = form.label :admin_assistant_name, 'Admin Name'
+      = form.text_field :admin_assistant_name
+
+    .mui-textfield
+      = form.label :admin_assistant_email, 'Admin Email Address'
+      = form.email_field :admin_assistant_email
+
+    .mui-textfield
+      = form.label :admin_assistant_phone_number, 'Admin Phone Number'
+      = form.text_field :admin_assistant_phone_number
+
+
 
   .actions
     = form.submit class: 'mui-btn'

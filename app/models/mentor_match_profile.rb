@@ -8,6 +8,11 @@ class MentorMatchProfile < ApplicationRecord
     'Seeking Both'
   ]
 
+  MentorMatchProfile::CareerTracks = [
+    '',
+    'academic',
+    'non-academic'
+  ]
 
 
 
@@ -18,6 +23,13 @@ class MentorMatchProfile < ApplicationRecord
   validates :match_role, inclusion: {in: MentorMatchProfile::Roles }
 
   validates :seeking_summary, length: { maximum: 50000 }
+
+  validates :career_track, inclusion: {in: MentorMatchProfile::CareerTracks }
+
+  validates :career_stage, length: { maximum: 300 }
+
+  validates :user_keywords, length: { maximum: 3000 }
+
 
 
   def role_display_text
@@ -43,9 +55,27 @@ class MentorMatchProfile < ApplicationRecord
     
   end
 
+  def any_availability?
+    self.available_ongoing || self.available_email_questions || self.available_one_off_meetings
+  end
+
+  def any_mentorship_areas?
+    self.mentorship_career || self.mentorship_life || self.mentorship_research || self.mentorship_promotion
+  end
+
   before_validation do
     self.uploaded_cv_exists = false if self.uploaded_cv_exists.nil?
     self.match_role = 'Not Seeking' if self.match_role.blank?
+
+    self.career_track = '' if self.career_track.nil?
+
+    self.available_ongoing = false if self.available_ongoing.nil?
+    self.available_email_questions = false if self.available_email_questions.nil?
+    self.available_one_off_meetings = false if self.available_one_off_meetings.nil?
+    self.mentorship_career = false if self.mentorship_career.nil?
+    self.mentorship_life = false if self.mentorship_life.nil?
+    self.mentorship_research = false if self.mentorship_research.nil?
+    self.mentorship_promotion = false if self.mentorship_promotion.nil?
   end
 
 

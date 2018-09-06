@@ -24,13 +24,59 @@ h2 Update My Mentor Match Profile
       = form.text_field :position
 
   .form-section
+    .mui-select
+      = form.label :career_track
+      = form.collection_select :career_track, MentorMatchProfile::CareerTracks, :to_s, :titleize
+
+  .form-section
+    .mui-textfield
+      = form.label :career_stage, 'Career Stage'
+      = form.text_field :career_stage
+
+  .form-section
     .mui-textfield
       = form.label :seeking_summary, 'Summary (your skills, interests, and goals in mentorship)'
       = form.text_area :seeking_summary
 
+  .form-section
+    .mui-textfield
+      = form.label :user_keywords, 'Keywords (key phrases about your career interests)'
+      = form.text_area :user_keywords
+  
+  .form-section
+    h3 Availability
+
+    .mui-checkbox
+      = form.check_box :available_email_questions
+      = form.label :available_email_questions, 'Email / Text Questions'
+
+    .mui-checkbox
+      = form.check_box :available_one_off_meetings
+      = form.label :available_one_off_meetings, 'One Off Meetings'
+
+    .mui-checkbox
+      = form.check_box :available_ongoing
+      = form.label :available_ongoing, 'Ongoing Basis'
+
+  .form-section
+    h3 Mentorship Areas
+    .mui-checkbox
+      = form.check_box :mentorship_career
+      = form.label :mentorship_career, 'Career'
+    .mui-checkbox
+      = form.check_box :mentorship_life
+      = form.label :mentorship_life, 'Life'
+    .mui-checkbox
+      = form.check_box :mentorship_research
+      = form.label :mentorship_research, 'Research'
+    .mui-checkbox
+      = form.check_box :mentorship_promotion
+      = form.label :mentorship_promotion, 'Promotions'
+
   .actions
     = form.submit class: 'mui-btn'
     = link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'
+
 
 
 
