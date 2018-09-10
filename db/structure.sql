@@ -163,14 +163,19 @@ CREATE TABLE public.mentor_match_profiles (
     available_ongoing boolean,
     available_email_questions boolean,
     available_one_off_meetings boolean,
-    mentorship_career boolean,
-    mentorship_life boolean,
-    mentorship_research boolean,
-    mentorship_promotion boolean,
     career_stage character varying,
-    career_track character varying,
     user_keywords character varying,
-    user_keywords_gdoc_id character varying
+    user_keywords_gdoc_id character varying,
+    mentorship_opportunities boolean,
+    mentorship_promotion_tenure boolean,
+    mentorship_career_life_balance boolean,
+    mentorship_performance boolean,
+    mentorship_networking boolean,
+    career_track_research boolean,
+    career_track_education boolean,
+    career_track_policy boolean,
+    career_track_leadership_admin boolean,
+    career_track_clinical boolean
 );
 
 
@@ -749,6 +754,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180826002434'),
 ('20180904012405'),
 ('20180906003800'),
-('20180906045006');
+('20180906045006'),
+('20180907190433');
 
 

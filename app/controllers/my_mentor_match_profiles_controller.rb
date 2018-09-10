@@ -121,8 +121,10 @@ class MyMentorMatchProfilesController < ApplicationController
   end
 
   def mentor_match_profile_params
-    params.require(:mentor_match_profile).permit(:match_role, :position, :seeking_summary, :available_ongoing, :available_email_questions, :available_one_off_meetings, :mentorship_career, :mentorship_life, :mentorship_research, :mentorship_promotion, :career_stage, :career_track, :user_keywords)
+    params.require(:mentor_match_profile).permit(:match_role, :position, :seeking_summary, :available_ongoing, :available_email_questions, :available_one_off_meetings, :career_stage, :user_keywords, :mentorship_opportunities, :mentorship_promotion_tenure, :mentorship_career_life_balance, :mentorship_performance, :mentorship_networking, :career_track_research, :career_track_education, :career_track_policy, :career_track_leadership_admin, :career_track_clinical)
   end
+
+
 
 
 end

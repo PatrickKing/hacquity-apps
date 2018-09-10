@@ -24,9 +24,24 @@ h2 Update My Mentor Match Profile
       = form.text_field :position
 
   .form-section
-    .mui-select
-      = form.label :career_track
-      = form.collection_select :career_track, MentorMatchProfile::CareerTracks, :to_s, :titleize
+    h3 Career Track
+
+    .mui-checkbox
+      = form.check_box :career_track_research
+      = form.label :career_track_research, 'Research'
+    .mui-checkbox
+      = form.check_box :career_track_education
+      = form.label :career_track_education, 'Education'
+    .mui-checkbox
+      = form.check_box :career_track_policy
+      = form.label :career_track_policy, 'Policy'
+    .mui-checkbox
+      = form.check_box :career_track_leadership_admin
+      = form.label :career_track_leadership_admin, 'Leadership and Administration'
+    .mui-checkbox
+      = form.check_box :career_track_clinical
+      = form.label :career_track_clinical, 'Clinical'
+
 
   .form-section
     .mui-textfield
@@ -35,13 +50,13 @@ h2 Update My Mentor Match Profile
 
   .form-section
     .mui-textfield
-      = form.label :seeking_summary, 'Summary (your skills, interests, and goals in mentorship)'
+      = form.label :seeking_summary, 'Summary (your skills, interests, prior roles, and goals in mentorship)'
       = form.text_area :seeking_summary
 
   .form-section
     .mui-textfield
       = form.label :user_keywords, 'Keywords (key phrases about your career interests)'
-      = form.text_area :user_keywords
+      = form.text_field :user_keywords
   
   .form-section
     h3 Availability
@@ -60,18 +75,27 @@ h2 Update My Mentor Match Profile
 
   .form-section
     h3 Mentorship Areas
+
     .mui-checkbox
-      = form.check_box :mentorship_career
-      = form.label :mentorship_career, 'Career'
+      = form.check_box :mentorship_opportunities
+      = form.label :mentorship_opportunities, 'New Opportunities'
+
     .mui-checkbox
-      = form.check_box :mentorship_life
-      = form.label :mentorship_life, 'Life'
+      = form.check_box :mentorship_promotion_tenure
+      = form.label :mentorship_promotion_tenure, 'Promotion and Tenure'
+
     .mui-checkbox
-      = form.check_box :mentorship_research
-      = form.label :mentorship_research, 'Research'
+      = form.check_box :mentorship_career_life_balance
+      = form.label :mentorship_career_life_balance, 'Career and Life Balance'
+
     .mui-checkbox
-      = form.check_box :mentorship_promotion
-      = form.label :mentorship_promotion, 'Promotions'
+      = form.check_box :mentorship_performance
+      = form.label :mentorship_performance, 'Improving Performance'
+
+    .mui-checkbox
+      = form.check_box :mentorship_networking
+      = form.label :mentorship_networking, 'Networking'
+
 
   .actions
     = form.submit class: 'mui-btn'

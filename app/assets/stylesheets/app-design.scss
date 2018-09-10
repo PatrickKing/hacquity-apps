@@ -81,6 +81,12 @@ $invalid-red: #F44336;
   color: white;
 }
 
+// This is a desperate attempt to make text box labels align okay. who knows if it works well on many/any browsers!?!?!
+.mui-checkbox label {
+  vertical-align: text-bottom;
+}
+
+
 // Colours:
 
 .dashboard-colours {

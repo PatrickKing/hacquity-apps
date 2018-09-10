@@ -6,9 +6,9 @@
 / If the users are connected:
 - elsif Connection.connection_exists? current_user, profile.user
 
-  p
-    = "You're connected. You can email #{profile.user.name} at "
-    = mail_to profile.user.email
+  h3 Connection
+  p = "You're connected with #{profile.user.name}"
+  = render 'users/contact_info', user: profile.user
 
 
 / If there is an existing connection request, related to this one or not:

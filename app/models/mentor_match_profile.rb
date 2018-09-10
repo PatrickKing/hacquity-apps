@@ -8,14 +8,6 @@ class MentorMatchProfile < ApplicationRecord
     'Seeking Both'
   ]
 
-  MentorMatchProfile::CareerTracks = [
-    '',
-    'academic',
-    'non-academic'
-  ]
-
-
-
   validates :position, presence: true
   validates :position, length: { maximum: 300 }
 
@@ -24,7 +16,6 @@ class MentorMatchProfile < ApplicationRecord
 
   validates :seeking_summary, length: { maximum: 50000 }
 
-  validates :career_track, inclusion: {in: MentorMatchProfile::CareerTracks }
 
   validates :career_stage, length: { maximum: 300 }
 
@@ -60,22 +51,34 @@ class MentorMatchProfile < ApplicationRecord
   end
 
   def any_mentorship_areas?
-    self.mentorship_career || self.mentorship_life || self.mentorship_research || self.mentorship_promotion
+    self.mentorship_opportunities || self.mentorship_promotion_tenure || self.mentorship_career_life_balance || self.mentorship_performance || self.mentorship_networking
+  end
+
+
+  def any_career_tracks?
+    self.career_track_research || self.career_track_education || self.career_track_policy || self.career_track_leadership_admin || self.career_track_clinical
   end
 
   before_validation do
     self.uploaded_cv_exists = false if self.uploaded_cv_exists.nil?
     self.match_role = 'Not Seeking' if self.match_role.blank?
 
-    self.career_track = '' if self.career_track.nil?
 
     self.available_ongoing = false if self.available_ongoing.nil?
     self.available_email_questions = false if self.available_email_questions.nil?
     self.available_one_off_meetings = false if self.available_one_off_meetings.nil?
-    self.mentorship_career = false if self.mentorship_career.nil?
-    self.mentorship_life = false if self.mentorship_life.nil?
-    self.mentorship_research = false if self.mentorship_research.nil?
-    self.mentorship_promotion = false if self.mentorship_promotion.nil?
+
+    self.mentorship_opportunities = false if self.mentorship_opportunities.nil?
+    self.mentorship_promotion_tenure = false if self.mentorship_promotion_tenure.nil?
+    self.mentorship_career_life_balance = false if self.mentorship_career_life_balance.nil?
+    self.mentorship_performance = false if self.mentorship_performance.nil?
+    self.mentorship_networking = false if self.mentorship_networking.nil?
+    self.career_track_research = false if self.career_track_research.nil?
+    self.career_track_education = false if self.career_track_education.nil?
+    self.career_track_policy = false if self.career_track_policy.nil?
+    self.career_track_leadership_admin = false if self.career_track_leadership_admin.nil?
+    self.career_track_clinical = false if self.career_track_clinical.nil?
+
   end
 
 
