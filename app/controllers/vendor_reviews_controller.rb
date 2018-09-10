@@ -126,7 +126,7 @@ class VendorReviewsController < ApplicationController
   end
 
   def set_vendor_review_like
-    @vendor_review_like = @vendor_review.vendor_review_likes.first_or_create(user_id: current_user.id)
+    @vendor_review_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first_or_create()
   end
 
   def require_owner
