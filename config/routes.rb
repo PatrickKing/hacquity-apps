@@ -62,6 +62,9 @@ Rails.application.routes.draw do
         get 'search'
         post 'query'
       end
+      member do
+        get 'cv'
+      end
     end
     resources :connection_requests,
       only: [:index, :create],

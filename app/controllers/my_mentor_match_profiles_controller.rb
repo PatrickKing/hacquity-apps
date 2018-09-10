@@ -88,23 +88,20 @@ class MyMentorMatchProfilesController < ApplicationController
 
     original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>"true"}
       },
-      fields: 'id,web_view_link',
+      fields: 'id,mime_type,name',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
       # Update: have never seen the upload break at this point, assume this is OK.
       upload_source: params[:CV].tempfile,
       content_type: mime_type
     )
 
-    perm = Google::Apis::DriveV3::Permission.new
-    perm.role = 'reader'
-    perm.type = 'anyone'
-    drive.create_permission(original_file.id, perm, {}) 
-
 
     # Finally, save our gains:
 
     profile.original_cv_drive_id = original_file.id
-    profile.web_view_link = original_file.web_view_link
+
+    profile.original_cv_mime_type = original_file.mime_type
+    profile.original_cv_file_name = original_file.name
     profile.save!
 
     redirect_to my_mentor_match_profile_path, notice: "CV uploaded successfully!"

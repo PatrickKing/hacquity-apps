@@ -159,7 +159,6 @@ CREATE TABLE public.mentor_match_profiles (
     original_cv_drive_id character varying,
     uploaded_cv_exists boolean,
     seeking_summary character varying,
-    web_view_link character varying,
     available_ongoing boolean,
     available_email_questions boolean,
     available_one_off_meetings boolean,
@@ -175,7 +174,9 @@ CREATE TABLE public.mentor_match_profiles (
     career_track_education boolean,
     career_track_policy boolean,
     career_track_leadership_admin boolean,
-    career_track_clinical boolean
+    career_track_clinical boolean,
+    original_cv_mime_type character varying,
+    original_cv_file_name character varying
 );
 
 
@@ -755,6 +756,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180904012405'),
 ('20180906003800'),
 ('20180906045006'),
-('20180907190433');
+('20180907190433'),
+('20180910212602');
 
 
