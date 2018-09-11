@@ -1,6 +1,6 @@
 h2 Update My Info
 
-= form_with(model: current_user, class: 'mui-form', action: :patch, local: true) do |form|
+= form_with(model: current_user, class: 'mui-form', method: :patch, local: true) do |form|
 
   - if current_user.errors.any?
     .form-section#error-explanation

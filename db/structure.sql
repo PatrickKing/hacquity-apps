@@ -577,6 +577,13 @@ CREATE INDEX index_mentor_match_profiles_on_user_id ON public.mentor_match_profi
 
 
 --
+-- Name: index_mentor_match_profiles_on_user_keywords_gdoc_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mentor_match_profiles_on_user_keywords_gdoc_id ON public.mentor_match_profiles USING btree (user_keywords_gdoc_id);
+
+
+--
 -- Name: index_service_postings_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -757,6 +764,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180906003800'),
 ('20180906045006'),
 ('20180907190433'),
-('20180910212602');
+('20180910212602'),
+('20180911043715');
 
 

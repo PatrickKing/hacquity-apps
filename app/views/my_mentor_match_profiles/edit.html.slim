@@ -1,14 +1,14 @@
 h2 Update My Mentor Match Profile
 
-= form_with(model: @mentor_match_profile, class: 'mui-form', action: :patch, url: my_mentor_match_profile_path, local: true) do |form|
+= form_with(model: @mentor_match_profile_form, class: 'mui-form', method: :patch, url: my_mentor_match_profile_path, local: true) do |form|
 
-  - if @mentor_match_profile.errors.any?
+  - if @mentor_match_profile_form.errors.any?
     .form-section#error-explanation
       h2
-        = "#{pluralize(@mentor_match_profile.errors.count, "error")} prohibited your profile from being saved:"
+        = "#{pluralize(@mentor_match_profile_form.errors.count, "error")} prohibited your profile from being saved:"
 
       ul
-        - @mentor_match_profile.errors.full_messages.each do |message|
+        - @mentor_match_profile_form.errors.full_messages.each do |message|
           li = message
 
 
@@ -98,7 +98,7 @@ h2 Update My Mentor Match Profile
 
 
   .actions
-    = form.submit class: 'mui-btn'
+    = form.submit 'Update My Profile', class: 'mui-btn'
     = link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'
 
 

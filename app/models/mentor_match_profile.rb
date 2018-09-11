@@ -8,20 +8,7 @@ class MentorMatchProfile < ApplicationRecord
     'Seeking Both'
   ]
 
-  validates :position, presence: true
-  validates :position, length: { maximum: 300 }
-
-  validates :match_role, presence: true
-  validates :match_role, inclusion: {in: MentorMatchProfile::Roles }
-
-  validates :seeking_summary, length: { maximum: 50000 }
-
-
-  validates :career_stage, length: { maximum: 300 }
-
-  validates :user_keywords, length: { maximum: 3000 }
-
-
+  # NB: see mentor_match_profile_form for user facing validations.
 
   def role_display_text
     case self.match_role
@@ -57,6 +44,10 @@ class MentorMatchProfile < ApplicationRecord
 
   def any_career_tracks?
     self.career_track_research || self.career_track_education || self.career_track_policy || self.career_track_leadership_admin || self.career_track_clinical
+  end
+
+  def search_document
+    [position, seeking_summary, career_stage, user_keywords].join ' '
   end
 
   before_validation do

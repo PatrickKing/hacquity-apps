@@ -38,11 +38,11 @@ class MentorMatchProfilesController < ApplicationController
 
     drive_file_list = drive.list_files q: "fullText contains '#{query}' and properties has {key='seeking' and value='true'}"
 
-    profile_ids = drive_file_list.files.map do |file|
+    drive_file_ids = drive_file_list.files.map do |file|
       file.id
     end
 
-    @mentor_match_profiles = MentorMatchProfile.where(original_cv_drive_id: profile_ids)
+    @mentor_match_profiles = MentorMatchProfile.where("original_cv_drive_id IN (:drive_file_ids) OR user_keywords_gdoc_id IN (:drive_file_ids)", drive_file_ids: drive_file_ids)
       .page(params[:page])
 
   end
