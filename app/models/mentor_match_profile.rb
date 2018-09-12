@@ -1,6 +1,80 @@
 class MentorMatchProfile < ApplicationRecord
   belongs_to :user
 
+  # These scopes are designed to take a mentor_match_filter_form object as argument
+
+  scope :with_availabilities, -> (filters) {
+    filter_pieces = []
+
+    if filters.available_ongoing == '1'
+      filter_pieces.push 'available_ongoing = true'
+    end
+    if filters.available_email_questions == '1'
+      filter_pieces.push 'available_email_questions = true'
+    end
+    if filters.available_one_off_meetings == '1'
+      filter_pieces.push 'available_one_off_meetings = true'
+    end
+
+    if filter_pieces.empty?
+      all
+    else
+      where filter_pieces.join(' OR ')
+    end
+  }
+
+  scope :with_areas, -> (filters) {
+    filter_pieces = []
+
+    if filters.mentorship_opportunities == '1'
+      filter_pieces.push 'mentorship_opportunities = true'
+    end
+    if filters.mentorship_promotion_tenure == '1'
+      filter_pieces.push 'mentorship_promotion_tenure = true'
+    end
+    if filters.mentorship_career_life_balance == '1'
+      filter_pieces.push 'mentorship_career_life_balance = true'
+    end
+    if filters.mentorship_performance == '1'
+      filter_pieces.push 'mentorship_performance = true'
+    end
+    if filters.mentorship_networking == '1'
+      filter_pieces.push 'mentorship_networking = true'
+    end
+
+    if filter_pieces.empty?
+      all
+    else
+      where filter_pieces.join(' OR ')
+    end
+  }
+
+  scope :with_tracks, -> (filters) {
+    filter_pieces = []
+
+    if filters.career_track_research == '1'
+      filter_pieces.push 'career_track_research = true'
+    end
+    if filters.career_track_education == '1'
+      filter_pieces.push 'career_track_education = true'
+    end
+    if filters.career_track_policy == '1'
+      filter_pieces.push 'career_track_policy = true'
+    end
+    if filters.career_track_leadership_admin == '1'
+      filter_pieces.push 'career_track_leadership_admin = true'
+    end
+    if filters.career_track_clinical == '1'
+      filter_pieces.push 'career_track_clinical = true'
+    end
+
+    if filter_pieces.empty?
+      all
+    else
+      where filter_pieces.join(' OR ')
+    end
+  }
+
   MentorMatchProfile::Roles = [
     'Not Seeking',
     'Seeking to be a Mentor',
