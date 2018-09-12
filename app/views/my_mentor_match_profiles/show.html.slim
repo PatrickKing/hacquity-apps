@@ -11,3 +11,10 @@ h2 My Mentor Match Profile
 = link_to 'Edit my Profile', edit_my_mentor_match_profile_path, class: 'mui-btn'
 = link_to 'Update my CV', edit_cv_my_mentor_match_profile_path, class: 'mui-btn'
 
+h3 Contact Information
+
+= render 'users/contact_info', user: current_user
+
+em You may also want to update your contact info on your info page.
+div = link_to 'My Info', edit_user_path, class: 'mui-btn'
+

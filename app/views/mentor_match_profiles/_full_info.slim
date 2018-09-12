@@ -1,3 +1,58 @@
 .mui-row
   .mui-col-md-12.mui-col-xs-12
-    p additional details here ...
+
+    p
+      strong Career Stage: 
+      = profile.career_stage
+
+    - if profile.any_career_tracks?
+
+      h3 Career Track
+      ul
+        - if profile.career_track_research
+          li Research
+        - if profile.career_track_education
+          li Education
+        - if profile.career_track_policy
+          li Policy
+        - if profile.career_track_leadership_admin
+          li Leadership and Administration
+        - if profile.career_track_clinical
+          li Clinical
+
+
+    - if profile.any_availability?
+
+      h3 Availability
+
+      ul
+        - if profile.available_email_questions
+          li Email / Text Questions
+        - if profile.available_one_off_meetings
+          li One Off Meetings
+        - if profile.available_ongoing
+          li Ongoing Basis
+
+    - if profile.any_mentorship_areas?
+
+      h3 Mentorship Areas
+
+      ul
+        - if profile.mentorship_opportunities
+          li New Opportunities
+        - if profile.mentorship_promotion_tenure
+          li Promotion and Tenure
+        - if profile.mentorship_career_life_balance
+          li Career and Life Balance
+        - if profile.mentorship_performance
+          li Improving Performance
+        - if profile.mentorship_networking
+          li Networking
+
+
+
+
+
+
+
+

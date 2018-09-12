@@ -19,5 +19,7 @@ module Hacquity
     config.active_job.queue_adapter = :delayed_job
 
     config.active_record.schema_format = :sql
+
+    config.autoload_paths << File.join(Rails.root, 'app', 'forms/**')
   end
 end

@@ -59,8 +59,10 @@ Rails.application.routes.draw do
     end
     resources :mentor_match_profiles, only: [:index, :show] do
       collection do
-        get 'search'
         post 'query'
+      end
+      member do
+        get 'cv'
       end
     end
     resources :connection_requests,

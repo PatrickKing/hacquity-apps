@@ -31,9 +31,7 @@ class UsersController < ApplicationController
 
     if current_user.mentor_match_profile.nil?
       profile = MentorMatchProfile.new user: current_user
-      # Validations are for user modifications. Note that the profile is invalid as created, and needs a few fields filled out by the user!
-      # TODO: introduce a proper 'first run' wizard when the user joins mentor match.
-      profile.save! validate: false
+      profile.save!
     end
 
     redirect_to edit_my_mentor_match_profile_path
@@ -68,7 +66,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-     params.require(:user).permit(:name)
+     params.require(:user).permit([:name, :preferred_contact_method, :phone_number, :admin_assistant_name, :admin_assistant_email, :admin_assistant_phone_number])
+
   end
 
 end

@@ -159,7 +159,24 @@ CREATE TABLE public.mentor_match_profiles (
     original_cv_drive_id character varying,
     uploaded_cv_exists boolean,
     seeking_summary character varying,
-    web_view_link character varying
+    available_ongoing boolean,
+    available_email_questions boolean,
+    available_one_off_meetings boolean,
+    career_stage character varying,
+    user_keywords character varying,
+    user_keywords_gdoc_id character varying,
+    mentorship_opportunities boolean,
+    mentorship_promotion_tenure boolean,
+    mentorship_career_life_balance boolean,
+    mentorship_performance boolean,
+    mentorship_networking boolean,
+    career_track_research boolean,
+    career_track_education boolean,
+    career_track_policy boolean,
+    career_track_leadership_admin boolean,
+    career_track_clinical boolean,
+    original_cv_mime_type character varying,
+    original_cv_file_name character varying
 );
 
 
@@ -257,7 +274,12 @@ CREATE TABLE public.users (
     unconfirmed_email character varying,
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
-    locked_at timestamp without time zone
+    locked_at timestamp without time zone,
+    preferred_contact_method character varying,
+    phone_number character varying,
+    admin_assistant_name character varying,
+    admin_assistant_email character varying,
+    admin_assistant_phone_number character varying
 );
 
 
@@ -555,6 +577,13 @@ CREATE INDEX index_mentor_match_profiles_on_user_id ON public.mentor_match_profi
 
 
 --
+-- Name: index_mentor_match_profiles_on_user_keywords_gdoc_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mentor_match_profiles_on_user_keywords_gdoc_id ON public.mentor_match_profiles USING btree (user_keywords_gdoc_id);
+
+
+--
 -- Name: index_service_postings_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -732,6 +761,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180823042412'),
 ('20180826002434'),
 ('20180904012405'),
-('20180906003800');
+('20180906003800'),
+('20180906045006'),
+('20180907190433'),
+('20180910212602'),
+('20180911043715');
 
 

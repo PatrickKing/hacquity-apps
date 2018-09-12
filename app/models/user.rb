@@ -17,8 +17,49 @@ class User < ApplicationRecord
     foreign_key: :receiver_id
 
 
+  User::ContactMethods = [
+    'email',
+    'phone',
+    'text',
+    'email_admin',
+    'phone_admin', 
+    'text_admin'
+  ]
+
   validates :name, presence: true
   validates :name, length: { maximum: 300 }
+
+  validates :preferred_contact_method, inclusion: {in: User::ContactMethods }
+
+  validates :phone_number, length: { maximum: 20 }
+  validates :phone_number, presence: true, if: :require_phone_number?
+
+  validates :admin_assistant_name, length: { maximum: 300 }
+  validates :admin_assistant_name, presence: true, if: :require_admin_name?
+
+  validates :admin_assistant_email, length: { maximum: 100 }
+  validates :admin_assistant_email, presence: true, if: :require_admin_email?
+
+  validates :admin_assistant_phone_number, length: { maximum: 20 }
+  validates :admin_assistant_phone_number, presence: true, if: :require_admin_phone_number?
+
+
+  def require_phone_number?
+    ['phone', 'text'].include? self.preferred_contact_method
+  end
+
+  def require_admin_phone_number?
+    ['phone_admin', 'text_admin'].include? self.preferred_contact_method
+  end
+
+  def require_admin_email?
+    self.preferred_contact_method == 'email_admin'
+  end
+
+  def require_admin_name?
+    ['email_admin', 'phone_admin', 'text_admin'].include? self.preferred_contact_method
+  end
+
 
   # TODO: this may be too expensive to query up all the time, may wish to store and update a counter on the user in the future.
   def active_connection_request_count
@@ -45,11 +86,12 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver
   end
 
-  before_create do
+  before_validation do
     self.second_shift_enabled = false if self.second_shift_enabled.nil?
     self.mentor_match_enabled = false if self.mentor_match_enabled.nil?
     self.subscribe_to_emails = true if self.subscribe_to_emails.nil?
     self.unsubscribe_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
+    self.preferred_contact_method = 'email' if self.preferred_contact_method.blank?
   end
 
 end

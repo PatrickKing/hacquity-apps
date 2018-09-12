@@ -1,0 +1,71 @@
+
+= form_with model: @mentor_match_filter_form,\
+  url: query_mentor_match_profiles_path(preserved_params),\
+  class: 'mui-form' do |form|
+
+  .form-section
+    .mui-textfield
+      = form.text_field :query
+
+  - if params[:show_filters] == 'true'
+    .mui-row
+      .mui-col-md-12.mui-col-xs-12
+        h3 Filters: 
+
+    .mui-row
+      .mui-col-md-4.mui-col-xs-12
+        h3 Availability
+        .mui-checkbox
+          = form.check_box :available_email_questions
+          = form.label :available_email_questions, 'Email / Text Questions'
+        .mui-checkbox
+          = form.check_box :available_one_off_meetings
+          = form.label :available_one_off_meetings, 'One Off Meetings'
+        .mui-checkbox
+          = form.check_box :available_ongoing
+          = form.label :available_ongoing, 'Ongoing Basis'
+
+      .mui-col-md-4.mui-col-xs-12
+        h3 Mentorship Areas
+        .mui-checkbox
+          = form.check_box :mentorship_opportunities
+          = form.label :mentorship_opportunities, 'New Opportunities'
+        .mui-checkbox
+          = form.check_box :mentorship_promotion_tenure
+          = form.label :mentorship_promotion_tenure, 'Promotion and Tenure'
+        .mui-checkbox
+          = form.check_box :mentorship_career_life_balance
+          = form.label :mentorship_career_life_balance, 'Career and Life Balance'
+        .mui-checkbox
+          = form.check_box :mentorship_performance
+          = form.label :mentorship_performance, 'Improving Performance'
+        .mui-checkbox
+          = form.check_box :mentorship_networking
+          = form.label :mentorship_networking, 'Networking'
+
+      .mui-col-md-4.mui-col-xs-12
+        h3 Career Tracks
+        .mui-checkbox
+          = form.check_box :career_track_research
+          = form.label :career_track_research, 'Research'
+        .mui-checkbox
+          = form.check_box :career_track_education
+          = form.label :career_track_education, 'Education'
+        .mui-checkbox
+          = form.check_box :career_track_policy
+          = form.label :career_track_policy, 'Policy'
+        .mui-checkbox
+          = form.check_box :career_track_leadership_admin
+          = form.label :career_track_leadership_admin, 'Leadership and Administration'
+        .mui-checkbox
+          = form.check_box :career_track_clinical
+          = form.label :career_track_clinical, 'Clinical'
+
+  = form.submit "Search", class: "mui-btn inline"
+
+  - if params[:show_filters] != 'true'
+    = link_to 'Show Advanced Filters', mentor_match_profiles_path(preserved_params.merge({show_filters: 'true'})), class: 'mui-btn'
+
+
+
+

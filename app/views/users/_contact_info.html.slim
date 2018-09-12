@@ -1,0 +1,33 @@
+p
+  strong Preferred Contact Method: 
+  = user.preferred_contact_method.titleize
+
+- case user.preferred_contact_method
+
+- when 'email'
+  p
+    strong Email: 
+    = mail_to user.email
+
+- when 'phone', 'text'
+  p
+    strong Phone Number: 
+    = user.phone_number
+
+- when 'email_admin'
+  p
+    strong Name: 
+    = user.admin_assistant_name
+  p
+    strong Email: 
+    = mail_to user.admin_assistant_email
+
+- when 'phone_admin', 'text_admin'
+  p
+    strong Name: 
+    = user.admin_assistant_name
+  p
+    strong Phone Number: 
+    = user.admin_assistant_phone_number
+
+
