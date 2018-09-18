@@ -1,8 +1,11 @@
-class MyCvsController < ApplicationController
-  before_action :require_login
+require './app/controllers/concerns/cv_helper'
 
-  # before_action :set_service_posting, only: [:show, :edit, :update, :open, :close]
-  # before_action :require_ownership, only: [:edit, :update, :open, :close]
+
+class MyCvsController < ApplicationController
+
+  include CvHelper
+
+  before_action :require_login
 
   layout "cv_catalogue_pages"
 
@@ -11,8 +14,8 @@ class MyCvsController < ApplicationController
     
   end
 
-  def update
-    
+  def update_cv
+    handle_cv_upload edit_my_cv_path
   end
 
 end
