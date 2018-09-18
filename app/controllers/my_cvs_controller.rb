@@ -1,6 +1,3 @@
-require './app/controllers/concerns/cv_helper'
-
-
 class MyCvsController < ApplicationController
 
   include CvHelper

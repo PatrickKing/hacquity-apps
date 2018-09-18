@@ -1,7 +1,3 @@
-
-require './app/models/concerns/GoogleDrive'
-require './app/controllers/concerns/cv_helper'
-
 class MyMentorMatchProfilesController < ApplicationController
   
   include CvHelper

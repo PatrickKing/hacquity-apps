@@ -1,6 +1,6 @@
 - if not @current_user.mentor_match_profile.personal_information.blank?
   h3 CV Personal Information
   p
-    em An automated scan of your CV found some personal information that may correspond to an email address, phone number, or street address. You may wish to upload a CV that omits this information. If the scan is in error, you may ignore this notice.
+    em An automated scan of your CV found some personal information that may correspond to an email address, phone number, or street address. This info is visible to any who view your CV on DoM Citizen. You may wish to upload a CV that omits this information. If the scan is in error, you may ignore this notice.
 
   .indent = simple_format @current_user.mentor_match_profile.personal_information

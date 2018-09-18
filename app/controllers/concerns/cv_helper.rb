@@ -1,5 +1,3 @@
-require './app/models/concerns/GoogleDrive'
-
 module CvHelper
 
   def respond_with_cv (mentor_match_profile)
