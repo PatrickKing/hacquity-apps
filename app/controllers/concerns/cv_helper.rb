@@ -1,3 +1,5 @@
+require './app/models/concerns/GoogleDrive'
+
 module CvHelper
 
   def respond_with_cv (mentor_match_profile)
@@ -65,8 +67,7 @@ module CvHelper
 
 
 
-    # Upload the file to Google Drive
-
+    # Upload the file to Google Drive:
 
     original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>"false", "dom_citizen_type"=>"cv_document"}
       },
@@ -78,12 +79,40 @@ module CvHelper
     )
 
 
-    # Finally, save our gains:
 
+
+    # TODO: in a better world: move this scan operation into a separate job, store the results, notify the user on their profile page or something ... 
+
+    # Create a google doc copy of the file:
+    gdoc_file = Google::Apis::DriveV3::File.new
+    gdoc_file.mime_type = 'application/vnd.google-apps.document'
+    gdoc_file = drive.copy_file original_file.id, gdoc_file
+
+    # Download a text only extraction of the file, and scan it for contact information:
+    cv_text = drive.export_file(gdoc_file.id, 'text/plain', download_dest: StringIO.new)
+
+    # We don't need the gdoc file long term
+    drive.delete_file gdoc_file.id
+
+    # Lots of assumptions at work with my regexes!
+    # No phone numbers in Calgary are less than 10 digits, this will potentially match other clusters of numbers with dashes and spaces if they're long enough:
+    phone_hits = cv_text.string.scan /(?:[()+-. ]|\d){10,}/
+    # Emails pretty much just have a @ in them:
+    email_hits = cv_text.string.scan /((?:[.+]|\w)+@(?:[.+]|\w)+)/
+    postal_code_hits = cv_text.string.scan /[a-z]\d[a-z][- ]?\d[a-z]\d/i
+
+    # To avoid too many false positives, scan case insensitive for street suffixes fully spelled out, but require all caps for abbreviations.
+    street_suffix_hits = cv_text.string.scan /\bavenue\b|\broad\b|\bstreet\b|\bboulevard\b|\blane\b|\bdrive\b|\bterrace\b|\bplace\b|\bcourt\b|\bplaza\b|\bparkway\b|\bgrove\b|\bgardens\b|\bcircus\b|\bcrescent\b|\bclose\b|\bsquare\b|\bhill\b|\bmews\b|\bexpressway\b|\bfreeway\b|\bhighway\b|\blanding\b/i
+    street_suffix_abbreviation_hits = cv_text.string.scan /ST|AVE|BLVD/
+    # Could scan for additional abbreviations, like CR|CT|RD|TR|PL|PW, worried about false positives. Given that they are doctors we cannot scan for DR =/
+
+    personal_information = phone_hits.concat(email_hits, postal_code_hits,street_suffix_hits, street_suffix_abbreviation_hits).flatten.join "\n"
+
+    # Save our gains:
     profile.original_cv_drive_id = original_file.id
-
     profile.original_cv_mime_type = original_file.mime_type
     profile.original_cv_file_name = original_file.name
+    profile.personal_information = personal_information
     profile.save!
 
     redirect_to (redirection_path or request.referrer), notice: "CV uploaded successfully!"

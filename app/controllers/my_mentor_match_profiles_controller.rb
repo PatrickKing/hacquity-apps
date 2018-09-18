@@ -8,7 +8,7 @@ class MyMentorMatchProfilesController < ApplicationController
 
   before_action :require_login
 
-  before_action :set_mentor_match_profile, only: [:show, :edit, :update]
+  before_action :set_mentor_match_profile, only: [:show, :edit, :update, :edit_cv]
 
   before_action :ensure_profile_search_document, only: :update
 
