@@ -55,19 +55,23 @@ module CvHelper
     drive = GoogleDrive.get_drive_service
     profile = current_user.mentor_match_profile
 
-    # TODO: technically, we could make the old CV as not searchable and then 
+    # TODO: technically, we could mark the old CV as not searchable and then 
     # encounter an error uploading the new one. A proper app would need to
     # address this.
     unless profile.original_cv_drive_id.nil?
       # previous_cv = drive.get_file profile.original_cv_drive_id
-      drive.update_file(profile.original_cv_drive_id, {properties: {"seeking"=>"false"}}, {})
+      # drive.update_file(profile.original_cv_drive_id, {properties: {"seeking"=>"false"}}, {})
+      drive.delete_file profile.original_cv_drive_id
+
+      profile.original_cv_drive_id = nil
+      profile.save!
     end
 
 
 
     # Upload the file to Google Drive:
 
-    original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>"false", "dom_citizen_type"=>"cv_document"}
+    original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>profile.seeking?, "dom_citizen_type"=>"cv_document"}
       },
       fields: 'id,mime_type,name',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
@@ -87,7 +91,7 @@ module CvHelper
     gdoc_file = drive.copy_file original_file.id, gdoc_file
 
     # Download a text only extraction of the file, and scan it for contact information:
-    cv_text = drive.export_file(gdoc_file.id, 'text/plain', download_dest: StringIO.new)
+    cv_text = drive.export_file gdoc_file.id, 'text/plain', download_dest: StringIO.new
 
     # We don't need the gdoc file long term
     drive.delete_file gdoc_file.id

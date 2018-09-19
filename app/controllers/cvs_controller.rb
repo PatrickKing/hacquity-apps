@@ -31,7 +31,7 @@ class CvsController < ApplicationController
       end
 
       @mentor_match_profiles = MentorMatchProfile.where("original_cv_drive_id IN (:drive_file_ids)", drive_file_ids: drive_file_ids)
-        .page(params[:page])
+        .page(params[:page]).includes(:user)
     end
 
   end

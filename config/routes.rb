@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   scope 'cv-catalogue' do
     resource :my_cv, only: [:edit] do
       post 'update_cv'
+      post 'update_cv_email'
     end
 
     resources :cvs, only: [:index, :show] do
