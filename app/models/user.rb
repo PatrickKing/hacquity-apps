@@ -81,6 +81,11 @@ class User < ApplicationRecord
     DeviseMailerJob.new(notification, self, *args).deliver
   end
 
+  def send_cv_submission_mail
+    return unless self.subscribe_to_emails
+    UserCvSubmissionMailerJob.new(self).deliver
+  end
+
   # devise_mailer is a protected method on the user instance, so we can't call it from my delayed_job instance directly. Hence this song and dance.
   def deliver_now (notification, args)
     devise_mailer.send(notification, self, *args).deliver
@@ -92,6 +97,9 @@ class User < ApplicationRecord
     self.subscribe_to_emails = true if self.subscribe_to_emails.nil?
     self.unsubscribe_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
     self.preferred_contact_method = 'email' if self.preferred_contact_method.blank?
+    self.cv_receipt_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
   end
+
+  after_create :send_cv_submission_mail
 
 end

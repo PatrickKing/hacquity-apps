@@ -1,0 +1,23 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "Share your CV on DoM Citizen"
+    = render 'mail_shared/body', body: "Welcome to DoM Citizen!"
+    = render 'mail_shared/body', body: "One of our best features is the CV Catalogue, which lets you quickly locate others with relevant expertise across the community."
+    = render 'mail_shared/body', body: "You can add your CV to the catalogue, and keep it up to date, just by replying to this email with your CV attached. Or, you can visit the CV Catalogue and update your CV there."
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: cvs_url, link_text: "Go to CV Catalogue"
+
+      td style=td_style
+
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @user
+
+    tr
+      td style=td_style
+      td style="#{font_family} text-align: center; color: #{slate_colour}; font-size: 8px;" = "[CV Receipt Token = #{@user.cv_receipt_token}]"
+      td style=td_style

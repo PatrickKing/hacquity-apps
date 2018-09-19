@@ -280,7 +280,8 @@ CREATE TABLE public.users (
     phone_number character varying,
     admin_assistant_name character varying,
     admin_assistant_email character varying,
-    admin_assistant_phone_number character varying
+    admin_assistant_phone_number character varying,
+    cv_receipt_token character varying
 );
 
 
@@ -767,6 +768,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180907190433'),
 ('20180910212602'),
 ('20180911043715'),
-('20180918055137');
+('20180918055137'),
+('20180919203142');
 
 

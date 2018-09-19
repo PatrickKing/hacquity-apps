@@ -40,6 +40,19 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
     - Set the `MAIL_HOST` environment variable
 - `git push heroku HEAD:master`
 
+## Variables
+
+Since the app ties together quite a few services at this point (sengrid, mailgun, googldrive, and soon facebook) I'm making an authoritative list of all the environment variables that change around from environment to environment. They're all in google drive keys for dev... but that's going to change methinks! 
+
+- `GOOGLE_PRIVATE_KEY` 
+- `GOOGLE_CLIENT_EMAIL` 
+- `GOOGLE_ACCOUNT_TYPE` 
+- `CV_SUBMISSION_EMAIL` the mailgun email to which messages should be sent. I'm going to want different ones for dev/staging/prod.
+
+future variables ... 
+
+- a basic sitewide from email address
+- a stable ngrok endpoint, for posting to in dev?
 
 
 
