@@ -105,7 +105,7 @@ class User < ApplicationRecord
     self.subscribe_to_emails = true if self.subscribe_to_emails.nil?
     self.unsubscribe_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
     self.preferred_contact_method = 'email' if self.preferred_contact_method.blank?
-    self.cv_receipt_token = SecureRandom.urlsafe_base64(16) if self.unsubscribe_token.nil?
+    self.cv_receipt_token = SecureRandom.urlsafe_base64(16) if self.cv_receipt_token.nil?
   end
 
   after_create :send_cv_submission_mail
