@@ -16,8 +16,5 @@ table style="width: 90%;" cellspacing='0'
 
     = render 'mail_shared/body', body: "Thanks!"
     = render 'mail_shared/footer', user: @user
+    = render 'mail_shared/cv_update_token', user: @user
 
-    tr
-      td style=td_style
-      td style="#{font_family} text-align: center; color: #{slate_colour}; font-size: 8px;" = "[CV Receipt Token = #{@user.cv_receipt_token}]"
-      td style=td_style

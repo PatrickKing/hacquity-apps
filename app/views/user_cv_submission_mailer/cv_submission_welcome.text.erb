@@ -16,5 +16,4 @@ Thanks!
 
 <%= render 'mail_shared/text_footer', user: @user %>
 
-[CV Receipt Token = <%= @user.cv_receipt_token %>]
-
+<%= render 'mail_shared/cv_update_token', user: @user %>

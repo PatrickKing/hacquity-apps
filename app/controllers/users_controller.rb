@@ -29,11 +29,6 @@ class UsersController < ApplicationController
     current_user.mentor_match_enabled = true
     current_user.save!
 
-    if current_user.mentor_match_profile.nil?
-      profile = MentorMatchProfile.new user: current_user
-      profile.save!
-    end
-
     redirect_to edit_my_mentor_match_profile_path
   end
 

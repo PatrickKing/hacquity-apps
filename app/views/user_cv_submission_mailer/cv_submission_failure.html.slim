@@ -1,0 +1,18 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "CV Submission Failed"
+    = render 'mail_shared/body', body: "We couldn't update your CV by email."
+    = render 'mail_shared/body', body: @message
+    = render 'mail_shared/body', body: "You may wish to log into DoM Citizen and upload the file there."
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: cvs_url, link_text: "Go to CV Catalogue"
+      td style=td_style
+
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @user
+    = render 'mail_shared/cv_update_token', user: @user

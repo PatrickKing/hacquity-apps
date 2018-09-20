@@ -1,5 +1,5 @@
 
-class UserCvSubmissionMailerJob
+class CvSubmissionWelcomeJob
 
   def initialize (user)
     @user_id = user.id

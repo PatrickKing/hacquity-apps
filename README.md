@@ -48,6 +48,14 @@ Since the app ties together quite a few services at this point (sengrid, mailgun
 - `GOOGLE_CLIENT_EMAIL` 
 - `GOOGLE_ACCOUNT_TYPE` 
 - `CV_SUBMISSION_EMAIL` the mailgun email to which messages should be sent. I'm going to want different ones for dev/staging/prod.
+    + cv_update_production@mg.foobarbaz.ing
+      https://hacquity.herokuapp.com/cv-catalogue/my_cv/update_cv_email
+    + cv_update_staging@mg.foobarbaz.ing
+      https://dom-citizen-staging.herokuapp.com/cv-catalogue/my_cv/update_cv_email
+    + cv_update_development@mg.foobarbaz.ing
+      https://ac9fc6ae.ngrok.io/cv-catalogue/my_cv/update_cv_email 
+      whatever ngrok gives me each day
+
 
 future variables ... 
 
@@ -55,6 +63,14 @@ future variables ...
 - a stable ngrok endpoint, for posting to in dev?
 
 
+## Clearing Data
+I end up wiping databases etc on deployment pretty often, not putting in the legwork to have proper migrations for the moment. So far ... 
+
+- Drop into the Heroku dashboard, click through to Heroku PG, reset DB under settings
+- To wipe out the gdrive content:
+    - `heroku run -a dom-citizen-staging rails c`
+    - `drive = GoogleDrive.get_drive_service`
+    - TODO: work out the rest of it. turns out I never set up google drive in staging =/
 
 # Future Work
 

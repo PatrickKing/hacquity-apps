@@ -23,46 +23,118 @@ module CvHelper
 
   end
 
+  def upload_cv_via_form (redirection_path)
+    result = upload_cv current_user, params[:CV]
+
+    case result[:error]
+    when :no_file
+      redirect_to request.referrer, alert: "Please choose a CV file to upload."
+    when :wrong_file_format
+      redirect_to request.referrer, alert: "Please upload your CV in .doc, .docx, .pdf, or .txt format."
+    else
+      redirect_to (redirection_path || request.referrer), notice: "CV uploaded successfully!"
+    end
+
+  end
+
+  def upload_cv_via_email (email_params)
+
+    # Since any errors resulting from this call will be emailed to the user, and not sent to the mailgun server, we can respond early.
+    # TODO: does this actually issue the HTTP response immediately? signs point to no!
+    head :no_content
+
+    user = User.where(email: email_params['sender']).first
+    unless user
+      CvSubmissionFailureNoUserJob.new(email_params['sender'], "We couldn't find your info. Please use the email address associated with your DoM Citizen account.").deliver
+      return
+    end
+
+    # NB: all of the email tokens I have generated so far have been 22 characters long, but the docs seem to imply that the length can vary? I don't know, but out of an abundance of caution, I've allowed some wiggle room on the token length.
+    # https://ruby-doc.org/stdlib-2.1.3/libdoc/securerandom/rdoc/SecureRandom.html#method-c-urlsafe_base64
+    # matching tokens like: 6cyGV_hhz-KH6gI-JTJnCQ
+    email_token_regex = /\[CV Receipt Token = ([A-Za-z0-9\-_]{20,23})\]/
+
+    html_match = (email_params['body-html'] || '').match email_token_regex
+    text_match = (email_params['body-text'] || '').match email_token_regex
+
+    html_token = html_match ? html_match[1] : nil
+    text_token = text_match ? text_match[1] : nil
+    token = html_token || text_token
+
+    if not token or user.cv_receipt_token != token
+      # This is a little weird, we've found the user but couldn't confirm the token. I may just be being paranoid, but I'm insisting that we get a token from the user because I'm not 100% sure I trust the 'sender' parameter, senders can be spoofed right? How much validation does mailgun do on incoming email?
+      # NB: we use the 'no user' failure email, because ordinary failure email *includes the token*.
+      CvSubmissionFailureNoUserJob.new(email_params['sender'], "We couldn't confirm your identity. Please reply to an email sent by the DoM Citizen CV update service.").deliver
+      return
+    end
+
+    if email_params["attachment-count"] != '1'
+
+      count_info = email_params["attachment-count"] ? "There were #{email_params["attachment-count"]} files attached. " : ''
+
+      CvSubmissionFailureJob.new(user, "We couldn't find your attachment. #{count_info}Please reply with only one file in .docx, .doc, .pdf, or .txt file attached.").deliver
+      return
+    end
+
+    result = upload_cv user, email_params["attachment-1"]
+
+    case result[:error]
+    when :no_file
+      # this is probably redundant with the attachment-count case above, but I'm leaving it in.
+      CvSubmissionFailureJob.new(user, "We couldn't find your attachment. Please attach only one file in .docx, .doc, .pdf, or .txt format.").deliver
+    when :wrong_file_format
+      CvSubmissionFailureJob.new(user, "Your CV was in a format we couldn't read. Please attach one file in .docx, .doc, .pdf, or .txt format.").deliver
+    else
+      CvSubmissionSuccessJob.new(user).deliver
+    end
+
+  end
 
 
-  def handle_cv_upload (redirection_path)
+  private
+
+  def upload_cv (user, cv_tempfile)
 
     # TODO: handle all the various exceptions the google API calls can produce
     # TODO: in a better world, we would move much of this into a task outside of the request-response cycle.
 
-    if params[:CV].nil?
-      return redirect_to request.referrer, alert: "Please choose a CV file to upload."
+    result = {
+      error: nil,
+    }
+
+    if cv_tempfile.nil?
+      result[:error] = :no_file
+      return result
     end
 
-    unless params[:CV].original_filename.match /\.(docx?|pdf|txt)$/
-      return redirect_to request.referrer, alert: "Please upload your CV in .doc, .docx, .pdf, or .txt format."
+    unless cv_tempfile.original_filename.match /\.(docx?|pdf|txt)$/
+      result[:error] = :wrong_file_format
+      return result
     end
 
-    if params[:CV].original_filename.match /\.docx$/
+    if cv_tempfile.original_filename.match /\.docx$/
       mime_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    elsif params[:CV].original_filename.match /\.doc$/
+    elsif cv_tempfile.original_filename.match /\.doc$/
       mime_type = 'application/msword'
-    elsif params[:CV].original_filename.match /\.pdf$/
+    elsif cv_tempfile.original_filename.match /\.pdf$/
       mime_type = 'application/pdf'
-    elsif params[:CV].original_filename.match /\.txt$/
+    elsif cv_tempfile.original_filename.match /\.txt$/
       mime_type = 'text/plain'
     else
       # Shouldn't be possible to get here, but... 
-      return redirect_to request.referrer, alert: "Please upload your CV in .doc, .docx, .pdf, or .txt format."
+      result[:error] = :wrong_file_format
+      return result
     end
 
 
     drive = GoogleDrive.get_drive_service
-    profile = current_user.mentor_match_profile
+    profile = user.mentor_match_profile
 
     # TODO: technically, we could mark the old CV as not searchable and then 
     # encounter an error uploading the new one. A proper app would need to
     # address this.
     unless profile.original_cv_drive_id.nil?
-      # previous_cv = drive.get_file profile.original_cv_drive_id
-      # drive.update_file(profile.original_cv_drive_id, {properties: {"seeking"=>"false"}}, {})
       drive.delete_file profile.original_cv_drive_id
-
       profile.original_cv_drive_id = nil
       profile.save!
     end
@@ -71,19 +143,19 @@ module CvHelper
 
     # Upload the file to Google Drive:
 
-    original_file = drive.create_file( {name: params[:CV].original_filename, properties: {"seeking"=>profile.seeking?, "dom_citizen_type"=>"cv_document"}
+    original_file = drive.create_file( {name: cv_tempfile.original_filename, properties: {"seeking"=>profile.seeking?, "dom_citizen_type"=>"cv_document"}
       },
       fields: 'id,mime_type,name',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
       # Update: have never seen the upload break at this point, assume this is OK.
-      upload_source: params[:CV].tempfile,
+      upload_source: cv_tempfile.tempfile,
       content_type: mime_type
     )
 
 
 
 
-    # TODO: in a better world: move this scan operation into a separate job, store the results, notify the user on their profile page or something ... 
+    # TODO: in a better world: move this scan operation into a separate job
 
     # Create a google doc copy of the file:
     gdoc_file = Google::Apis::DriveV3::File.new
@@ -102,7 +174,6 @@ module CvHelper
     # Emails pretty much just have a @ in them:
     email_hits = cv_text.string.scan /((?:[.+]|\w)+@(?:[.+]|\w)+)/
     postal_code_hits = cv_text.string.scan /[a-z]\d[a-z][- ]?\d[a-z]\d/i
-
     # To avoid too many false positives, scan case insensitive for street suffixes fully spelled out, but require all caps for abbreviations.
     street_suffix_hits = cv_text.string.scan /\bavenue\b|\broad\b|\bstreet\b|\bboulevard\b|\blane\b|\bdrive\b|\bterrace\b|\bplace\b|\bcourt\b|\bplaza\b|\bparkway\b|\bgrove\b|\bgardens\b|\bcircus\b|\bcrescent\b|\bclose\b|\bsquare\b|\bhill\b|\bmews\b|\bexpressway\b|\bfreeway\b|\bhighway\b|\blanding\b/i
     street_suffix_abbreviation_hits = cv_text.string.scan /ST|AVE|BLVD/
@@ -117,9 +188,8 @@ module CvHelper
     profile.personal_information = personal_information
     profile.save!
 
-    redirect_to (redirection_path or request.referrer), notice: "CV uploaded successfully!"
+    return result
 
-    
   end
 
 end

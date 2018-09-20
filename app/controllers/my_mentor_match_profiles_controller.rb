@@ -67,7 +67,7 @@ class MyMentorMatchProfilesController < ApplicationController
   end
 
   def update_cv
-    handle_cv_upload my_mentor_match_profile_path
+    upload_cv_via_form my_mentor_match_profile_path
   end
 
 

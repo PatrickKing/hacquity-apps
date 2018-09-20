@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     resource :my_cv, only: [:edit] do
       post 'update_cv'
       post 'update_cv_email'
+      post 'resend_cv_email'
     end
 
     resources :cvs, only: [:index, :show] do

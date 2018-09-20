@@ -1,0 +1,19 @@
+
+DoM Citizen
+CV Submission Failed
+
+============================================================
+
+We couldn't update your CV by email.
+
+<%= @message %>
+
+You may wish to log into DoM Citizen and upload the file there.
+
+Go to CV Catalogue: <%= cvs_url %>
+
+Thanks!
+
+<%= render 'mail_shared/text_footer', user: @user %>
+
+<%= render 'mail_shared/cv_update_token', user: @user %>

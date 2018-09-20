@@ -13,11 +13,16 @@ class MyCvsController < ApplicationController
   end
 
   def update_cv
-    handle_cv_upload edit_my_cv_path
+    upload_cv_via_form edit_my_cv_path
   end
 
   def update_cv_email
-    ap mailgun_email_permitted_params
+    upload_cv_via_email mailgun_email_permitted_params
+  end
+
+  def resend_cv_email
+    current_user.send_cv_submission_mail user_requested: true
+    head :no_content
   end
 
   def mailgun_email_permitted_params
