@@ -74,3 +74,5 @@ bower.json
 
 # Drive API Keys
 google-drive-keys.sh
+staging-keys.sh
+foo-keys.sh

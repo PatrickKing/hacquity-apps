@@ -55,11 +55,14 @@ Since the app ties together quite a few services at this point (sengrid, mailgun
     + cv_update_development@mg.foobarbaz.ing
       https://ac9fc6ae.ngrok.io/cv-catalogue/my_cv/update_cv_email 
       whatever ngrok gives me each day
+- `MAILER_REPLY_TO_ADDRESS`
+    + `patrick.f.king+domcitizen@gmail.com` in dev
+    + NB: put a real address in there! we gotta buy a domain
 
 
 future variables ... 
 
-- a basic sitewide from email address
+
 - a stable ngrok endpoint, for posting to in dev?
 
 
