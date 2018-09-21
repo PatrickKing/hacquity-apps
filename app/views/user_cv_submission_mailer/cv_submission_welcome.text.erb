@@ -1,0 +1,19 @@
+
+DoM Citizen
+Share your CV on DoM Citizen
+
+============================================================
+
+Welcome to DoM Citizen!
+
+One of our best features is the CV Catalogue, which lets you quickly locate others with relevant expertise across the community.
+
+You can add your CV to the catalogue, and keep it up to date, just by replying to this email with your CV attached. Or, you can visit the CV Catalogue and update your CV there.
+
+Go to CV Catalogue: <%= cvs_url %>
+
+Thanks!
+
+<%= render 'mail_shared/text_footer', user: @user %>
+
+<%= render 'mail_shared/cv_update_token', user: @user %>

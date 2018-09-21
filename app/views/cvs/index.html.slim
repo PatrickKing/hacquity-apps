@@ -1,0 +1,33 @@
+
+.mui-container
+  h2 Search CVs
+
+  = form_with url: query_cvs_path, class: 'mui-form' do |form|
+
+    .form-section
+      .mui-textfield
+        = form.text_field :query, value: params[:query]
+
+    = form.submit "Search", class: "mui-btn inline"
+
+  .form-section
+
+  - @mentor_match_profiles.each_slice 3 do |profiles_slice|
+    .mui-row
+      - profiles_slice.each do |profile|
+        .mui-col-md-4.mui-col-xs-12
+          h2.bottom-border = profile.user.name
+          = render 'mentor_match_profiles/cv_button', profile: profile
+
+  - if @mentor_match_profiles.empty?
+
+    - if params[:query].blank?
+      em Add some terms to search for CVs
+    - else
+      em No CVs found.
+
+
+  .form-section
+
+  - if @mentor_match_profiles.any?
+    = paginate @mentor_match_profiles

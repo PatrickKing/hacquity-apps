@@ -92,6 +92,20 @@ Rails.application.routes.draw do
         post 'neutral_helpfulness'
       end
     end
+  end
+
+  scope 'cv-catalogue' do
+    resource :my_cv, only: [:edit] do
+      post 'update_cv'
+      post 'update_cv_email'
+      post 'resend_cv_email'
+    end
+
+    resources :cvs, only: [:index, :show] do
+      collection do
+        post 'query'
+      end
+    end
 
   end
 

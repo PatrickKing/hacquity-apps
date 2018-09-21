@@ -1,0 +1,13 @@
+h2 Upload CV
+
+= form_with url: update_path, multipart: true, local: true do |form|
+
+  .form-section
+    = form.file_field 'CV', accept: '.doc,.docx,.pdf,.txt'
+
+  .actions
+    = form.submit "Upload", class: "mui-btn"
+
+
+
+

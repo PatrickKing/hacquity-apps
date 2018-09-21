@@ -3,6 +3,9 @@ h2 My Mentor Match Profile
 
 = render 'mentor_match_profiles/info', profile: @mentor_match_profile
 = render 'mentor_match_profiles/full_info', profile: @mentor_match_profile
+
+= render 'shared/cv_personal_information_warning'
+
 = render 'mentor_match_profiles/cv_button', profile: @mentor_match_profile
 
 
@@ -18,3 +21,4 @@ h3 Contact Information
 em You may also want to update your contact info on your info page.
 div = link_to 'My Info', edit_user_path, class: 'mui-btn'
 
+= render 'shared/cv_email_update_button'

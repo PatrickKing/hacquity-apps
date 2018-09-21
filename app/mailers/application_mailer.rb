@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'patrick.f.king+domcitizen@gmail.com'
+  default from: "DoM Citizen <#{ENV['MAILER_REPLY_TO_ADDRESS']}>"
   add_template_helper(MailHelper)
   layout 'mailer'
 end

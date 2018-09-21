@@ -13,13 +13,6 @@ SET client_min_messages = warning;
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -176,7 +169,8 @@ CREATE TABLE public.mentor_match_profiles (
     career_track_leadership_admin boolean,
     career_track_clinical boolean,
     original_cv_mime_type character varying,
-    original_cv_file_name character varying
+    original_cv_file_name character varying,
+    personal_information character varying
 );
 
 
@@ -279,7 +273,8 @@ CREATE TABLE public.users (
     phone_number character varying,
     admin_assistant_name character varying,
     admin_assistant_email character varying,
-    admin_assistant_phone_number character varying
+    admin_assistant_phone_number character varying,
+    cv_receipt_token character varying
 );
 
 
@@ -765,6 +760,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180906045006'),
 ('20180907190433'),
 ('20180910212602'),
-('20180911043715');
+('20180911043715'),
+('20180918055137'),
+('20180919203142');
 
 

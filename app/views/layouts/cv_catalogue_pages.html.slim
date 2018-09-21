@@ -4,8 +4,8 @@
       = link_to 'DoM Citizen', root_path, class: 'home-link'
       |  - CV Catalogue
 
-/ - content_for :navbar do
-/   = render 'shared/second_shift_navbar'
+- content_for :navbar do
+  = render 'shared/cv_catalogue_navbar'
 
 
 = render template: "layouts/application", locals: {colours_class: 'cv-catalogue-colours'}

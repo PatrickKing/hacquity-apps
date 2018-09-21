@@ -19,7 +19,7 @@ class ConnectionRequestMailer < ApplicationMailer
       @detail = "#{connection_request.initiator.name} wants to connect about your Mentor Match profile."
     end
 
-    mail to: @connection_request.receiver.email, subject: "#{connection_request.initiator.name} wants to connect on DoM Citizen."
+    mail to: "#{@connection_request.receiver.name} <#{@connection_request.receiver.email}>" , subject: "#{connection_request.initiator.name} wants to connect on DoM Citizen."
   end
 
 end
