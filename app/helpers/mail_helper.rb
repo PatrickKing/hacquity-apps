@@ -4,8 +4,16 @@ module MailHelper
     '#546E7A'
   end
 
+  def purple_colour
+    '#5E35B1'
+  end
+
   def background_colour
     "background-color: #{slate_colour};"
+  end
+
+  def admin_background_colour
+    "background-color: #{purple_colour};"
   end
 
   def td_style

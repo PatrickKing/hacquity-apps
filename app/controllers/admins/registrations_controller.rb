@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-class Users::RegistrationsController < Devise::RegistrationsController
+class Admins::RegistrationsController < Devise::RegistrationsController
 
   include DeviseAccessible
   skip_before_action :check_user, except: [:new, :create]
 
-  before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
-  layout 'user_settings_pages', only: [:edit, :update]
+  layout 'admin_devise_pages'
+  layout 'admin_pages', only: [:edit, :update]
+
 
   # GET /resource/sign_up
   # def new
@@ -31,9 +33,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # TODO: I do not want a user destroy endpoint. Would prefer to remove it from the router, but devise only seems to support skipping entire chunks of functionality, e.g. all of registrations, and not individual routes within a module. You could skip registrations and manually specify all the routes you do want, but that seems error prone, so just going with this no-op function instead.
+  # Destroy endpoint no-op
   def destroy
-    # super
+  #   super
   end
 
   # GET /resource/cancel
@@ -48,9 +50,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-  end
+  # def configure_sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  # end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
@@ -66,9 +68,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
-  def after_update_path_for (resource)
-    user_path
-  end
-
 end

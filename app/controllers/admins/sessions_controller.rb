@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-class Users::SessionsController < Devise::SessionsController
+class Admins::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   include DeviseAccessible
   before_action :check_user, except: :destroy
+
+  layout 'admin_devise_pages'
+
 
   # GET /resource/sign_in
   # def new

@@ -96,6 +96,13 @@ $invalid-red: #F44336;
   padding-left: 15px;
 }
 
+.tiny {
+  text-align: center;
+  font-size: 8px;
+  a {
+    color: $dashboard-slate;
+  }
+}
 
 // Colours:
 

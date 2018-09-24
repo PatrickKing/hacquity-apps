@@ -5,6 +5,8 @@ class CommonPagesController < ApplicationController
   def main
     if user_signed_in?
       redirect_to dashboard_path
+    elsif admin_signed_in?
+      redirect_to admin_dashboard_path
     end
   end
 

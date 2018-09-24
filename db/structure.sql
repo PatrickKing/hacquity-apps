@@ -18,6 +18,50 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: admins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.admins (
+    id bigint NOT NULL,
+    name character varying,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.admins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.admins_id_seq OWNED BY public.admins.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -376,6 +420,13 @@ ALTER SEQUENCE public.vendor_reviews_id_seq OWNED BY public.vendor_reviews.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY public.admins ALTER COLUMN id SET DEFAULT nextval('public.admins_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY public.connection_requests ALTER COLUMN id SET DEFAULT nextval('public.connection_requests_id_seq'::regclass);
 
 
@@ -426,6 +477,14 @@ ALTER TABLE ONLY public.vendor_review_likes ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.vendor_reviews ALTER COLUMN id SET DEFAULT nextval('public.vendor_reviews_id_seq'::regclass);
+
+
+--
+-- Name: admins_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.admins
+    ADD CONSTRAINT admins_pkey PRIMARY KEY (id);
 
 
 --
@@ -513,6 +572,27 @@ ALTER TABLE ONLY public.vendor_reviews
 --
 
 CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority, run_at);
+
+
+--
+-- Name: index_admins_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_email ON public.admins USING btree (email);
+
+
+--
+-- Name: index_admins_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_reset_password_token ON public.admins USING btree (reset_password_token);
+
+
+--
+-- Name: index_admins_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_unlock_token ON public.admins USING btree (unlock_token);
 
 
 --
@@ -762,6 +842,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180910212602'),
 ('20180911043715'),
 ('20180918055137'),
-('20180919203142');
+('20180919203142'),
+('20180921224548');
 
 

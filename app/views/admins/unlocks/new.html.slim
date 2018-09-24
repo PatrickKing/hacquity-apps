@@ -1,0 +1,20 @@
+
+- content_for :single_column do
+  h2 Resend unlock instructions
+
+  = form_for resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }, class: 'mui-form' do |f|
+
+    = devise_error_messages!
+
+    .field.mui-textfield
+      = f.label :email
+      br
+      = f.email_field :email, autofocus: true, autocomplete: "email"
+
+
+    .actions
+      = f.submit "Resend unlock instructions", class: 'mui-btn'
+
+  br
+  = render "admins/shared/links"
+
