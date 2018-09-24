@@ -6,4 +6,8 @@ class Admin < ApplicationRecord
 
   # NB: when creating an admin at console: name, email, password
 
+  def send_devise_notification (notification, *args)
+    DeviseMailerJob.new(notification, self, *args).deliver
+  end
+
 end
