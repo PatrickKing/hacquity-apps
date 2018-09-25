@@ -99,6 +99,21 @@ class User < ApplicationRecord
     end
   end
 
+  def active_for_authentication?
+    super && self.account_active?
+  end
+
+  def account_active?
+    self.admin_approved and self.admin_disabled.nil?
+  end
+
+  def inactive_message
+    return super if account_active?
+    return :not_admin_approved if self.admin_approved.nil?
+    return :account_disabled if self.admin_disabled
+    super
+  end
+
   before_validation do
     self.second_shift_enabled = false if self.second_shift_enabled.nil?
     self.mentor_match_enabled = false if self.mentor_match_enabled.nil?

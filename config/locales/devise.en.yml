@@ -16,6 +16,8 @@ en:
       timeout: "Your session expired. Please sign in again to continue."
       unauthenticated: "You need to sign in or sign up before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
+      not_admin_approved: "Your account needs to be approved by a DoM Citizen administrator before you can log in."
+      account_disabled: "Your account has been disabled by a DoM Citizen administrator"
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"
