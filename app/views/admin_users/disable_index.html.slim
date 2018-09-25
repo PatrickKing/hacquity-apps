@@ -1,1 +1,34 @@
-p disable index
+.mui-container
+
+  h2 Disable Users
+
+  p 
+    em Disabled users can't log in. Users may be disabled and re-enabled any number of times.
+
+  - @users.each_slice 3 do |users_slice|
+    .mui-row
+      - users_slice.each do |user|
+        .mui-col-md-4.mui-col-xs.12
+          h3.bottom-border = user.name
+          p = user.email
+          - if user.admin_disabled
+            p = "Disabled on #{user.admin_disabled.strftime '%A %B %d, %Y'}"
+            = form_with url: admin_user_reenable_path(user), class: 'inline' do |form|
+              = form.hidden_field 'page', value: params[:page]
+              = form.submit 'Re-enable', class: "mui-btn preserve-scroll-position mui--bg-color-white mui--color-deep-purple-600"
+          - else
+            p
+              strong Active
+            = form_with url: admin_user_disable_path(user), class: 'inline' do |form|
+              = form.hidden_field 'page', value: params[:page]
+              = form.submit 'Disable', class: "mui-btn preserve-scroll-position"
+
+
+
+  .form-section
+    - if @users.any?
+      = paginate @users
+    - if @users.empty?
+      p 
+        em No users need to be approved.
+

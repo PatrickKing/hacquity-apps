@@ -15,6 +15,7 @@
             p = "Approved on #{user.admin_approved.strftime '%A %B %d, %Y'}"
           - else
             = form_with url: admin_user_approve_path(user), class: 'inline' do |form|
+              = form.hidden_field 'page', value: params[:page]
               = form.submit 'Approve', class: "mui-btn preserve-scroll-position"
 
 

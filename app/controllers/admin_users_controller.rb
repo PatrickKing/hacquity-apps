@@ -47,21 +47,29 @@ class AdminUsersController < ApplicationController
 
     user.admin_approved = DateTime.now
     user.save!
-    redirect_to approve_index_admin_users_path(params[:page])
+    redirect_to approve_index_admin_users_path(page: params[:page])
 
     NotifyUserAccountApprovedJob.new(user).deliver
   end
 
   def disable_index
-    
+    # TODO: would be a nicer UX to be able to search for users, but there won't be that many to start, and browsers have ctrl+f
+    # 102, because users are displayed 3 per row, and this gives us a clean last row :3
+    @users = User.order(name: :asc).page(params[:page]).per(102)
   end
 
   def disable
-    
+    user = User.find params[:admin_user_id]
+    user.admin_disabled = DateTime.now
+    user.save!
+    redirect_to disable_index_admin_users_path(page: params[:page])
   end
 
   def reenable
-    
+    user = User.find params[:admin_user_id]
+    user.admin_disabled = nil
+    user.save!
+    redirect_to disable_index_admin_users_path(page: params[:page])
   end
 
 
