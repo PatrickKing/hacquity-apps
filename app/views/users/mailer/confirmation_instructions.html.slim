@@ -13,4 +13,6 @@ table style="width: 90%;" cellspacing='0'
 
       td style=td_style
 
+    = render 'mail_shared/body', body: "After you confirm your email, your account also needs to be approved by a DoM Citizen administrator before you can log in. Please watch your email!"
+    = render 'mail_shared/body', body: "Thanks!"
     = render 'mail_shared/footer', user: @resource, offer_unsubscribe: 'no'

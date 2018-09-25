@@ -8,4 +8,11 @@ class UserMailer < ApplicationMailer
   end
 
 
+  def notify_user_account_approved (user)
+    @user = user
+    
+    mail to: "#{user.name} <#{user.email}>", subject: "Your DoM Citizen account is active"
+  end
+
+
 end

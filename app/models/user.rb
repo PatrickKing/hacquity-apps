@@ -108,10 +108,23 @@ class User < ApplicationRecord
   end
 
   def inactive_message
-    return super if account_active?
+    # Unfortunately, we need to use some Devise implementation details to get this message right. One more place where inheritance falls down.
+    return super if self.confirmed_at.nil?
     return :not_admin_approved if self.admin_approved.nil?
     return :account_disabled if self.admin_disabled
-    super
+    super # handles the 'account locked' case, possibly others
+  end
+
+  def notify_admin_to_approve
+    return unless self.admin_approved.nil?
+    Admin.all.each do |admin|
+      NotifyAdminUserNeedsApprovalJob.new(admin, self).deliver
+    end
+  end
+
+  def after_confirmation
+    self.notify_admin_to_approve
+    self.send_cv_submission_mail
   end
 
   before_validation do
@@ -123,7 +136,6 @@ class User < ApplicationRecord
     self.cv_receipt_token = SecureRandom.urlsafe_base64(16) if self.cv_receipt_token.nil?
   end
 
-  after_create :send_cv_submission_mail
   after_create :create_mentor_match_profile
 
 end

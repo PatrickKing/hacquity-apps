@@ -140,11 +140,11 @@ Rails.application.routes.draw do
     resources :users, controller: 'admin_users', as: 'admin_users', only: [:new, :create] do
 
       collection do
-        get 'confirm_index'
+        get 'approve_index'
         get 'disable_index'
       end
 
-      post 'confirm'
+      post 'approve'
       post 'disable'
       post 'reenable'
     end

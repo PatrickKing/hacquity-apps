@@ -1,9 +1,11 @@
 class AdminUsersController < ApplicationController
+  # That is, the controller that admins will use to manage ordinary users
 
   before_action :require_admin_login
 
   layout 'admin_pages'
 
+  helper_method :users_to_confirm
 
   def new
     @user = User.new
@@ -20,30 +22,34 @@ class AdminUsersController < ApplicationController
     # Similarly, since this is not someone on the internet claiming they have an email address, but an admin offering access to an email address, no sense in making the user confirm ownership.
     @user.confirmed_at = DateTime.now
 
-    ap @user
-
     if @user.save
       redirect_to new_admin_user_path, notice: "User #{@user.name} <#{@user.email}> was invited."
+      # TODO: yes, we're calling a protected devise method here. It seems to work fine but this is not ideal.
       raw_token = @user.send :set_reset_password_token
       InvitedUserPasswordChangeJob.new(@user, raw_token).deliver
+      @user.send_cv_submission_mail
     else
       render :new
     end
 
-
-    # random pw
-    # admin approved
-    # error cases: email taken, no name
-    # emails: pw reset, welcome, update cv ... 
-    
   end
 
-  def confirm_index
-    
+  def approve_index
+    # Include recently approved users so that items do not disappear from the list in the middle of use.
+    # We're going to use little inline forms which cause a turbolinks page refresh, this combined with a stable list of users gives the impression of using a single page application with no client side code :3
+    @users = User.where('admin_approved is NULL or admin_approved > :three_days_ago', three_days_ago: 3.days.ago)
+      .order(created_at: :desc)
+      .page(params[:page])
   end
 
-  def confirm
-    
+  def approve
+    user = User.find params[:admin_user_id]
+
+    user.admin_approved = DateTime.now
+    user.save!
+    redirect_to approve_index_admin_users_path(params[:page])
+
+    NotifyUserAccountApprovedJob.new(user).deliver
   end
 
   def disable_index
@@ -64,6 +70,11 @@ class AdminUsersController < ApplicationController
 
   def user_params
     params.require(:user).permit([:name, :email])
+  end
+
+
+  def users_to_confirm
+    User.where('admin_approved is NULL')
   end
 
 end

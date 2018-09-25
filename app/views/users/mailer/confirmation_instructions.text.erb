@@ -9,4 +9,8 @@ You can confirm your account email through the link below:
 
 <%= confirmation_url(@resource, confirmation_token: @token) %>
 
+After you confirm your email, your account also needs to be approved by a DoM Citizen administrator before you can log in. Please watch your email!
+
+Thanks!
+
 <%= render 'mail_shared/text_footer', user: @resource, offer_unsubscribe: 'no' %>

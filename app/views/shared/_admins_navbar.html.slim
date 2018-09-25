@@ -4,10 +4,9 @@
     .nav-link class = new_create_nav_link_class('admin_users')
       span Invite New User
 
-  / TODO: put a badge on me reflecting the number of unconfirmed users!
-  a href = confirm_index_admin_users_path
-    .nav-link class = nav_link_class('admin_users', 'confirm_index')
-      span Confirm Users
+  a href = approve_index_admin_users_path
+    .nav-link class = nav_link_class('admin_users', 'approve_index')
+      span = "Approve Users (#{users_to_confirm.count})"
 
   a href = disable_index_admin_users_path
     .nav-link class = nav_link_class('admin_users', 'disable_index')

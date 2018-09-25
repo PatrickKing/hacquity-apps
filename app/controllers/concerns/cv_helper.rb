@@ -16,8 +16,8 @@ module CvHelper
     drive.get_file mentor_match_profile.original_cv_drive_id, download_dest: file_data
 
     send_data file_data.string,
-    filename: mentor_match_profile.original_cv_file_name,
-    type: mentor_match_profile.original_cv_mime_type
+      filename: mentor_match_profile.original_cv_file_name,
+      type: mentor_match_profile.original_cv_mime_type
 
     # TODO: if this were a node app, the file data request would be async, and the data return would be async, the whole thing would be nonblocking... can rails let us do anything similar here?
 
@@ -72,7 +72,7 @@ module CvHelper
 
       count_info = email_params["attachment-count"] ? "There were #{email_params["attachment-count"]} files attached. " : ''
 
-      CvSubmissionFailureJob.new(user, "We couldn't find your attachment. #{count_info}Please reply with only one file in .docx, .doc, .pdf, or .txt file attached.").deliver
+      CvSubmissionFailureJob.new(user, "We couldn't find your attachment. #{count_info}Please reply with only one .docx, .doc, .pdf, or .txt file attached.").deliver
       return
     end
 
