@@ -1,1 +1,22 @@
-p admin cv index
+.mui-container
+
+  h2 Update User CV
+
+  - @users.each_slice 3 do |users_slice|
+    .mui-row
+      - users_slice.each do |user|
+        .mui-col-md-4.mui-col-xs.12
+          h3.bottom-border = user.name
+          p = user.email
+          = render 'mentor_match_profiles/cv_button', profile: user.mentor_match_profile
+          = link_to 'Update CV', edit_admin_cv_path(user), class: 'mui-btn'
+
+
+
+  .form-section
+    - if @users.any?
+      = paginate @users
+    - if @users.empty?
+      p 
+        em No users found.
+

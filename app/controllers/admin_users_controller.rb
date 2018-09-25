@@ -5,8 +5,6 @@ class AdminUsersController < ApplicationController
 
   layout 'admin_pages'
 
-  helper_method :users_to_confirm
-
   def new
     @user = User.new
   end
@@ -78,11 +76,6 @@ class AdminUsersController < ApplicationController
 
   def user_params
     params.require(:user).permit([:name, :email])
-  end
-
-
-  def users_to_confirm
-    User.where('admin_approved is NULL')
   end
 
 end

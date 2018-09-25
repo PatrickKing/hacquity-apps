@@ -6,7 +6,7 @@
 
   a href = approve_index_admin_users_path
     .nav-link class = nav_link_class('admin_users', 'approve_index')
-      span = "Approve Users (#{users_to_confirm.count})"
+      span = "Approve Users (#{User.where('admin_approved is NULL').count})"
 
   a href = disable_index_admin_users_path
     .nav-link class = nav_link_class('admin_users', 'disable_index')

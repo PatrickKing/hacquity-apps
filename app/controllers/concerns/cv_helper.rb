@@ -23,8 +23,8 @@ module CvHelper
 
   end
 
-  def upload_cv_via_form (redirection_path)
-    result = upload_cv current_user, params[:CV]
+  def upload_cv_via_form (redirection_path, user)
+    result = upload_cv user, params[:CV]
 
     case result[:error]
     when :no_file

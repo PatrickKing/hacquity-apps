@@ -13,7 +13,7 @@ class MyCvsController < ApplicationController
   end
 
   def update_cv
-    upload_cv_via_form edit_my_cv_path
+    upload_cv_via_form edit_my_cv_path, current_user
   end
 
   def update_cv_email

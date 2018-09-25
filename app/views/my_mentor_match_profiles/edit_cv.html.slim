@@ -1,4 +1,4 @@
 = render 'shared/cv_form', update_path: update_cv_my_mentor_match_profile_path
-= render 'shared/cv_personal_information_warning'
+= render 'shared/cv_personal_information_warning', user: @current_user
 = render 'mentor_match_profiles/cv_button', profile: @mentor_match_profile
 = link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'
