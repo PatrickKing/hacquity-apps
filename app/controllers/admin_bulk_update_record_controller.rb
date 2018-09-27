@@ -4,7 +4,7 @@ class AdminBulkUpdateRecordController < ApplicationController
 
   layout 'admin_pages'
 
-  # old: error or completed and >2 weeks old
+  # old: error or completed and <2 weeks old
   # new: created and in progress
   def index
     @bulk_update_records = BulkUpdateRecord.order(updated_at: :desc)

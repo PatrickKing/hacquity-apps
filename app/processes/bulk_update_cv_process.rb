@@ -1,4 +1,4 @@
-
+require 'aws-sdk'
 
 # I didn't want to store transient state about the bulk upload process on either the record (which is database backed and mostly for informing the user about what's going on) or the delayedjob object (which is also database backed and really just for delayedjob's use). To avoid any possiblity of storing stale data, this object exists only while we're doing work.
 class BulkUpdateCvProcess
@@ -9,6 +9,12 @@ class BulkUpdateCvProcess
 
   def run
 
+    s3 = Aws::S3::Resource.new region: 'us-west-2'
+    obj = s3.bucket(ENV['S3_BUCKET_NAME']).object(@bulk_update_record.s3_zip_id)
+
+    path = Pathname.new('/tmp').join(@bulk_update_record.s3_zip_id)
+
+    obj.get(response_target: path)
 
     # download the ZIP
       # errors: zip not found, couldn't save file or something
