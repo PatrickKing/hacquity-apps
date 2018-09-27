@@ -74,6 +74,74 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: bulk_update_line_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.bulk_update_line_items (
+    id bigint NOT NULL,
+    bulk_update_record_id bigint,
+    filename character varying,
+    email character varying,
+    status character varying,
+    error_message character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: bulk_update_line_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bulk_update_line_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_update_line_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bulk_update_line_items_id_seq OWNED BY public.bulk_update_line_items.id;
+
+
+--
+-- Name: bulk_update_records; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.bulk_update_records (
+    id bigint NOT NULL,
+    status character varying,
+    s3_zip_id character varying,
+    admin_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: bulk_update_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bulk_update_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_update_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bulk_update_records_id_seq OWNED BY public.bulk_update_records.id;
+
+
+--
 -- Name: connection_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -429,6 +497,20 @@ ALTER TABLE ONLY public.admins ALTER COLUMN id SET DEFAULT nextval('public.admin
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY public.bulk_update_line_items ALTER COLUMN id SET DEFAULT nextval('public.bulk_update_line_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_records ALTER COLUMN id SET DEFAULT nextval('public.bulk_update_records_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY public.connection_requests ALTER COLUMN id SET DEFAULT nextval('public.connection_requests_id_seq'::regclass);
 
 
@@ -495,6 +577,22 @@ ALTER TABLE ONLY public.admins
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: bulk_update_line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.bulk_update_line_items
+    ADD CONSTRAINT bulk_update_line_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bulk_update_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.bulk_update_records
+    ADD CONSTRAINT bulk_update_records_pkey PRIMARY KEY (id);
 
 
 --
@@ -595,6 +693,20 @@ CREATE UNIQUE INDEX index_admins_on_reset_password_token ON public.admins USING 
 --
 
 CREATE UNIQUE INDEX index_admins_on_unlock_token ON public.admins USING btree (unlock_token);
+
+
+--
+-- Name: index_bulk_update_line_items_on_bulk_update_record_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bulk_update_line_items_on_bulk_update_record_id ON public.bulk_update_line_items USING btree (bulk_update_record_id);
+
+
+--
+-- Name: index_bulk_update_records_on_admin_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bulk_update_records_on_admin_id ON public.bulk_update_records USING btree (admin_id);
 
 
 --
@@ -754,6 +866,14 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 
 --
+-- Name: fk_rails_83fdfd96aa; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_records
+    ADD CONSTRAINT fk_rails_83fdfd96aa FOREIGN KEY (admin_id) REFERENCES public.admins(id);
+
+
+--
 -- Name: fk_rails_8a85be6f1c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -783,6 +903,14 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 ALTER TABLE ONLY public.vendor_reviews
     ADD CONSTRAINT fk_rails_c98e35f83d FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: fk_rails_d37f9dccb1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_line_items
+    ADD CONSTRAINT fk_rails_d37f9dccb1 FOREIGN KEY (bulk_update_record_id) REFERENCES public.bulk_update_records(id);
 
 
 --
@@ -846,6 +974,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180918055137'),
 ('20180919203142'),
 ('20180921224548'),
-('20180925000743');
+('20180925000743'),
+('20180926203231'),
+('20180926203753');
 
 

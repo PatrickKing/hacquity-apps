@@ -15,6 +15,7 @@ gem 'google-api-client'
 gem 'jquery-rails'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'aws-sdk', '~> 2'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

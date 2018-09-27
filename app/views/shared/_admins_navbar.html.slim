@@ -16,8 +16,11 @@
     .nav-link class = nav_link_class('admin_cvs', 'index')
       span Update User CV
 
-  / TODO: we may wish to alter this to handlt both edit/update routes here, but the workflow for this operation is going to be hella complex anyways.
-  a href = edit_bulk_admin_cvs_path
-    .nav-link class = nav_link_class('admin_cvs', 'edit_bulk')
-      span Bulk Update User CVs
+  a href = new_bulk_cv_path
+    .nav-link class = nav_link_class('admin_bulk_update_record', 'new')
+      span New Bulk Update CV Job
+
+  a href = bulk_cv_index_path
+    .nav-link class = nav_link_class('admin_bulk_update_record', 'index')
+      span View Bulk Update CV Jobs
 

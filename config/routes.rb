@@ -149,11 +149,10 @@ Rails.application.routes.draw do
       post 'reenable'
     end
 
-    resources :cvs, controller: 'admin_cvs', as: 'admin_cvs', only: [:index, :edit, :update] do
-      collection do
-        get 'edit_bulk'
-        put 'update_bulk'
-      end
+    resources :cvs, controller: 'admin_cvs', as: 'admin_cvs', only: [:index, :edit, :update]
+
+    resources :bulk_update_record, controller: 'admin_bulk_update_record', as: 'bulk_cv', only: [:index, :new, :create, :show] do
+      post :rerun
     end
 
   end

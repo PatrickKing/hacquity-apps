@@ -19,14 +19,6 @@ class AdminCvsController < ApplicationController
     upload_cv_via_form edit_admin_cv_path(@user), @user
   end
 
-  def edit_bulk
-    
-  end
-
-  def update_bulk
-    
-  end
-
   protected
 
   def set_user
