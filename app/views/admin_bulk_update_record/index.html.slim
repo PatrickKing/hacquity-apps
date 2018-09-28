@@ -17,7 +17,7 @@
 
     .mui-row.table-row
       .mui-col-md-3.mui-col-xs-12
-        p = record.status.titleize
+        p class=record.status_colour_class = record.status_string
       .mui-col-md-3.mui-col-xs-12
         p = record.updated_at.getlocal.strftime '%I:%M %p, %A %B %d, %Y'
       .mui-col-md-3.mui-col-xs-12

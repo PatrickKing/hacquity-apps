@@ -1,6 +1,14 @@
 
 
-$ ->
+$(document).on 'turbolinks:load', ->
+
+  $('#upload-button').on 'click', (event) ->
+    event.preventDefault()
+    fileInput = $ '#zip-file-input'
+    fileInput.fileupload 'send', files: fileInput.prop('files')
+
+
+
   $('#s3_upload_form').find('input:file').each (i, elem) ->
     # TODO: do I really want to keep all this?
 
@@ -10,10 +18,9 @@ $ ->
     progressBar = $ '<div class="bar"> </div>'
     barContainer = $('<div class="progress"> </div>').append progressBar
 
+    # We don't want this form to submit, just using it to contain a file submit element.
     form.on 'submit', (event) ->
       event.preventDefault()
-      fileInput.fileupload 'send', files: fileInput.prop('files')
-
       false
 
 

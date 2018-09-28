@@ -12,6 +12,18 @@ class BulkUpdateCvProcess
 
   def run
 
+    if @bulk_update_record.status == 'completed' or 
+       @bulk_update_record.status == 'error_no_retry' or
+       @bulk_update_record.status == 'in_progress'
+      return
+    else
+      # Though we do not check it here, we expect the status to be one of created, error_retry_permitted or will_retry. If the user triggers a retry through the UI, the status should be will_retry, but if triggered at the CLI it may be error_retry_permitted.
+      @bulk_update_record.status = 'in_progress'
+      @bulk_update_record.save!
+    end
+
+
+
     s3 = Aws::S3::Resource.new region: 'us-west-2'
     obj = s3.bucket(ENV['S3_BUCKET_NAME']).object(@bulk_update_record.s3_zip_id)
 
@@ -30,6 +42,7 @@ class BulkUpdateCvProcess
       return 'error! want exactly one CSV'
     end
 
+
     # Expectation: first column has filenames, second column has emails
     CSV.foreach csv_files[0] do |row|
 
@@ -47,8 +60,9 @@ class BulkUpdateCvProcess
 
       user = User.where(email: item.email).first
       if not user
-        item.status = 'error_no_retry'
-        item.error_message = "User account for #{item.email} not found."
+        # Retry is permitted here, because if the admin creates this user this item can succeed.
+        item.status = 'error_retry_permitted'
+        item.error_message = "User account for #{item.email} not found. Please check the spelling of the email address, or create an account for this user."
         item.save!
         next
       end
@@ -65,6 +79,41 @@ class BulkUpdateCvProcess
       item.status = 'completed'
       item.save!
 
+    end
+
+
+
+
+    tentative_status = 'completed'
+
+    @bulk_update_record.bulk_update_line_items.each do |item|
+      if item.status == 'error_retry_permitted'
+        tentative_status = 'error_retry_permitted'
+      end
+    end
+
+    @bulk_update_record.status = tentative_status
+    @bulk_update_record.save!
+
+
+    # Cleanup:
+
+
+    filenames = @bulk_update_record.bulk_update_line_items.map do |item|
+      path.dirname.join(item.filename)
+    end
+
+    # Delete the CVs, the CSV file, and the .zip
+    # We could delete everything under the path, but to avoid any rm -rf * disasters lets not.
+    File.unlink *filenames
+    File.unlink csv_files[0]
+    File.unlink path
+
+    unless @bulk_update_record.can_retry?
+      # Also clean the file out of S3.
+      # TODO: This should do an acceptable job of keeping the bucket clean, but if the user has a job that can retry and they neglect it for two weeks, it will disappear from the list of jobs, and we will have leaked some stuff into the bucket. When this product takes off and we sell it for a bajillion dollars we will need a task to erase old jobs + line items from the DB, and old S3 objects. Or when I get an S3 bill for $0.02 in a year's time, whichever comes first.
+
+      obj.delete
     end
 
 

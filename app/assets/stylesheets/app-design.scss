@@ -10,7 +10,7 @@ $admin-deep-purple: #5E35B1; // deep-purple-600
 $trusted-vendors-deep-orange: #D84315; // deep-orange-800
 
 $invalid-red: #F44336;
-
+$success-green:  #43A047; // green-600
 
 
 
@@ -121,6 +121,15 @@ $invalid-red: #F44336;
   // To match margins on mui-btns
   margin: 6px 0 6px 0;
 }
+
+.red-font {
+  color: $invalid-red;
+}
+
+.green-font {
+  color: $success-green;
+}
+
 
 
 // Colours:

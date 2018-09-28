@@ -152,7 +152,9 @@ Rails.application.routes.draw do
     resources :cvs, controller: 'admin_cvs', as: 'admin_cvs', only: [:index, :edit, :update]
 
     resources :bulk_update_record, controller: 'admin_bulk_update_record', as: 'bulk_cv', only: [:index, :new, :create, :show] do
-      post :rerun
+      member do
+        post :retry
+      end
     end
 
   end

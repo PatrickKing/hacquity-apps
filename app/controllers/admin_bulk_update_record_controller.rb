@@ -1,6 +1,7 @@
 class AdminBulkUpdateRecordController < ApplicationController
 
   before_action :require_admin_login
+  before_action :set_bulk_update_record, only: [:show, :retry]
 
   layout 'admin_pages'
 
@@ -37,19 +38,29 @@ class AdminBulkUpdateRecordController < ApplicationController
   end
 
   def show
-    @bulk_update_record = BulkUpdateRecord.find params[:id]
   end
 
   # Non RESTful actions:
 
-  def rerun
-    
+  def retry
+    if @bulk_update_record.status == 'error_retry_permitted'
+      @bulk_update_record.status = 'will_retry'
+      @bulk_update_record.save!
+      redirect_to bulk_cv_path(@bulk_update_record), notice: 'Retrying ...'
+      BulkUpdateCvJob.new(@bulk_update_record).process
+    else
+      redirect_to bulk_cv_path(@bulk_update_record), notice: "Can't retry this job."
+    end
   end
 
   private
 
   def record_params
     params.require('bulk_update_record').permit('s3_zip_id')
+  end
+
+  def set_bulk_update_record
+    @bulk_update_record = BulkUpdateRecord.includes(:bulk_update_line_items).find(params[:id])
   end
 
 end

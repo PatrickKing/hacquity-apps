@@ -24,10 +24,10 @@ em
 
   .mui-row.form-section
     .mui-col-md-12.mui-col-xs.12
-      = form.file_field 'cv_zip', accept: '.zip'
+      = form.file_field 'cv_zip', accept: '.zip', id: "zip-file-input"
 
-  .actions
-    = form.submit "Create Bulk Update CV Job", class: 'mui-btn'
+
+= link_to "Create Bulk Update CV Job", '#', class: 'mui-btn' ,id: 'upload-button'
 
 
 .mui--hide
