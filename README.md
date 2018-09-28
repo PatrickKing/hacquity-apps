@@ -38,8 +38,6 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
 - In the Heroku dashboard:
     - Set the three service account related environment variables
     - Set the `MAIL_HOST` environment variable
-- Add the apt-get buildpack. We use apt to install 7zip, which is required for the bulk CV upload feature. See `Aptfile`.
-    + `heroku buildpacks:add --index 1 heroku-community/apt -a hacquity`
 - `git push heroku HEAD:master`
 
 ## Variables

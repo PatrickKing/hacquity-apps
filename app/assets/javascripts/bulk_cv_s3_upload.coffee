@@ -14,6 +14,8 @@ $ ->
       event.preventDefault()
       fileInput.fileupload 'send', files: fileInput.prop('files')
 
+      false
+
 
     fileInput.fileupload
       fileInput: fileInput

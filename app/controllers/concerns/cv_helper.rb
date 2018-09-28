@@ -24,7 +24,7 @@ module CvHelper
   end
 
   def upload_cv_via_form (redirection_path, user)
-    result = upload_cv user, params[:CV]
+    result = upload_cv_web user, params[:CV]
 
     case result[:error]
     when :no_file
@@ -76,7 +76,7 @@ module CvHelper
       return
     end
 
-    result = upload_cv user, email_params["attachment-1"]
+    result = upload_cv_web user, email_params["attachment-1"]
 
     case result[:error]
     when :no_file
@@ -93,11 +93,7 @@ module CvHelper
 
   private
 
-  def upload_cv (user, cv_tempfile)
-
-    # TODO: handle all the various exceptions the google API calls can produce
-    # TODO: in a better world, we would move much of this into a task outside of the request-response cycle.
-
+  def upload_cv_web (user, cv_tempfile)
     result = {
       error: nil,
     }
@@ -107,18 +103,31 @@ module CvHelper
       return result
     end
 
-    unless cv_tempfile.original_filename.match /\.(docx?|pdf|txt)$/
+    return upload_cv user, cv_tempfile.original_filename, cv_tempfile.tempfile
+  end
+  
+
+  def upload_cv (user, original_filename, file)
+
+    # TODO: handle all the various exceptions the google API calls can produce
+    # TODO: in a better world, we would move much of this into a task outside of the request-response cycle.
+
+    result = {
+      error: nil,
+    }
+
+    unless original_filename.match /\.(docx?|pdf|txt)$/
       result[:error] = :wrong_file_format
       return result
     end
 
-    if cv_tempfile.original_filename.match /\.docx$/
+    if original_filename.match /\.docx$/
       mime_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    elsif cv_tempfile.original_filename.match /\.doc$/
+    elsif original_filename.match /\.doc$/
       mime_type = 'application/msword'
-    elsif cv_tempfile.original_filename.match /\.pdf$/
+    elsif original_filename.match /\.pdf$/
       mime_type = 'application/pdf'
-    elsif cv_tempfile.original_filename.match /\.txt$/
+    elsif original_filename.match /\.txt$/
       mime_type = 'text/plain'
     else
       # Shouldn't be possible to get here, but... 
@@ -143,12 +152,12 @@ module CvHelper
 
     # Upload the file to Google Drive:
 
-    original_file = drive.create_file( {name: cv_tempfile.original_filename, properties: {"seeking"=>profile.seeking?, "dom_citizen_type"=>"cv_document"}
+    original_file = drive.create_file( {name: original_filename, properties: {"seeking"=>profile.seeking?, "dom_citizen_type"=>"cv_document"}
       },
       fields: 'id,mime_type,name',
       # TODO: Not sure that tempfile will always exist here, test with like a tiny tiny file
       # Update: have never seen the upload break at this point, assume this is OK.
-      upload_source: cv_tempfile.tempfile,
+      upload_source: file,
       content_type: mime_type
     )
 

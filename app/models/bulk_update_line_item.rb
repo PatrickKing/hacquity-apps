@@ -13,5 +13,8 @@ class BulkUpdateLineItem < ApplicationRecord
 
   validates :status, inclusion: {in: BulkUpdateLineItem::Statuses }
 
-
+  before_validation do
+    self.status = 'not_processed' if self.status.nil?
+  end
+  
 end
