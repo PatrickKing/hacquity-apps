@@ -118,7 +118,8 @@ CREATE TABLE public.bulk_update_records (
     s3_zip_id character varying,
     admin_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    error_message character varying
 );
 
 
@@ -976,6 +977,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180921224548'),
 ('20180925000743'),
 ('20180926203231'),
-('20180926203753');
+('20180926203753'),
+('20180928214116');
 
 

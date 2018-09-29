@@ -6,6 +6,12 @@
   p 
     strong Status: 
     span class=@bulk_update_record.status_colour_class = @bulk_update_record.status_string
+
+  - unless @bulk_update_record.error_message.blank?
+    p
+      strong Error Message: 
+      span.red-font = @bulk_update_record.error_message
+
   p 
     strong Updated at: 
     = @bulk_update_record.updated_at.getlocal.strftime '%I:%M %p, %A %B %d, %Y'
