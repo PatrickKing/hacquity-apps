@@ -2,6 +2,8 @@ class MentorMatchConnectionRequestsController < ApplicationController
 
   include ConnectionRequestActions
 
+  before_action :require_user_login
+
   layout 'mentor_match_pages'
 
   def index

@@ -2,6 +2,8 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   include ConnectionRequestActions
 
+  before_action :require_user_login
+
   layout "second_shift_pages"
 
   def index

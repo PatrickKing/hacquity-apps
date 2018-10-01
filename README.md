@@ -59,6 +59,9 @@ Since the app ties together quite a few services at this point (sengrid, mailgun
     + `patrick.f.king+domcitizen@gmail.com` in dev
     + NB: put a real address in there! we gotta buy a domain
 
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `S3_BUCKET_NAME` all of the AWS stuff is only needed for handling multiple file uploads in the admin panel. but you should STILL SET IT ALL UP
 
 future variables ... 
 

@@ -51,7 +51,7 @@ class BulkUpdateCvProcess
     @csv_files = Dir[@path.dirname.join('*.csv')]
     if @csv_files.length != 1
       @bulk_update_record.status = 'error_no_retry'
-      @bulk_update_record.error_message = "We found #{@csv_files.length} .csv file(s) in the .zip file. Please include exactly one .csv file."
+      @bulk_update_record.error_message = "We found #{@csv_files.length} .csv file(s) in the .zip file. Please include exactly one .csv file. Note that filenames are case sensitive, the file extension should be lowercase '.csv'."
       @bulk_update_record.save!
       cleanup
       return
@@ -83,7 +83,7 @@ class BulkUpdateCvProcess
       item = @bulk_update_record.bulk_update_line_items.where(filename: other_file).first_or_create
       item.email = nil
       item.status = 'error_no_retry'
-      item.error_message = "File '#{other_file}' was not listed in the .csv file."
+      item.error_message = "File '#{other_file}' was not listed in the .csv file. Note that filenames are case sensitive, the name given in the .csv needs to match the name of the file exactly."
       item.save!
     end
 
@@ -97,7 +97,7 @@ class BulkUpdateCvProcess
       if not user
         # Retry is permitted here, because if the admin creates this user this item can succeed.
         item.status = 'error_retry_permitted'
-        item.error_message = "User account for #{item.email} not found. Please check the spelling of the email address, or create an account for this user."
+        item.error_message = "User account for #{item.email} not found. Please check the spelling of the email address, or create an account for this user. Note that email addresses are case sensitive."
         item.save!
         next
       end
@@ -106,7 +106,7 @@ class BulkUpdateCvProcess
         cv_file = File.new(@path.dirname.join(item.filename), "r")
       rescue Errno::ENOENT => error
         item.status = 'error_no_retry'
-        item.error_message = "No file named '#{item.filename}' in the .zip file."
+        item.error_message = "No file named '#{item.filename}' in the .zip file. Note that filenames are case sensitive, the name given in the .csv needs to match the name of the file exactly."
         item.save!
         next
       end
@@ -116,12 +116,12 @@ class BulkUpdateCvProcess
       if upload_result[:error] == :no_file
         # Shouldn't be possible to see this error since we handle it above, but handle it anyway.
         item.status = 'error_no_retry'
-        item.error_message = "No file named '#{item.filename}' in the .zip file."
+        item.error_message = "No file named '#{item.filename}' in the .zip file. Note that filenames are case sensitive, the name given in the .csv needs to match the name of the file exactly."
         item.save!
         next
       elsif upload_result[:error] == :wrong_file_format
         item.status = 'error_no_retry'
-        item.error_message = "CV '#{item.filename}' was in a format we couldn't read. Please attach a file in .docx, .doc, .pdf, or .txt format."
+        item.error_message = "CV '#{item.filename}' was in a format we couldn't read. Please attach a file in .docx, .doc, .pdf, or .txt format.  Note that filenames are case sensitive, the file extension should be in lowercase."
         item.save!
         next
       end

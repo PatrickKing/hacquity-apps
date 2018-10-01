@@ -43,6 +43,7 @@ class AdminBulkUpdateRecordController < ApplicationController
   # Non RESTful actions:
 
   def retry
+    # TODO: in theory, if two people retry the same job simultaneously, we could get two job records, and conceivably even two simultaneous processes running at once. Rather unlikely, but in the world where we go pro, we should make this check and save within an atomic transaction so that only one job may run at once. If we're going to do that, may as well do it also on create and guard also in BulkUpdateCvProcess.
     if @bulk_update_record.status == 'error_retry_permitted'
       @bulk_update_record.status = 'will_retry'
       @bulk_update_record.save!

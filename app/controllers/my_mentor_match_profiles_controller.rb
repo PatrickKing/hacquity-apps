@@ -2,7 +2,7 @@ class MyMentorMatchProfilesController < ApplicationController
   
   include CvHelper
 
-  before_action :require_login
+  before_action :require_user_login
 
   before_action :set_mentor_match_profile, only: [:show, :edit, :update, :edit_cv]
 

@@ -1,6 +1,6 @@
 class CommonPagesController < ApplicationController
 
-  before_action :require_login, except: :main
+  before_action :require_user_login, except: :main
 
   def main
     if user_signed_in?

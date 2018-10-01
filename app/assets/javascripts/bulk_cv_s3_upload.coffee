@@ -2,7 +2,11 @@
 
 $(document).on 'turbolinks:load', ->
 
+  submitted = false
+
   $('#upload-button').on 'click', (event) ->
+    return if submitted
+    submitted = true
     event.preventDefault()
     fileInput = $ '#zip-file-input'
     fileInput.fileupload 'send', files: fileInput.prop('files')
