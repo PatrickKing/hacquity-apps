@@ -2,7 +2,7 @@ class MyMentorMatchProfilesController < ApplicationController
   
   include CvHelper
 
-  before_action :require_login
+  before_action :require_user_login
 
   before_action :set_mentor_match_profile, only: [:show, :edit, :update, :edit_cv]
 
@@ -67,7 +67,7 @@ class MyMentorMatchProfilesController < ApplicationController
   end
 
   def update_cv
-    upload_cv_via_form my_mentor_match_profile_path
+    upload_cv_via_form my_mentor_match_profile_path, current_user
   end
 
 

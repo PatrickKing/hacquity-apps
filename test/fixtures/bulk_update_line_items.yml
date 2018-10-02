@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bulk_update_record: one
+  filename: MyString
+  email: MyString
+  status: MyString
+  error_message: MyString
+
+two:
+  bulk_update_record: two
+  filename: MyString
+  email: MyString
+  status: MyString
+  error_message: MyString

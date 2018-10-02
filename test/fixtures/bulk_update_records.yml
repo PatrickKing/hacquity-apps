@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  s3_zip_id: MyString
+  admin: one
+
+two:
+  status: MyString
+  s3_zip_id: MyString
+  admin: two

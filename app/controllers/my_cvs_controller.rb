@@ -2,7 +2,7 @@ class MyCvsController < ApplicationController
 
   include CvHelper
 
-  before_action :require_login, except: [:update_cv_email]
+  before_action :require_user_login, except: [:update_cv_email]
   skip_before_action :verify_authenticity_token, only: [:update_cv_email]
 
   layout "cv_catalogue_pages"
@@ -13,7 +13,7 @@ class MyCvsController < ApplicationController
   end
 
   def update_cv
-    upload_cv_via_form edit_my_cv_path
+    upload_cv_via_form edit_my_cv_path, current_user
   end
 
   def update_cv_email

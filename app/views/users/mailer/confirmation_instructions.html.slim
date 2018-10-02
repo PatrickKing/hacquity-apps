@@ -1,0 +1,18 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "Confirmation Instructions"
+    = render 'mail_shared/body', body: "Welcome #{@resource.name},"
+    = render 'mail_shared/body', body: "Please confirm your account email through the link below:"
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: confirmation_url(@resource, confirmation_token: @token), link_text: "Confirm my account"
+
+      td style=td_style
+
+    = render 'mail_shared/body', body: "After you confirm your email, your account also needs to be approved by a DoM Citizen administrator before you can log in. Please watch your email!"
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @resource, offer_unsubscribe: 'no'

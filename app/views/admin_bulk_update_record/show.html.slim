@@ -1,0 +1,53 @@
+
+.mui-container
+
+  h2 Bulk Update CV Job
+
+  p 
+    strong Status: 
+    span class=@bulk_update_record.status_colour_class = @bulk_update_record.status_string
+
+  - unless @bulk_update_record.error_message.blank?
+    p
+      strong Error Message: 
+      span.red-font = @bulk_update_record.error_message
+
+  p 
+    strong Updated at: 
+    = @bulk_update_record.updated_at.getlocal.strftime '%I:%M %p, %A %B %d, %Y'
+  p 
+    strong Created by: 
+    = @bulk_update_record.admin.name
+
+  - if @bulk_update_record.can_retry?
+    = form_with url: retry_bulk_cv_path(@bulk_update_record), class: 'inline' do |form|
+      = form.submit 'Retry', class: "mui-btn preserve-scroll-position"
+
+  - if @bulk_update_record.can_refresh?
+    = link_to 'Refresh', bulk_cv_path(@bulk_update_record), class: "mui-btn"
+
+  .mui-row.bottom-border.table-row
+    strong
+      .mui-col-md-3.mui-col-xs-12
+        p Status
+      .mui-col-md-3.mui-col-xs-12
+        p Email
+      .mui-col-md-3.mui-col-xs-12
+        p CV File
+      .mui-col-md-3.mui-col-xs-12
+        p Error Message
+
+  br
+
+  - @bulk_update_record.bulk_update_line_items.each do |item|
+
+    .mui-row.table-row
+      .mui-col-md-3.mui-col-xs-12
+        p class=item.status_colour_class = item.status_string
+      .mui-col-md-3.mui-col-xs-12
+        p = item.email
+      .mui-col-md-3.mui-col-xs-12
+        p = item.filename
+      .mui-col-md-3.mui-col-xs-12
+        p = item.error_message
+

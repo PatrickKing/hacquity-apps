@@ -1,6 +1,6 @@
 class VendorReviewsController < ApplicationController
 
-  before_action :require_login
+  before_action :require_user_login
 
   before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike, :neutral_helpfulness]
 

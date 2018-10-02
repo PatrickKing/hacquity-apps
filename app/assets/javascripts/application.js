@@ -15,5 +15,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery
+//= require jquery.ui.widget.js
+//= require jquery.fileupload.js
 //= require_tree .
 //= require mui.min.js

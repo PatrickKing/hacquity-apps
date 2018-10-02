@@ -1,0 +1,39 @@
+h2 New Bulk Update CV Job
+em
+  p You can upload a .zip file with many CVs to update multiple users at once (in .pdf, .doc, .docx and/or .txt format).
+  p Along with the CVs, the .zip file should include a .csv file with: 
+  ul
+    li In the first column: CV filename 
+    li In the second column: the user's email address
+
+
+= form_with class: 'mui-form',\
+  local: true,\
+  id: 's3_upload_form',\
+  data: { 'form-data' => (@s3_direct_post.fields),\
+    'url' => @s3_direct_post.url,\
+    'host' => URI.parse(@s3_direct_post.url).host }\
+  do |form|
+
+  - if @bulk_update_record.errors.any?
+    #error-explanation
+      h2 = "#{pluralize(@bulk_update_record.errors.count, "error")} prohibited this Bulk Update CV job from being started:"
+      ul
+        - @bulk_update_record.errors.full_messages.each do |message|
+          li = message
+
+  .mui-row.form-section
+    .mui-col-md-12.mui-col-xs.12
+      = form.file_field 'cv_zip', accept: '.zip', id: "zip-file-input"
+
+
+= link_to "Create Bulk Update CV Job", '#', class: 'mui-btn' ,id: 'upload-button'
+
+
+.mui--hide
+  = form_with model: @bulk_update_record, class: 'mui-form', local: true, url: bulk_cv_index_path, id: 'bulk_update_cv_form' do |form|
+
+    = form.text_field :s3_zip_id, id: 's3_zip_id_input'
+
+
+

@@ -1,0 +1,26 @@
+.hacquity-nav-list
+
+  a href = new_admin_user_path
+    .nav-link class = new_create_nav_link_class('admin_users')
+      span Invite New User
+
+  a href = approve_index_admin_users_path
+    .nav-link class = nav_link_class('admin_users', 'approve_index')
+      span = "Approve Users (#{User.where('admin_approved is NULL').count})"
+
+  a href = disable_index_admin_users_path
+    .nav-link class = nav_link_class('admin_users', 'disable_index')
+      span Disable / Re-enable Users
+
+  a href = admin_cvs_path
+    .nav-link class = nav_link_class('admin_cvs', 'index')
+      span Update User CV
+
+  a href = new_bulk_cv_path
+    .nav-link class = nav_link_class('admin_bulk_update_record', 'new')
+      span New Bulk Update CV Job
+
+  a href = bulk_cv_index_path
+    .nav-link class = nav_link_class('admin_bulk_update_record', 'index')
+      span View Bulk Update CV Jobs
+

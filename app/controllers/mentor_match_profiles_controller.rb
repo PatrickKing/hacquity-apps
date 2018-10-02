@@ -4,7 +4,9 @@ class MentorMatchProfilesController < ApplicationController
 
   helper_method :preserved_params
 
-  before_action :require_login
+  before_action :require_user_login, except: :cv
+  # CVs may be accessed by admins also
+  before_action :require_login, only: :cv
 
   before_action :set_mentor_match_profile, only: [:show, :cv]
 

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :require_login, except: :unsubscribe
+  before_action :require_user_login, except: :unsubscribe
 
   layout 'user_settings_pages'
 

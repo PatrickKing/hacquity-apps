@@ -2,7 +2,7 @@
 
   - if @vendor_review.errors.any?
     #error-explanation
-      h2 = "#{pluralize(@vendor_review.errors.count, "error")} prohibited this vendor_review from being saved:"
+      h2 = "#{pluralize(@vendor_review.errors.count, "error")} prohibited this vendor review from being saved:"
       ul
         - @vendor_review.errors.full_messages.each do |message|
           li = message
