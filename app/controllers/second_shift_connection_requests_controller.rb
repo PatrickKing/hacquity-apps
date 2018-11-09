@@ -2,11 +2,13 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
   include ConnectionRequestActions
 
+  before_action :require_user_login
+
   layout "second_shift_pages"
 
   def index
 
-   @connection_requests = index_connection_requests
+    @connection_requests = index_connection_requests
 
     render 'connection_requests/index'
   end
@@ -28,6 +30,9 @@ class SecondShiftConnectionRequestsController < ApplicationController
 
     if @connection_request.save
       redirect_to redirection_path, notice: 'Connection request sent.'
+      if @connection_request.receiver.subscribe_to_emails
+        ConnectionRequestMailerJob.new(@connection_request).deliver
+      end
     else
       redirect_to service_posting_path(@connection_request.initiator_service_posting), alert: 'A problem prevented us from creating the request.'
     end

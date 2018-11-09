@@ -10,7 +10,7 @@ $admin-deep-purple: #5E35B1; // deep-purple-600
 $trusted-vendors-deep-orange: #D84315; // deep-orange-800
 
 $invalid-red: #F44336;
-
+$success-green:  #43A047; // green-600
 
 
 
@@ -71,6 +71,65 @@ $invalid-red: #F44336;
   border-bottom: 2px solid $invalid-red;
   color: $invalid-red;
 }
+
+.inline {
+  display: inline;
+}
+
+.home-link {
+  text-decoration: underline;
+  color: white;
+}
+
+// This is a desperate attempt to make text box labels align okay. who knows if it works well on many/any browsers!?!?!
+.mui-checkbox label {
+  vertical-align: text-bottom;
+}
+
+.shaded-box {
+  background-color: #ddd;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.indent {
+  padding-left: 15px;
+}
+
+.tiny {
+  text-align: center;
+  font-size: 8px;
+  a {
+    color: $dashboard-slate;
+  }
+}
+
+
+.progress {
+  max-width: 600px;
+  margin:    0.2em 0 0.2em 0;
+}
+
+.progress .bar {
+  height:  1.2em;
+  padding-left: 0.2em;
+  color:   white;
+  display: none;
+}
+
+.table-row p {
+  // To match margins on mui-btns
+  margin: 6px 0 6px 0;
+}
+
+.red-font {
+  color: $invalid-red;
+}
+
+.green-font {
+  color: $success-green;
+}
+
 
 
 // Colours:

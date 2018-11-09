@@ -1,0 +1,12 @@
+DoM Citizen
+New user signup for approval: <%= @user.name %>
+
+============================================================
+
+A new user has signed up to DoM Citizen: <%= @user.name %> <<%= @user.email %>>. Please verify that this user has a valid institutional email address, before approving them.
+
+Approve users:
+
+<%= approve_index_admin_users_url %>
+
+<%= render 'admin_mail_shared/text_footer', admin: @admin %>

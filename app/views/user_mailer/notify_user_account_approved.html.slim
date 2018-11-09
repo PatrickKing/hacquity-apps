@@ -1,0 +1,19 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "Your DoM Citizen account is active"
+    = render 'mail_shared/body', body: "Welcome to DoM Citizen!"
+    = render 'mail_shared/body', body: "An administrator has approved your account, you may now log in."
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: new_session_url('user'), link_text: "Log in to DoM Citizen"
+
+
+      td style=td_style
+
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @user
+

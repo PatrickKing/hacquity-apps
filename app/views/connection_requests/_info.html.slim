@@ -46,8 +46,15 @@
           | : 
         = link_to connection_request.receiver_service_posting.seeking_summary, connection_request.receiver_service_posting
 
+
     - if connection_request.accepted?
       p
         strong Email: 
         = mail_to connection_request.receiver.email
 
+.mui-row
+  .mui-col-md-12.mui-col-xs-12
+
+    - if connection_request.connection_type == 'mentor_match'
+      p
+        em Please note: accepting a connection request on Mentor Match does not imply any commitment or obligation to enter into a mentorship relationship!

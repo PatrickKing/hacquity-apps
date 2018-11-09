@@ -1,0 +1,13 @@
+- content_for :single_column do
+  h2 Resend confirmation instructions
+
+  = form_for resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }, class: 'mui-form' do |f|
+    = devise_error_messages!
+
+    .mui-textfield
+      = f.label :email
+      = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+
+    = f.submit "Re-send confirmation email", class: 'mui-btn'
+
+

@@ -1,11 +1,13 @@
-.dashboard-colours
-  - if user_signed_in?
-    = form_with url: destroy_user_session_path, method: :delete, local: true do |form|
-      = form.submit "Logout", class: 'mui-btn mui--color-blue-grey-600 mui--bg-color-white'
-  - else
-    = link_to "Log in", new_user_session_path, class: 'mui-btn'
-    = link_to "Sign up", new_user_registration_path, class: 'mui-btn'
-    br
+/ NB: unused for the moment.
+
+/ .dashboard-colours
+/   - if user_signed_in?
+/     = form_with url: destroy_user_session_path, method: :delete, local: true do |form|
+/       = form.submit "Logout", class: 'mui-btn mui--color-blue-grey-600 mui--bg-color-white'
+/   - else
+/     = link_to "Log in", new_user_session_path, class: 'mui-btn'
+/     = link_to "Sign up", new_user_registration_path, class: 'mui-btn'
+/     br
 
 
 / - if devise_mapping.registerable? && controller_name != 'registrations'

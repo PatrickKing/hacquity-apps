@@ -2,6 +2,8 @@ class MentorMatchConnectionRequestsController < ApplicationController
 
   include ConnectionRequestActions
 
+  before_action :require_user_login
+
   layout 'mentor_match_pages'
 
   def index
@@ -29,6 +31,9 @@ class MentorMatchConnectionRequestsController < ApplicationController
 
     if @connection_request.save
       redirect_to redirection_path, notice: 'Connection request sent.'
+      if @connection_request.receiver.subscribe_to_emails
+        ConnectionRequestMailerJob.new(@connection_request).deliver
+      end
     else
       redirect_to redirection_path, alert: 'A problem prevented us from creating the request.'
     end

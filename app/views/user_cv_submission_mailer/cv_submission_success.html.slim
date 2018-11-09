@@ -1,0 +1,23 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'mail_shared/appbar'
+    = render 'mail_shared/title', title: "CV Successfully Updated"
+    = render 'mail_shared/body', body: "Your CV was succesfully updated by email."
+    - unless @user.mentor_match_profile.personal_information.blank?
+      = render 'mail_shared/body', body: "However, An automated scan of your CV found some personal information that may correspond to an email address, phone number, or street address. This info is visible to any who view your CV on DoM Citizen. You may wish to upload a CV that omits this information. If the scan is in error, you may ignore this notice."
+      = render 'mail_shared/body', body: @user.mentor_match_profile.personal_information
+
+    = render 'mail_shared/body', body: "If you wish to update your CV again, you can do so by replying to this email with the CV attached."
+
+
+
+    tr
+      td style=td_style
+      td
+        = render 'mail_shared/link_button', href: cvs_url, link_text: "Go to CV Catalogue"
+      td style=td_style
+
+    = render 'mail_shared/body', body: "Thanks!"
+    = render 'mail_shared/footer', user: @user
+    = render 'mail_shared/cv_update_token', user: @user

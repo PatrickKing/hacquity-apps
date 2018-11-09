@@ -26,16 +26,57 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
 - Visit the credentials section of the developer's console and create a set of service account keys for development, and store them in a file at the root of the project directory named `google-drive-keys.sh`. Note that this file is in `.gitignore`, don't check in these credentials. See `app/models/concerns/GoogleDrive.rb` for details on how these credentials are used. 
 - `source google-drive-keys.sh && rails s`
 
+### Other Development Tasks
+- Development mode is set up to send email to a local Mailcatcher server. Install mailcatcher in a separate gemset, and visit `http://localhost:1080`
+- Mail is also configured to be sent with DelayedJob. Use `rails jobs:work` to start the queue.
+
 
 ## Deployment
 
 - Repeat the steps given in setup for creating a Google service account, but this time give the account a name indicating that it will be used in production
 - Create an app with Heroku, and add it as a git remote on your local repository
-- In the Heroku dashboard, set the three service account related environment variables
+- In the Heroku dashboard:
+    - Set the three service account related environment variables
+    - Set the `MAIL_HOST` environment variable
 - `git push heroku HEAD:master`
 
+## Variables
+
+Since the app ties together quite a few services at this point (sengrid, mailgun, googldrive, and soon facebook) I'm making an authoritative list of all the environment variables that change around from environment to environment. They're all in google drive keys for dev... but that's going to change methinks! 
+
+- `GOOGLE_PRIVATE_KEY` 
+- `GOOGLE_CLIENT_EMAIL` 
+- `GOOGLE_ACCOUNT_TYPE` 
+- `CV_SUBMISSION_EMAIL` the mailgun email to which messages should be sent. I'm going to want different ones for dev/staging/prod.
+    + cv_update_production@mg.foobarbaz.ing
+      https://hacquity.herokuapp.com/cv-catalogue/my_cv/update_cv_email
+    + cv_update_staging@mg.foobarbaz.ing
+      https://dom-citizen-staging.herokuapp.com/cv-catalogue/my_cv/update_cv_email
+    + cv_update_development@mg.foobarbaz.ing
+      https://ac9fc6ae.ngrok.io/cv-catalogue/my_cv/update_cv_email 
+      whatever ngrok gives me each day
+- `MAILER_REPLY_TO_ADDRESS`
+    + `patrick.f.king+domcitizen@gmail.com` in dev
+    + NB: put a real address in there! we gotta buy a domain
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `S3_BUCKET_NAME` all of the AWS stuff is only needed for handling multiple file uploads in the admin panel. but you should STILL SET IT ALL UP
+
+future variables ... 
 
 
+- a stable ngrok endpoint, for posting to in dev?
+
+
+## Clearing Data
+I end up wiping databases etc on deployment pretty often, not putting in the legwork to have proper migrations for the moment. So far ... 
+
+- Drop into the Heroku dashboard, click through to Heroku PG, reset DB under settings
+- To wipe out the gdrive content:
+    - `heroku run -a dom-citizen-staging rails c`
+    - `drive = GoogleDrive.get_drive_service`
+    - TODO: work out the rest of it. turns out I never set up google drive in staging =/
 
 # Future Work
 

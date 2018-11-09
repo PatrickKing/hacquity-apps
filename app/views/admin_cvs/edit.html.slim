@@ -1,0 +1,21 @@
+
+
+h2.bottom-border = "Upload CV for #{@user.name}"
+p = @user.email
+
+= form_with url: admin_cv_path(@user), multipart: true, local: true, method: :put do |form|
+
+  .form-section
+    = form.file_field 'CV', accept: '.doc,.docx,.pdf,.txt'
+
+  .actions
+    = form.submit "Upload", class: "mui-btn"
+
+
+
+
+
+
+= render 'shared/cv_personal_information_warning', user: @user
+= render 'mentor_match_profiles/cv_button', profile: @user.mentor_match_profile
+= link_to 'Cancel', admin_cvs_path, class: 'mui-btn'

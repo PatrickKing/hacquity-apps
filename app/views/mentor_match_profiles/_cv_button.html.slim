@@ -1,6 +1,6 @@
 
-- unless profile.web_view_link.blank?
-  = link_to 'View CV', profile.web_view_link, class: 'mui-btn'
+- unless profile.original_cv_drive_id.blank?
+  = link_to 'View CV', cv_mentor_match_profile_path(profile) , class: 'mui-btn'
 - else
   p 
-    em No CV available.
+    em No CV file available.

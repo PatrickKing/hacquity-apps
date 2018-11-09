@@ -1,7 +1,10 @@
 
-
 .mui-container
-  h1 Browse Mentor Match Profiles
+  h2 Search Mentor Match Profiles
+
+  = render 'mentor_match_profiles/filter_form'
+
+  .form-section
 
   - @mentor_match_profiles.each do |profile|
     = render 'mentor_match_profiles/info', profile: profile

@@ -1,0 +1,15 @@
+.hacquity-nav-list
+
+  a href = user_path
+    .nav-link class = nav_link_class('users', 'show')
+      span My Info
+
+  a href = edit_user_path
+    .nav-link class = edit_create_nav_link_class('users')
+      span Update Info
+
+  a href = edit_user_registration_path
+    .nav-link class = edit_create_nav_link_class('registrations')
+      span Update Password
+
+

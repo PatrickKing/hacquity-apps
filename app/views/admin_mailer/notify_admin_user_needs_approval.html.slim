@@ -1,0 +1,16 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'admin_mail_shared/appbar'
+    = render 'admin_mail_shared/title', title: "New user signup for approval: #{@user.name}"
+    = render 'admin_mail_shared/body', body: "A new user has signed up to DoM Citizen: #{@user.name} <#{@user.email}>. Please verify that this user has a valid institutional email address, before approving them."
+
+    tr
+      td style=td_style
+      td
+        = render 'admin_mail_shared/link_button', href: approve_index_admin_users_url, link_text: "Approve users"
+
+      td style=td_style
+
+    = render 'admin_mail_shared/body', body: "Thanks!"
+    = render 'admin_mail_shared/footer', admin: @admin

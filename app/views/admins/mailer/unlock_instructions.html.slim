@@ -1,0 +1,16 @@
+table style="width: 90%;" cellspacing='0'
+  tbody
+
+    = render 'admin_mail_shared/appbar'
+    = render 'admin_mail_shared/title', title: "Unlock Instructions"
+    = render 'admin_mail_shared/body', body: "Hello #{@resource.name}, your admin account has been locked due to an excessive number of unsuccessful sign in attempts."
+    = render 'admin_mail_shared/body', body: "Click the link below to unlock your account:"
+
+    tr
+      td style=td_style
+      td
+        = render 'admin_mail_shared/link_button', href: unlock_url(@resource, unlock_token: @token), link_text: "Unlock my account"
+
+      td style=td_style
+
+    = render 'admin_mail_shared/footer', admin: @resource

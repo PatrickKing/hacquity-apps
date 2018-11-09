@@ -1,6 +1,6 @@
 class VendorReviewsController < ApplicationController
 
-  before_action :require_login
+  before_action :require_user_login
 
   before_action :set_vendor_review, only: [:show, :edit, :update, :destroy, :set_vendor_review, :set_vendor_review, :like, :unlike, :neutral_helpfulness]
 
@@ -126,7 +126,7 @@ class VendorReviewsController < ApplicationController
   end
 
   def set_vendor_review_like
-    @vendor_review_like = @vendor_review.vendor_review_likes.first_or_create(user_id: current_user.id)
+    @vendor_review_like = @vendor_review.vendor_review_likes.where(user_id: current_user.id).first_or_create()
   end
 
   def require_owner

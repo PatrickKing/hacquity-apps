@@ -12,9 +12,10 @@
 / If the users are connected:
 - elsif Connection.connection_exists? current_user, other_user
 
-  p
-    = "You're connected. You can email #{other_user.name} at "
-    = mail_to other_user.email
+  h3 Connection
+  p = "You're connected with #{other_user.name}"
+  = render 'users/contact_info', user: other_user
+
 
 
 / If there is an existing connection request, related to this one or not:

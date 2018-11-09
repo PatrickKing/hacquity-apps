@@ -13,16 +13,53 @@ SET client_min_messages = warning;
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: admins; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.admins (
+    id bigint NOT NULL,
+    name character varying,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.admins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: admins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.admins_id_seq OWNED BY public.admins.id;
+
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -34,6 +71,75 @@ CREATE TABLE public.ar_internal_metadata (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: bulk_update_line_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.bulk_update_line_items (
+    id bigint NOT NULL,
+    bulk_update_record_id bigint,
+    filename character varying,
+    email character varying,
+    status character varying,
+    error_message character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: bulk_update_line_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bulk_update_line_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_update_line_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bulk_update_line_items_id_seq OWNED BY public.bulk_update_line_items.id;
+
+
+--
+-- Name: bulk_update_records; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE public.bulk_update_records (
+    id bigint NOT NULL,
+    status character varying,
+    s3_zip_id character varying,
+    admin_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    error_message character varying
+);
+
+
+--
+-- Name: bulk_update_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bulk_update_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_update_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bulk_update_records_id_seq OWNED BY public.bulk_update_records.id;
 
 
 --
@@ -159,7 +265,25 @@ CREATE TABLE public.mentor_match_profiles (
     original_cv_drive_id character varying,
     uploaded_cv_exists boolean,
     seeking_summary character varying,
-    web_view_link character varying
+    available_ongoing boolean,
+    available_email_questions boolean,
+    available_one_off_meetings boolean,
+    career_stage character varying,
+    user_keywords character varying,
+    user_keywords_gdoc_id character varying,
+    mentorship_opportunities boolean,
+    mentorship_promotion_tenure boolean,
+    mentorship_career_life_balance boolean,
+    mentorship_performance boolean,
+    mentorship_networking boolean,
+    career_track_research boolean,
+    career_track_education boolean,
+    career_track_policy boolean,
+    career_track_leadership_admin boolean,
+    career_track_clinical boolean,
+    original_cv_mime_type character varying,
+    original_cv_file_name character varying,
+    personal_information character varying
 );
 
 
@@ -248,7 +372,24 @@ CREATE TABLE public.users (
     current_sign_in_ip inet,
     last_sign_in_ip inet,
     second_shift_enabled boolean,
-    mentor_match_enabled boolean
+    mentor_match_enabled boolean,
+    subscribe_to_emails boolean,
+    unsubscribe_token character varying,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone,
+    preferred_contact_method character varying,
+    phone_number character varying,
+    admin_assistant_name character varying,
+    admin_assistant_email character varying,
+    admin_assistant_phone_number character varying,
+    cv_receipt_token character varying,
+    admin_approved timestamp without time zone,
+    admin_disabled timestamp without time zone
 );
 
 
@@ -350,6 +491,27 @@ ALTER SEQUENCE public.vendor_reviews_id_seq OWNED BY public.vendor_reviews.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY public.admins ALTER COLUMN id SET DEFAULT nextval('public.admins_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_line_items ALTER COLUMN id SET DEFAULT nextval('public.bulk_update_line_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_records ALTER COLUMN id SET DEFAULT nextval('public.bulk_update_records_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY public.connection_requests ALTER COLUMN id SET DEFAULT nextval('public.connection_requests_id_seq'::regclass);
 
 
@@ -403,11 +565,35 @@ ALTER TABLE ONLY public.vendor_reviews ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: admins_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.admins
+    ADD CONSTRAINT admins_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: bulk_update_line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.bulk_update_line_items
+    ADD CONSTRAINT bulk_update_line_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bulk_update_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY public.bulk_update_records
+    ADD CONSTRAINT bulk_update_records_pkey PRIMARY KEY (id);
 
 
 --
@@ -490,6 +676,41 @@ CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority,
 
 
 --
+-- Name: index_admins_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_email ON public.admins USING btree (email);
+
+
+--
+-- Name: index_admins_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_reset_password_token ON public.admins USING btree (reset_password_token);
+
+
+--
+-- Name: index_admins_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_admins_on_unlock_token ON public.admins USING btree (unlock_token);
+
+
+--
+-- Name: index_bulk_update_line_items_on_bulk_update_record_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bulk_update_line_items_on_bulk_update_record_id ON public.bulk_update_line_items USING btree (bulk_update_record_id);
+
+
+--
+-- Name: index_bulk_update_records_on_admin_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bulk_update_records_on_admin_id ON public.bulk_update_records USING btree (admin_id);
+
+
+--
 -- Name: index_connection_requests_on_initiator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -546,10 +767,24 @@ CREATE INDEX index_mentor_match_profiles_on_user_id ON public.mentor_match_profi
 
 
 --
+-- Name: index_mentor_match_profiles_on_user_keywords_gdoc_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mentor_match_profiles_on_user_keywords_gdoc_id ON public.mentor_match_profiles USING btree (user_keywords_gdoc_id);
+
+
+--
 -- Name: index_service_postings_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_service_postings_on_user_id ON public.service_postings USING btree (user_id);
+
+
+--
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON public.users USING btree (confirmation_token);
 
 
 --
@@ -564,6 +799,20 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
+
+
+--
+-- Name: index_users_on_unsubscribe_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_unsubscribe_token ON public.users USING btree (unsubscribe_token);
 
 
 --
@@ -618,6 +867,14 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 
 --
+-- Name: fk_rails_83fdfd96aa; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_records
+    ADD CONSTRAINT fk_rails_83fdfd96aa FOREIGN KEY (admin_id) REFERENCES public.admins(id);
+
+
+--
 -- Name: fk_rails_8a85be6f1c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -647,6 +904,14 @@ ALTER TABLE ONLY public.vendor_review_likes
 
 ALTER TABLE ONLY public.vendor_reviews
     ADD CONSTRAINT fk_rails_c98e35f83d FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: fk_rails_d37f9dccb1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bulk_update_line_items
+    ADD CONSTRAINT fk_rails_d37f9dccb1 FOREIGN KEY (bulk_update_record_id) REFERENCES public.bulk_update_records(id);
 
 
 --
@@ -700,6 +965,19 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821174547'),
 ('20180822222701'),
 ('20180823042412'),
-('20180826002434');
+('20180826002434'),
+('20180904012405'),
+('20180906003800'),
+('20180906045006'),
+('20180907190433'),
+('20180910212602'),
+('20180911043715'),
+('20180918055137'),
+('20180919203142'),
+('20180921224548'),
+('20180925000743'),
+('20180926203231'),
+('20180926203753'),
+('20180928214116');
 
 

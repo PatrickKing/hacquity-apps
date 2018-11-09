@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+
+  include DeviseAccessible
+  skip_before_action :check_user, except: [:new, :create]
+
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+
+  layout 'user_settings_pages', only: [:edit, :update]
 
   # GET /resource/sign_up
   # def new
@@ -25,9 +31,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  # TODO: I do not want a user destroy endpoint. Would prefer to remove it from the router, but devise only seems to support skipping entire chunks of functionality, e.g. all of registrations, and not individual routes within a module. You could skip registrations and manually specify all the routes you do want, but that seems error prone, so just going with this no-op function instead.
+  def destroy
+    # super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -59,4 +66,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  def after_update_path_for (resource)
+    user_path
+  end
+
 end

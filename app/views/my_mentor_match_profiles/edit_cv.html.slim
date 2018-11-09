@@ -1,14 +1,4 @@
-h1 Upload Mentor Match CV
-
-= form_with url: update_cv_my_mentor_match_profile_path, multipart: true, local: true do |form|
-
-  .form-section
-    = form.file_field 'CV', accept: '.doc,.docx,.pdf,.txt'
-
-  .actions
-    = form.submit "Upload", class: "mui-btn"
-    = link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'
-
-
-
-
+= render 'shared/cv_form', update_path: update_cv_my_mentor_match_profile_path
+= render 'shared/cv_personal_information_warning', user: @current_user
+= render 'mentor_match_profiles/cv_button', profile: @mentor_match_profile
+= link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'

@@ -1,14 +1,14 @@
-h1 Update My Mentor Match Profile
+h2 Update My Mentor Match Profile
 
-= form_with(model: @mentor_match_profile, class: 'mui-form', action: :patch, url: my_mentor_match_profile_path, local: true) do |form|
+= form_with(model: @mentor_match_profile_form, class: 'mui-form', method: :patch, url: my_mentor_match_profile_path, local: true) do |form|
 
-  - if @mentor_match_profile.errors.any?
+  - if @mentor_match_profile_form.errors.any?
     .form-section#error-explanation
       h2
-        = "#{pluralize(@mentor_match_profile.errors.count, "error")} prohibited your profile from being saved:"
+        = "#{pluralize(@mentor_match_profile_form.errors.count, "error")} prohibited your profile from being saved:"
 
       ul
-        - @mentor_match_profile.errors.full_messages.each do |message|
+        - @mentor_match_profile_form.errors.full_messages.each do |message|
           li = message
 
 
@@ -24,13 +24,83 @@ h1 Update My Mentor Match Profile
       = form.text_field :position
 
   .form-section
+    h3 Career Track
+
+    .mui-checkbox
+      = form.check_box :career_track_research
+      = form.label :career_track_research, 'Research'
+    .mui-checkbox
+      = form.check_box :career_track_education
+      = form.label :career_track_education, 'Education'
+    .mui-checkbox
+      = form.check_box :career_track_policy
+      = form.label :career_track_policy, 'Policy'
+    .mui-checkbox
+      = form.check_box :career_track_leadership_admin
+      = form.label :career_track_leadership_admin, 'Leadership and Administration'
+    .mui-checkbox
+      = form.check_box :career_track_clinical
+      = form.label :career_track_clinical, 'Clinical'
+
+
+  .form-section
     .mui-textfield
-      = form.label :seeking_summary, 'Summary (your skills, interests, and goals in mentorship)'
+      = form.label :career_stage, 'Career Stage'
+      = form.text_field :career_stage
+
+  .form-section
+    .mui-textfield
+      = form.label :seeking_summary, 'Summary (your skills, interests, prior roles, and goals in mentorship)'
       = form.text_area :seeking_summary
 
+  .form-section
+    .mui-textfield
+      = form.label :user_keywords, 'Keywords (key phrases about your career interests)'
+      = form.text_field :user_keywords
+  
+  .form-section
+    h3 Availability
+
+    .mui-checkbox
+      = form.check_box :available_email_questions
+      = form.label :available_email_questions, 'Email / Text Questions'
+
+    .mui-checkbox
+      = form.check_box :available_one_off_meetings
+      = form.label :available_one_off_meetings, 'One Off Meetings'
+
+    .mui-checkbox
+      = form.check_box :available_ongoing
+      = form.label :available_ongoing, 'Ongoing Basis'
+
+  .form-section
+    h3 Mentorship Areas
+
+    .mui-checkbox
+      = form.check_box :mentorship_opportunities
+      = form.label :mentorship_opportunities, 'New Opportunities'
+
+    .mui-checkbox
+      = form.check_box :mentorship_promotion_tenure
+      = form.label :mentorship_promotion_tenure, 'Promotion and Tenure'
+
+    .mui-checkbox
+      = form.check_box :mentorship_career_life_balance
+      = form.label :mentorship_career_life_balance, 'Career and Life Balance'
+
+    .mui-checkbox
+      = form.check_box :mentorship_performance
+      = form.label :mentorship_performance, 'Improving Performance'
+
+    .mui-checkbox
+      = form.check_box :mentorship_networking
+      = form.label :mentorship_networking, 'Networking'
+
+
   .actions
-    = form.submit class: 'mui-btn'
+    = form.submit 'Update My Profile', class: 'mui-btn'
     = link_to 'Cancel', my_mentor_match_profile_path, class: 'mui-btn'
+
 
 
 

@@ -5,13 +5,13 @@
     .nav-link class = nav_link_class('my_mentor_match_profiles', 'show')
       span My Mentor Match Profile
 
-  a href = search_mentor_match_profiles_path
-    .nav-link class = nav_link_class('mentor_match_profiles', 'search')
-      span Search Profiles
+  / a href = search_mentor_match_profiles_path
+  /   .nav-link class = nav_link_class('mentor_match_profiles', 'search')
+  /     span Search Profiles
 
   a href = mentor_match_profiles_path
     .nav-link class = nav_link_class('mentor_match_profiles', 'index')
-      span Browse Profiles
+      span Search Profiles
 
   a href = mm_connection_requests_path
     .nav-link class = nav_link_class('mentor_match_connection_requests', 'index')
@@ -20,7 +20,4 @@
         - if current_user.active_connection_request_count > 0
           = " (#{current_user.active_connection_request_count})"
 
-  a href = dashboard_path
-    .nav-link
-      span DoM Citizen Home
 

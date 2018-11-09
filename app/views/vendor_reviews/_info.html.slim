@@ -1,7 +1,7 @@
 
 .mui-row
   .mui-col-md-12.mui-col-xs.12
-    h1.bottom-border = vendor_review.title
+    h2.bottom-border = vendor_review.title
 
     p 
       em
@@ -14,6 +14,7 @@
 
     p 
       em
+        | Other users' experiences with this vendor: 
         i.material-icons.inline-icon thumbs_up_down
         = " #{vendor_review.likes}"
 

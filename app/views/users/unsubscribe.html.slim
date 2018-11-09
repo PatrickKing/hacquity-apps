@@ -1,0 +1,16 @@
+
+- content_for :single_column do
+
+  .mui-container-fluid
+    .mui-row.form-section
+      .mui-col-md-12.mui-col-xs.12
+          h2.bottom-border Unsubscribe
+          p = @message
+
+          - if user_signed_in?
+            a.mui-btn href='#' Email Settings
+          - else
+            p Log in to change your email subscription settings.
+            a.mui-btn href=new_user_session_path Login
+
+
