@@ -42,20 +42,26 @@ html
             = link_to "Sign up", new_user_registration_path, class: 'mui-btn'
 
 
-        br
-        = flash.alert
-        = flash.notice
 
       .mui-container
         = yield :appbar
 
-        / NB: don't add .mui-row here, it just breaks the layout.
-        .mui-col-md-2.mui-col-xs-12
-          = yield :navbar
-        .mui-col-md-10.mui-col-xs-12
-          = yield
+        - unless flash[:notice].blank?
+          .notice-colours
+            .mui-appbar
+              p = flash.notice
+        - unless flash[:alert].blank?
+          .alert-colours
+            .mui-appbar
+              p = flash.alert
 
         .mui-panel
+          / NB: don't add .mui-row here, it just breaks the layout.
+          .mui-col-md-2.mui-col-xs-12
+            = yield :navbar
+          .mui-col-md-10.mui-col-xs-12
+            = yield
+
           = yield :single_column
 
 

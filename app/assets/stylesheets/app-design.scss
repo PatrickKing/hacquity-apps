@@ -12,6 +12,10 @@ $trusted-vendors-deep-orange: #D84315; // deep-orange-800
 $invalid-red: #F44336;
 $success-green:  #43A047; // green-600
 
+$notice-bg-blue: #E3F2FD; // blue-50
+$notice-blue: #2196F3; // blue-500
+$alert-bg-red: #FFEBEE; // red-50
+$alert-red: #C62828; // red-500
 
 
 // Generic / non-colour styles
@@ -362,3 +366,30 @@ $success-green:  #43A047; // green-600
   }
 }
 
+
+
+
+
+.notice-colours {
+  .mui-appbar {
+    background-color: $notice-bg-blue;
+    color: $notice-blue;
+    padding-right: 15px; 
+  }
+  p {
+    padding: 16px 0 16px 0;
+    margin: 0;
+  }
+}
+
+.alert-colours {
+  .mui-appbar {
+    background-color: $alert-bg-red;
+    color: $alert-red;
+    padding-right: 15px; 
+  }
+  p {
+    padding: 16px 0 16px 0;
+    margin: 0;
+  }
+}

@@ -26,9 +26,9 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
 - Visit the credentials section of the developer's console and create a set of service account keys for development, and store them in a file at the root of the project directory named `google-drive-keys.sh`. Note that this file is in `.gitignore`, don't check in these credentials. See `app/models/concerns/GoogleDrive.rb` for details on how these credentials are used. 
 - `source google-drive-keys.sh && rails s`
 
-### Other Development Tasks
-- Development mode is set up to send email to a local Mailcatcher server. Install mailcatcher in a separate gemset, and visit `http://localhost:1080`
-- Mail is also configured to be sent with DelayedJob. Use `rails jobs:work` to start the queue.
+### Processes to run in development.
+- `projects/mail/mailcatcher`. Development mode is set up to send email to a local Mailcatcher server. Install mailcatcher in a separate gemset, and visit `http://localhost:1080`
+- `rails jobs:work` . Mail is also configured to be sent with DelayedJob. Use this to start the queue.
 
 
 ## Deployment
