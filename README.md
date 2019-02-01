@@ -1,16 +1,30 @@
 # DoM Citizen
 
-The DoM Citizen webapp was a hackathon project built as an experiment in addressing gender inequity in medicine and academia. It has two major modules, Second Shift and Mentor Match.
+The DoM Citizen webapp was a hackathon project built as an experiment in addressing gender inequity in medicine and academia. It has several major modules, including: 
 
-If you have hired help (like a nanny or a cleaner) but don't need them full time, or if you are looking for part time household help, Second Shift lets you connect with peers who can help.
+- Second Shift
 
-Mentor Match helps you to discover other faculty who have interests like yours, and who are looking for mentor/mentee relationships.
+    If you have hired help (like a nanny or a cleaner) but don't need them full time, or if you are looking for part time household help, Second Shift lets you connect with peers who can help.
+- Mentor Match
+
+    Mentor Match helps you to discover other faculty who have interests like yours, and who are looking for mentor/mentee relationships.
+- Trusted Vendors
+
+    Trusted Vendors is a place for reviews of people and companies who are trusted by members of the community. You can browse, search, post, and rate vendor reviews.
+- CV Catalogue
+
+    Search a database of CVs for members of the Department of Medicine.
+- Administration
+
+    Admins can invite users, approve or reject users who request to join the site, disable user accounts, and also perform bulk update operations on CVs available in the CV Catalogue and Mentor Match.
+
+
 
 
 
 ## Development Setup
 
-DoM Citizen is a Ruby on Rails app, the process getting set up for development with this project should be familiar to most rails developers. The app is built on Google Drive for CV file storage and search, which requires some credential setup.
+DoM Citizen is a Ruby on Rails app, the process getting set up for development with this project should be familiar to most rails developers. The app ties into several external services for its features, which requires some credential setup, see the Variables section below.
 
 
 ### Prerequisites
@@ -42,47 +56,23 @@ DoM Citizen is a Ruby on Rails app, the process getting set up for development w
 
 ## Variables
 
-Since the app ties together quite a few services at this point (sengrid, mailgun, googldrive, and soon facebook) I'm making an authoritative list of all the environment variables that change around from environment to environment. They're all in google drive keys for dev... but that's going to change methinks! 
+Since the app ties together quite a few services at this point (Sengrid, Mailgun, Google Drive, and Amazon S3) I'm including this authoritative list of all the environment variables that change around from environment to environment. They can all be recorded in `google-drive-keys.sh` in development, and sourced as the instructions above indicate.
 
 - `GOOGLE_PRIVATE_KEY` 
 - `GOOGLE_CLIENT_EMAIL` 
 - `GOOGLE_ACCOUNT_TYPE` 
-- `CV_SUBMISSION_EMAIL` the mailgun email to which messages should be sent. I'm going to want different ones for dev/staging/prod.
-    + cv_update_production@mg.foobarbaz.ing
-      https://hacquity.herokuapp.com/cv-catalogue/my_cv/update_cv_email
-    + cv_update_staging@mg.foobarbaz.ing
-      https://dom-citizen-staging.herokuapp.com/cv-catalogue/my_cv/update_cv_email
-    + cv_update_development@mg.foobarbaz.ing
-      https://ac9fc6ae.ngrok.io/cv-catalogue/my_cv/update_cv_email 
-      whatever ngrok gives me each day
+- `CV_SUBMISSION_EMAIL` the mailgun email to which messages containing attachments should be sent. 
 - `MAILER_REPLY_TO_ADDRESS`
-    + `patrick.f.king+domcitizen@gmail.com` in dev
-    + NB: put a real address in there! we gotta buy a domain
-
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
-- `S3_BUCKET_NAME` all of the AWS stuff is only needed for handling multiple file uploads in the admin panel. but you should STILL SET IT ALL UP
+- `S3_BUCKET_NAME` S3 is only needed for the multiple CV file upload feature, accessible from the admin panel.
 
-future variables ... 
-
-
-- a stable ngrok endpoint, for posting to in dev?
-
-
-## Clearing Data
-I end up wiping databases etc on deployment pretty often, not putting in the legwork to have proper migrations for the moment. So far ... 
-
-- Drop into the Heroku dashboard, click through to Heroku PG, reset DB under settings
-- To wipe out the gdrive content:
-    - `heroku run -a dom-citizen-staging rails c`
-    - `drive = GoogleDrive.get_drive_service`
-    - TODO: work out the rest of it. turns out I never set up google drive in staging =/
 
 # Future Work
 
 Note that this app was built in haste for a hackathon! There are numerous tasks to do to bring it up to production quality. In particular:
 
 - There should be tests
-- More authentication checks on most actions
-- Much more careful handling of user files on Google Drive
+- More authentication checks on most actions (this is partially addressed)
+- Much more careful handling of user files on Google Drive (this is largely addressed)
 
