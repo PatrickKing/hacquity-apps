@@ -100,6 +100,16 @@ $alert-red: #C62828; // red-500
   padding-left: 15px;
 }
 
+
+.small {
+  text-align: center;
+  font-size: 12px;
+  a {
+    color: $dashboard-slate;
+  }
+}
+
+
 .tiny {
   text-align: center;
   font-size: 8px;
